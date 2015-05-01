@@ -4,11 +4,10 @@
   <meta charset="utf-8">
 
 <!--   Meta project information -->  
-  <title>EHR VISUALIZATION</title>
+  <title>{% block title %}EHR VISUALIZATION{% endblock %}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="A platform for more intuitive visualizations of Electronic Health Records">
   <meta name="author" content="Team EHR Vis">
-  <link rel="shortcut icon" href="/static/favicon.ico">
 
 <!--   Stylesheets here -->  
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
@@ -45,7 +44,6 @@
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="/static/js/libs/jquery.js">\x3C/script>')</script>
-
 
   <!-- Additional JavaScript libraries and plugins... -->
   {% block js %}{% endblock %}

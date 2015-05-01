@@ -27,10 +27,10 @@ SETTING UP
 	>> source env/bin/activate 
 	
 	# This is how you start the virtual environment everytime you want to work in the directory. There should be a (env) by your prompt after running this command.
-	>> deactivate
 
 Note - In order to get out of virtual environment, use the following command:
 	>> deactivate
+	
 	# (and the '(env)' by the prompt should go away)
 
 3) Install all dependencies - these are outlined in requirements.txt

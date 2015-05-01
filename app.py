@@ -9,7 +9,6 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 
 import os
 from flask import Flask, render_template, request, redirect, url_for
-# from waitress import serve
 
 #=======================================================================
 #       Application Configuration
@@ -24,6 +23,7 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'EHR_visualization_2015'
 @app.route('/')
 def home():
     """Render website's home page."""
+    print "RENDERING HOME.HTML"
     return render_template('home.html')
 
 
@@ -48,7 +48,7 @@ def medications():
 #=======================================================================
 
 
-########################################################################
+#=======================================================================
 #       Maintenance functions for Flask apps.
 #=======================================================================
 @app.after_request
@@ -73,5 +73,4 @@ def page_not_found(error):
 #=======================================================================
 if __name__ == '__main__':
     app.run(debug=True)
-    # serve(app)
 #=======================================================================
