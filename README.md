@@ -12,9 +12,13 @@ SETTING UP
 	>> sudo easy_install pip
 
 	# For the latest version, use:
-	>> pip install --upgrade pip
+	>> sudo pip install --upgrade pip
 
-2) (opt) Start a virtual environment in this directory
+2) Make sure to have the latest version of virtualenv installed
+
+	>> sudo pip install virtualenv --upgrade
+
+2) Start a virtual environment in this directory
 
 	>> virtualenv env 
 	

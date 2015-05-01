@@ -9,6 +9,7 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 
 import os
 from flask import Flask, render_template, request, redirect, url_for
+from waitress import serve
 
 #=======================================================================
 #       Application Configuration
@@ -71,5 +72,6 @@ def page_not_found(error):
 #       RUN APPLICATION!
 #=======================================================================
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    serve(app)
 #=======================================================================
