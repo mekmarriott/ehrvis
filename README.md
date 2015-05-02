@@ -11,7 +11,9 @@ EHR Vis is a simple web application demo that visualizes electronic health recor
 Setting Up
 ==================================================
 
-1) Make sure you have latest version of pip installed. 
+1) Install the heroku tool belt here: https://toolbelt.heroku.com/
+
+2) Make sure you have latest version of pip installed. 
 
 	If you don't have pip, install with:
 	>> sudo easy_install pip
@@ -19,12 +21,12 @@ Setting Up
 	To upgrade to the latest version of pip, use:
 	>> sudo pip install --upgrade pip
 
-2) Make sure to have the latest version of virtualenv installed
+3) Make sure to have the latest version of virtualenv installed
 
 	>> sudo pip install virtualenv --upgrade
 	# Note: This is critical for the key dependencies of Flask
 
-3) Start a virtual environment in this directory
+4) Start a virtual environment in this directory
 
 	>> virtualenv env 
 	
@@ -36,20 +38,20 @@ Setting Up
 	In order to get out of virtual environment after you are done working, use the following command and the '(env)' by the prompt should go away!:
 	>> deactivate
 
-4) Install all dependencies - these are outlined in requirements.txt
+5) Install all dependencies - these are outlined in requirements.txt
 
 	>> pip install -r requirements.txt
 
 	You can check if this successfully installed all the dependencies by comparing requirements.txt with the output of:
 	>> pip freeze
 
-5) Running - go to localhost://5000 on your browser to see the application after running the following commands
+6) Running - go to localhost://5000 on your browser to see the application after running the following commands
 
 	>> python app.py
 	OR (if you want to use a real web server)
 	>> foreman start (run on web proc)
 
-6) Contributing - If you want to add python dependencies, make sure to add them to requirements.txt:
+7) Contributing - If you want to add python dependencies, make sure to add them to requirements.txt:
 
 	>> pip install [my python package here]
 	>> pip freeze > requirements.txt
@@ -66,7 +68,7 @@ Just to make organization easier, I'm going to list the files and what should go
 - **robots.txt:** Not important, don't worry about it (it's for search stuff)
 - **Makefile, Procfile:** Don't change please this is for the Heroku/other configuration
 - **.gitignore:** Has pretty much everything covered so you can ignore it
-- **requirements.txt:** Change when you install a new python dependency (as described in step 6 of Setting Up)
+- **requirements.txt:** Change when you install a new python dependency (as described in step 7 of Setting Up)
 - **app.py:** Where all the magic happens
 - **objects.py:** For python data models
 
