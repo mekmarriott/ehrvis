@@ -65,7 +65,7 @@ Just to make organization easier, I'm going to list the files and what should go
 - static/js: All the standard javascripts we want to include. You can add more standard javascripts to this file, but don't modify any of them
 - static/scripts: All of our javascripts. This includes *Medication.js* for the Medication javascript class, *Note.js* for the Note javascript class, and *dashboard.js* for any other external functions we might need
 - robots.txt: Not important, don't worry about it (it's for search stuff)
-- Makefile, Procfile, runtime.txt: Don't change please this is for the Heroku/other configuration
+- Makefile, Procfile: Don't change please this is for the Heroku/other configuration
 - .gitignore: Has pretty much everything covered so you can ignore it
 - requirements.txt: Change when you install a new python dependency (as described in step 5 of Setting Up)
 - app.py: Where all the magic happens
