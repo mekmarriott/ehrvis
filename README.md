@@ -11,7 +11,7 @@ EHR Vis is a simple web application demo that visualizes electronic health recor
 Setting Up
 ==================================================
 
-1. Make sure you have latest version of pip installed. 
+1) Make sure you have latest version of pip installed. 
 
 	If you don't have pip, install with:
 	>> sudo easy_install pip
@@ -19,12 +19,12 @@ Setting Up
 	To upgrade to the latest version of pip, use:
 	>> sudo pip install --upgrade pip
 
-2. Make sure to have the latest version of virtualenv installed
+2) Make sure to have the latest version of virtualenv installed
 
 	>> sudo pip install virtualenv --upgrade
 	# Note: This is critical for the key dependencies of Flask
 
-3. Start a virtual environment in this directory
+3) Start a virtual environment in this directory
 
 	>> virtualenv env 
 	
@@ -36,20 +36,20 @@ Setting Up
 	In order to get out of virtual environment after you are done working, use the following command and the '(env)' by the prompt should go away!:
 	>> deactivate
 
-4. Install all dependencies - these are outlined in requirements.txt
+4) Install all dependencies - these are outlined in requirements.txt
 
 	>> pip install -r requirements.txt
 
 	You can check if this successfully installed all the dependencies by comparing requirements.txt with the output of:
 	>> pip freeze
 
-5. Running - go to localhost://5000 on your browser to see the application after running the following commands
+5) Running - go to localhost://5000 on your browser to see the application after running the following commands
 
 	>> python app.py
 	OR (if you want to use a real web server)
 	>> foreman start (run on web proc)
 
-6. Contributing - If you want to add python dependencies, make sure to add them to requirements.txt:
+6) Contributing - If you want to add python dependencies, make sure to add them to requirements.txt:
 
 	>> pip install [my python package here]
 	>> pip freeze > requirements.txt
