@@ -11,12 +11,12 @@ EHR Vis is a simple web application demo that visualizes electronic health recor
 Setting Up
 ==================================================
 
-1) Make sure to have latest version of pip installed. 
+1) Make sure you have latest version of pip installed. 
 
-	IF NOT, install with:
+	If you don't have pip, install with:
 	>> sudo easy_install pip
 
-	For the latest version, use:
+	To upgrade to the latest version of pip, use:
 	>> sudo pip install --upgrade pip
 
 2) Make sure to have the latest version of virtualenv installed
@@ -46,9 +46,9 @@ Setting Up
 4) RUN
 
 	>> python app.py
-	OR
+	OR (if you want to use a real web server)
 	>> foreman start (run on web proc)
-	# Note: foreman is preferred to see how it will function on the gunicorn server
+	Then go to localhost://5000 on your browser to see the application
 
 5) Contributing - If you want to add python dependencies, make sure to add them to requirements.txt:
 
@@ -58,12 +58,23 @@ Setting Up
 ==================================================
 Specifications
 ==================================================
+Just to make organization easier, I'm going to list the files and what should go in these files:
+- static/css: All the css (styling) files for the web application. Anything with less and bootstrap, including *dashboard.css*, is a template css page that should not be modified
+- static/css/style.css: This is where you can add your styling changes. Since it is the last file included, it will take precedence over ther template css files mentioned above
+- static/fonts: Not really important, unless you find a font you absolutely must have in which case put it in this folder
+- static/js: All the standard javascripts we want to include. You can add more standard javascripts to this file, but don't modify any of them
+- static/scripts: All of our javascripts. This includes *Medication.js* for the Medication javascript class, *Note.js* for the Note javascript class, and *dashboard.js* for any other external functions we might need
+- robots.txt: Not important, don't worry about it (it's for search stuff)
+- Makefile, Procfile, runtime.txt: Don't change please this is for the Heroku/other configuration
+- .gitignore: Has pretty much everything covered so you can ignore it
+- requirements.txt: Change when you install a new python dependency (as described in step 5 of Setting Up)
+- app.py: Where all the magic happens
+- objects.py: For python data models
 
 ==================================================
 Dependencies
 ==================================================
 EHR Vis is built on [Flask] and HTML5.
-
 Other dependencies include:
 * [Twitter Bootstrap] - great UI boilerplate for modern web apps
 * [jQuery] - duh
@@ -72,13 +83,16 @@ Other dependencies include:
 ==================================================
 To-Dos
 ==================================================
-- Too many to list
+- Get API calls working
+- Make data objects
+- Get vis.js, flot.js, etc. functioning
+- Make real visuals
+- etc.
 
 ==================================================
 License
 ==================================================
 MIT
-
 
 [Twitter Bootstrap]:http://twitter.github.com/bootstrap/
 [jQuery]:http://jquery.com
