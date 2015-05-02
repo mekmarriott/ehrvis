@@ -1,12 +1,11 @@
 ==================================================
->> EHR VISUALIZATION PROJECT >>
+>> EHR VISUALIZATION PROJECT 
 ==================================================
 
 ==================================================
 Description
 ==================================================
 EHR Vis is a simple web application demo that visualizes electronic health record data in an intuitive way. It utilizes FHIR REST frameworks and HL7 models to integrate with any FHIR server (demo uses EPIC sandbox). See the application live at https://ehrvis.herokuapp.com/
-
 ==================================================
 Setting Up
 ==================================================
