@@ -59,17 +59,17 @@ Setting Up
 Specifications
 ==================================================
 Just to make organization easier, I'm going to list the files and what should go in these files:
-- static/css: All the css (styling) files for the web application. Anything with less and bootstrap, including *dashboard.css*, is a template css page that should not be modified
-- static/css/style.css: This is where you can add your styling changes. Since it is the last file included, it will take precedence over ther template css files mentioned above
-- static/fonts: Not really important, unless you find a font you absolutely must have in which case put it in this folder
-- static/js: All the standard javascripts we want to include. You can add more standard javascripts to this file, but don't modify any of them
-- static/scripts: All of our javascripts. This includes *Medication.js* for the Medication javascript class, *Note.js* for the Note javascript class, and *dashboard.js* for any other external functions we might need
-- robots.txt: Not important, don't worry about it (it's for search stuff)
-- Makefile, Procfile: Don't change please this is for the Heroku/other configuration
-- .gitignore: Has pretty much everything covered so you can ignore it
-- requirements.txt: Change when you install a new python dependency (as described in step 5 of Setting Up)
-- app.py: Where all the magic happens
-- objects.py: For python data models
+- **static/css:** All the css (styling) files for the web application. Add any other template pages you want but do not modify any page except *style.css*
+- **static/css/style.css:** This is where you can add your styling changes. Since it is the last file included, it will take precedence over ther template css files mentioned above
+- **static/fonts:** Not really important, unless you find a font you absolutely must have in which case put it in this folder
+- **static/js:** All the standard javascripts we want to include. You can add more standard javascripts to this file, but don't modify any of them
+- **static/scripts:** All of our javascripts. This includes *Medication.js* for the Medication javascript class, *Note.js* for the Note javascript class, and *dashboard.js* for any other external functions we might need
+- **robots.txt:** Not important, don't worry about it (it's for search stuff)
+- **Makefile, Procfile:** Don't change please this is for the Heroku/other configuration
+- **.gitignore:** Has pretty much everything covered so you can ignore it
+- **requirements.txt:** Change when you install a new python dependency (as described in step 5 of Setting Up)
+- **app.py:** Where all the magic happens
+- **objects.py:** For python data models
 
 ==================================================
 Dependencies
