@@ -1,0 +1,44 @@
+{
+  "resourceType": "Bundle",
+  "title": "Search results for AllergyIntolerance",
+  "id": "https://open-ic.epic.com/FHIR-2015/api/FHIR/AllergyIntolerance?subject=RVBUOyAgICAgWjUxNDY7Ozs7dGVybWluYXRl",
+  "updated": "2015-05-07T10:54:01",
+  "entry": [
+    {
+      "title": "Entry for AllergyIntolerance TFBMOzIzNzY3Ozs7O3Rlcm1pbmF0ZQ",
+      "id": "https://open-ic.epic.com/FHIR-2015/api/FHIR/AllergyIntolerance/TFBMOzIzNzY3Ozs7O3Rlcm1pbmF0ZQ",
+      "updated": "2015-05-07T10:54:01",
+      "published": "2015-05-07T10:54:01",
+      "content": {
+        "resourceType": "AllergyIntolerance",
+        "recordedDate": "2013-10-31T00:00:00",
+        "status": "confirmed",
+        "sensitivityType": "unknown",
+        "identifier": [
+          {
+            "value": "26",
+            "use": "usual"
+          }
+        ],
+        "subject": {
+          "reference": "https://open-ic.epic.com/FHIR-2015/api/FHIR/Patient/RVBUOyAgICAgWjUxNDY7Ozs7dGVybWluYXRl",
+          "display": "CARVER,STENTON"
+        },
+        "substance": {
+          "reference": "https://open-ic.epic.com/FHIR-2015/api/FHIR/substance/RUxHOzI1Ozs7O3Rlcm1pbmF0ZQ",
+          "display": "PENICILLINS"
+        },
+        "reaction": [
+          {
+            "reference": "/AdverseReaction/TFBMOzIzNzY3OzszMDA4OzI7dGVybWluYXRl",
+            "display": "Hives"
+          },
+          {
+            "reference": "/AdverseReaction/TFBMOzIzNzY3OzszMDA4OzExO3Rlcm1pbmF0ZQ",
+            "display": "Swelling"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "resourceType": "Bundle",
+  "title": "Search results for Observation",
+  "id": "https://open-ic.epic.com/FHIR-2015/api/FHIR/Observation?subject=RVBUOyAgICAgWjUxNDY7Ozs7dGVybWluYXRl&name=8310-5",
+  "updated": "2015-05-07T10:55:34",
+  "totalResults": 3,
+  "entry": [
+    {
+      "title": "Entry for Observation RlNEOzE0NzY2Ozs7MTt0ZXJtaW5hdGU",
+      "id": "https://open-ic.epic.com/FHIR-2015/api/FHIR/Observation/RlNEOzE0NzY2Ozs7MTt0ZXJtaW5hdGU",
+      "updated": "2015-05-07T10:55:34",
+      "published": "2015-05-07T10:55:34",
+      "content": {
+        "resourceType": "Observation",
+        "appliesDateTime": "2013-11-15T12:43:00",
+        "status": "final",
+        "reliability": "ok",
+        "name": {
+          "text": "Temp",
+          "coding": [
+            {
+              "system": "http://www.loinc.org",
+              "code": "8310-5",
+              "display": "Temp",
+              "primary": false
+            }
+          ]
+        },
+        "subject": {
+          "reference": "https://open-ic.epic.com/FHIR-2015/api/FHIR/Patient/RVBUOyAgICAgWjUxNDY7Ozs7dGVybWluYXRl",
+          "display": "CARVER,STENTON"
+        },
+        "performer": {
+          "reference": "https://open-ic.epic.com/FHIR-2015/api/FHIR/Practitioner/U0VSOyAgNDAwMDAwOzs7O3Rlcm1pbmF0ZQ",
+          "display": "Nurse Family"
+        },
+        "valueQuantity": {
+          "value": "98.6",
+          "units": "Fahrenheit",
+          "code": "Fahrenheit"
+        }
+      }
+    },
+    {
+      "title": "Entry for Observation RlNEOzE0NzY3Ozs7Mzt0ZXJtaW5hdGU",
+      "id": "https://open-ic.epic.com/FHIR-2015/api/FHIR/Observation/RlNEOzE0NzY3Ozs7Mzt0ZXJtaW5hdGU",
+      "updated": "2015-05-07T10:55:34",
+      "published": "2015-05-07T10:55:34",
+      "content": {
+        "resourceType": "Observation",
+        "appliesDateTime": "2013-11-05T12:27:00",
+        "status": "final",
+        "reliability": "ok",
+        "name": {
+          "text": "Temp",
+          "coding": [
+            {
+              "system": "http://www.loinc.org",
+              "code": "8310-5",
+              "display": "Temp",
+              "primary": false
+            }
+          ]
+        },
+        "subject": {
+          "reference": "https://open-ic.epic.com/FHIR-2015/api/FHIR/Patient/RVBUOyAgICAgWjUxNDY7Ozs7dGVybWluYXRl",
+          "display": "CARVER,STENTON"
+        },
+        "performer": {
+          "reference": "https://open-ic.epic.com/FHIR-2015/api/FHIR/Practitioner/U0VSOyAgNDAwMDAwOzs7O3Rlcm1pbmF0ZQ",
+          "display": "Nurse Family"
+        },
+        "valueQuantity": {
+          "value": "98.6",
+          "units": "Fahrenheit",
+          "code": "Fahrenheit"
+        }
+      }
+    },
+    {
+      "title": "Entry for Observation RlNEOzE0NzY4Ozs7NDt0ZXJtaW5hdGU",
+      "id": "https://open-ic.epic.com/FHIR-2015/api/FHIR/Observation/RlNEOzE0NzY4Ozs7NDt0ZXJtaW5hdGU",
+      "updated": "2015-05-07T10:55:34",
+      "published": "2015-05-07T10:55:34",
+      "content": {
+        "resourceType": "Observation",
+        "appliesDateTime": "2013-10-31T12:22:00",
+        "status": "final",
+        "reliability": "ok",
+        "name": {
+          "text": "Temp",
+          "coding": [
+            {
+              "system": "http://www.loinc.org",
+              "code": "8310-5",
+              "display": "Temp",
+              "primary": false
+            }
+          ]
+        },
+        "subject": {
+          "reference": "https://open-ic.epic.com/FHIR-2015/api/FHIR/Patient/RVBUOyAgICAgWjUxNDY7Ozs7dGVybWluYXRl",
+          "display": "CARVER,STENTON"
+        },
+        "performer": {
+          "reference": "https://open-ic.epic.com/FHIR-2015/api/FHIR/Practitioner/U0VSOyAgNDAwMDAwOzs7O3Rlcm1pbmF0ZQ",
+          "display": "Nurse Family"
+        },
+        "valueQuantity": {
+          "value": "98.6",
+          "units": "Fahrenheit",
+          "code": "Fahrenheit"
+        }
+      }
+    }
+  ]
+}

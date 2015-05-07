@@ -1,0 +1,96 @@
+{
+  "resourceType": "Patient",
+  "birthDate": "1956-10-30T00:00:00Z",
+  "deceasedBoolean": false,
+  "identifier": [
+    {
+      "label": "SSN",
+      "value": "714-19-2985",
+      "system": "urn:oid:2.16.840.1.113883.4.1",
+      "use": "usual"
+    },
+    {
+      "label": "Epic MRN",
+      "value": "E3289",
+      "system": "urn:oid:1.2.840.114350.1.13.327.1.7.5.737384.0",
+      "use": "usual"
+    },
+    {
+      "label": "MRN",
+      "value": "203039",
+      "system": "urn:oid:1.2.3.4",
+      "use": "usual"
+    }
+  ],
+  "name": [
+    {
+      "use": "usual",
+      "family": [
+        "Carver"
+      ],
+      "given": [
+        "Stenton"
+      ]
+    }
+  ],
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "608-555-3120",
+      "use": "home"
+    },
+    {
+      "system": "phone",
+      "value": "608-550-3120",
+      "use": "work"
+    }
+  ],
+  "gender": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/v3/AdministrativeGender",
+        "code": "M",
+        "display": "Male",
+        "primary": false
+      }
+    ]
+  },
+  "address": [
+    {
+      "use": "home",
+      "line": [
+        "3120 Maple Street"
+      ],
+      "city": "Madison",
+      "state": "WI",
+      "zip": "53711",
+      "country": "US"
+    }
+  ],
+  "maritalStatus": {
+    "coding": [
+      {
+        "code": "Married",
+        "primary": false
+      }
+    ]
+  },
+  "communication": [
+    {
+      "text": "English",
+      "coding": [
+        {
+          "system": "urn:oid:2.16.840.1.113883.6.99",
+          "code": "EN",
+          "primary": false
+        }
+      ]
+    }
+  ],
+  "careProvider": [
+    {
+      "reference": "https://open-ic.epic.com/FHIR-/api/FHIR/Practitioner/U0VSOyAgIEUxMDUxOzs7O3Rlcm1pbmF0ZQ",
+      "display": "INTERNAL MEDICINE, PHYSICIAN"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "resourceType": "FamilyHistory",
+  "subject": {
+    "reference": "https://open-ic.epic.com/FHIR-/api/FHIR/Patient/RVBUOyAgICAgWjUxNDY7Ozs7dGVybWluYXRl",
+    "display": "CARVER,STENTON"
+  },
+  "relation": [
+    {
+      "name": "Edna",
+      "deceasedBoolean": false,
+      "bornString": "1926-1927",
+      "relationship": {
+        "text": "Mother",
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/v3/RoleCode",
+            "code": "MTH",
+            "display": "Mother",
+            "primary": false
+          }
+        ]
+      },
+      "Condition": []
+    }
+  ]
+}

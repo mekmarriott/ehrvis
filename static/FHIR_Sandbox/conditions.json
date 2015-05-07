@@ -1,0 +1,35 @@
+{
+  "resourceType": "Condition",
+  "dateAsserted": "2013-10-31T00:00:00Z",
+  "onsetDate": "2000-10-30T00:00:00Z",
+  "status": "Confirmed",
+  "subject": {
+    "reference": "https://open-ic.epic.com/FHIR-/api/FHIR/Patient/RVBUOyAgICAgWjUxNDY7Ozs7dGVybWluYXRl",
+    "display": "CARVER,STENTON"
+  },
+  "asserter": {
+    "reference": "https://open-ic.epic.com/FHIR-/api/FHIR/Practitioner/U0VSOyBFNDAwMDAwOzs7O3Rlcm1pbmF0ZQ",
+    "display": "FAMILY MEDICINE, NURSE"
+  },
+  "category": {
+    "text": "Diagnosis",
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/vs/condition-category",
+        "code": "diagnosis",
+        "primary": false
+      }
+    ]
+  },
+  "code": {
+    "text": "Essential hypertension (disorder)",
+    "coding": [
+      {
+        "system": "http://snomed.info/sct",
+        "code": "59621000",
+        "display": "Essential hypertension (disorder)",
+        "primary": false
+      }
+    ]
+  }
+}
