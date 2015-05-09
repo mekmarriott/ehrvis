@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+<!-- styling specific to timeline here -->
+{% block css %}
+<link href="/static/css/vis.min.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+<!-- Html for timeline here -->
+{% block main %}
+<div class="container-fluid">
+	<p>
+	  Select item(s): <input type="text" id="selection" value="1, 2"><input type="button" id="select" value="Select"><br>
+	  <label><input type="checkbox" id="focus" checked> Focus on selection</label>
+	</p>
+	<div id="visualization">
+		<div class="menu">
+        <input type="button" id="zoomIn" value="Zoom in"/>
+        <input type="button" id="zoomOut" value="Zoom out"/>
+        <input type="button" id="moveLeft" value="Move left"/>
+        <input type="button" id="moveRight" value="Move right"/>
+    </div>
+	</div>
+</div>
+<!-- JavaScript HERE (at the bottom for fast page loading) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+<script src="/static/js/vis.js"></script>
+
+<!-- Custom javascript for timeline manipulation -->
+<script>
+	var groups = new vis.DataSet([
+		{id: 0, content: 'First', value: 1},
+		{id: 1, content: 'Third', value: 3},
+		{id: 2, content: 'Second', value: 2}
+	]);
+
+	// create a dataset with items
+	// note that months are zero-based in the JavaScript Date object, so month 3 is April
+	var items = new vis.DataSet([
+		{id: 'A', content: 'Period A', start: '2014-04-16', end: '2014-04-22', type: 'background', group: 1},
+	    {id: 'B', content: 'Period B', start: '2014-04-23', end: '2014-04-26', type: 'background', group: 2},
+	    {id: 'C', content: 'Period C', start: '2014-04-27', end: '2014-05-03', type: 'background'}, // no group
+	    {id: 'D', content: 'Period D', start: '2014-04-14', end: '2014-04-20', type: 'background', group: 'non-existing'},
+		{id: 0, group: 0, content: 'item 0', start: new Date(2014, 3, 17), end: new Date(2014, 3, 21)},
+		{id: 1, group: 0, content: 'item 1', start: new Date(2014, 3, 19), end: new Date(2014, 3, 20)},
+		{id: 2, group: 1, content: 'item 2', start: new Date(2014, 3, 16), end: new Date(2014, 3, 24)},
+		{id: 3, group: 1, content: 'item 3', start: new Date(2014, 3, 23), end: new Date(2014, 3, 24)},
+		{id: 4, group: 1, content: 'item 4', start: new Date(2014, 3, 22), end: new Date(2014, 3, 26)},
+		{id: 5, group: 2, content: 'item 5', start: new Date(2014, 3, 24), end: new Date(2014, 3, 27)}
+	]);
+
+	// create visualization
+	var container = document.getElementById('visualization');
+	var options = {
+		min: new Date(2014, 0, 1),                // lower limit of visible range
+	    max: new Date(2015, 0, 1),                // upper limit of visible range
+	    zoomMin: 1000 * 60 * 60 * 24,             // one day in milliseconds
+	    zoomMax: 1000 * 60 * 60 * 24 * 31 * 3,    // about three months in milliseconds
+	// option groupOrder can be a property name or a sort function
+	// the sort function must compare two groups and return a value
+	//     > 0 when a > b
+	//     < 0 when a < b
+	//       0 when a == b
+		groupOrder: function (a, b) {
+		  return a.value - b.value;
+		},
+		editable: false
+	};
+
+	var timeline = new vis.Timeline(container);
+	timeline.setOptions(options);
+	timeline.setGroups(groups);
+	timeline.setItems(items);
+
+	/**
+     * Move the timeline a given percentage to left or right
+     * @param {Number} percentage   For example 0.1 (left) or -0.1 (right)
+     */
+    function move (percentage) {
+        var range = timeline.getWindow();
+        var interval = range.end - range.start;
+
+        timeline.setWindow({
+            start: range.start.valueOf() - interval * percentage,
+            end:   range.end.valueOf()   - interval * percentage
+        });
+    }
+
+    /**
+     * Zoom the timeline a given percentage in or out
+     * @param {Number} percentage   For example 0.1 (zoom out) or -0.1 (zoom in)
+     */
+    function zoom (percentage) {
+        var range = timeline.getWindow();
+        var interval = range.end - range.start;
+
+        timeline.setWindow({
+            start: range.start.valueOf() - interval * percentage,
+            end:   range.end.valueOf()   + interval * percentage
+        });
+    }
+
+    // attach events to the navigation buttons
+    document.getElementById('zoomIn').onclick    = function () { zoom(-0.2); };
+    document.getElementById('zoomOut').onclick   = function () { zoom( 0.2); };
+    document.getElementById('moveLeft').onclick  = function () { move( 0.2); };
+    document.getElementById('moveRight').onclick = function () { move(-0.2); };
+
+    /**
+     *Select + move window dynamically to view selections
+    */
+    var selection = document.getElementById('selection');
+	var select = document.getElementById('select');
+	var focus = document.getElementById('focus');
+
+	select.onclick = function () {
+		var ids = selection.value.split(',').map(function (value) {
+		  return value.trim();
+		});
+		timeline.setSelection(ids, {focus: focus.checked});
+	};
+</script>
+
+{% endblock %}
