@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 # Need to parse query output to store information of interest
 
+from flask import Flask, request
+
 class MedicationEvent():
     '''This class ...Type of information represented here is a point, not a block.'''
 
-    def __init__(self, date, medName, practitioner):
+    def __init__(self, queryResult):
+        self.name = request.args.get('queryResult[subobj][foo]',0,type=int) #This is not correct yet
         pass
 
 class MedicationTrack():
