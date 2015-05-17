@@ -5,18 +5,27 @@ from flask import Flask, request
 import json
 from pprint import pprint
 
-class MedicationEvent():
-    '''This class ...Type of information represented here is a point, not a block.'''
+class MedicationEntry():
+    '''This class ...'''
 
     def __init__(self, data):
-        # This gives the display name of the medication: print data["content"]["medication"]["display"]
-        # Date written: print data["content"]["dateWritten"]
-        # Status: print data["content"]["status"]
-        # Prescriber (right now it is a URL. need to deal with thati): print data["content"]["prescriber"]["reference"]
-        # Dose: print data["content"]["prescriber"]["reference"] 
-        # Duration:
-        # Reason: 
-        # Class: 
+        # This gives the display name of the medication:
+        self.name =  data["content"]["medication"]["display"]
+        # Date written:
+        self.start = data["content"]["dateWritten"]
+        # Status:
+        self.status = data["content"]["status"]
+        # Prescriber (right now it is a URL. need to deal with that): 
+        self.prescriber = data["content"]["prescriber"]["reference"]
+        # Dose: Another way to get this could be parsing the name field. Talk to group about this option
+        self.dose = data["content"]["dosageInstruction"][0]["doseQuantity"]["value"] 
+        # AdministrationMethod: 
+        self.admMethod = data["content"]["dosageInstruction"][0]["route"]["text"]
+        # End Date: 
+        self.end = data["content"]["dosageInstruction"][0]["timingSchedule"]["repeat"]["end"]
+        # Duration: 
+        # Reason: I haven't figured out how to get this yet
+        # Class: I haven't figured out how to get this yet
 
 #class MedicationTrack():
 #    '''This class represents a specific medication that a patient is taking over time. This encompasses MedicationEvents such as changing the dose or 
@@ -32,16 +41,9 @@ with open('static/FHIR_Sandbox/medications.json') as data_file:
     #need to split the query results into individual entries
     entryList = data["entry"]
     for entry in entryList:
-        drug = MedicationEvent(entry)
-        
+        drug = MedicationEntry(entry)
+        print drug.name 
         print "-------------------------------------------------------------------------------------------"
-        #x=x.encode("ascii")
 
-    #x = request.args.get('data[medication][display]',"",type=string) 
-    #x = data["display"]
-    #
-    #x = data["entry"][0]["title"]
         
-    #drug = MedicationEvent(data)
-    #print drug.name();
     
