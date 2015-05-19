@@ -9,23 +9,38 @@ class MedicationEntry():
     '''This class ...'''
 
     def __init__(self, data):
-        # This gives the display name of the medication:
-        self.name =  data["content"]["medication"]["display"]
-        # Date written:
-        self.start = data["content"]["dateWritten"]
-        # Status:
-        self.status = data["content"]["status"]
-        # Prescriber (right now it is a URL. need to deal with that): 
-        self.prescriber = data["content"]["prescriber"]["reference"]
-        # Dose: Another way to get this could be parsing the name field. Talk to group about this option
-        self.dose = data["content"]["dosageInstruction"][0]["doseQuantity"]["value"] 
-        # AdministrationMethod: 
-        self.admMethod = data["content"]["dosageInstruction"][0]["route"]["text"]
-        # End Date: 
-        self.end = data["content"]["dosageInstruction"][0]["timingSchedule"]["repeat"]["end"]
-        # Duration: 
-        # Reason: I haven't figured out how to get this yet
-        # Class: I haven't figured out how to get this yet
+        try:
+            # This gives the display name of the medication:
+            self.name =  data["content"]["medication"]["display"]
+            # Date written:
+            self.start = data["content"]["dateWritten"]
+            # Status:
+            self.status = data["content"]["status"]
+            # Prescriber (right now it is a URL. need to deal with that): 
+            self.prescriber = data["content"]["prescriber"]["reference"]
+            # Dose: Another way to get this could be parsing the name field. Talk to group about this option
+            self.dose = data["content"]["dosageInstruction"][0]["doseQuantity"]["value"] 
+            # AdministrationMethod: 
+            self.admMethod = data["content"]["dosageInstruction"][0]["route"]["text"]
+            # End Date: 
+            self.end = data["content"]["dosageInstruction"][0]["timingSchedule"]["repeat"]["end"]
+            # Duration: 
+            # Reason: I haven't figured out how to get this yet
+            # Class: I haven't figured out how to get this yet
+        except: 
+            print "Malformed data for object initialization"
+    '''Function: str 
+        Prints out the string representation of the drug (for debugging/information purposes)'''
+    def __str__(self):
+        result = ""
+        result += "Name: " + self.name + "\n"
+        result += "Start Date:" + self.start + "\n"
+        result += "Status: " + self.status + "\n"
+        result += "Prescriber: " + self.prescriber + "\n"
+        result += "Dose: " + self.dose + "\n"
+        result += "Admin Method: " + self.admMethod + "\n"
+        result += "End Date: " + self.end
+        return result
 
 #class MedicationTrack():
 #    '''This class represents a specific medication that a patient is taking over time. This encompasses MedicationEvents such as changing the dose or 
@@ -42,7 +57,7 @@ with open('static/FHIR_Sandbox/medications.json') as data_file:
     entryList = data["entry"]
     for entry in entryList:
         drug = MedicationEntry(entry)
-        print drug.name 
+        print str(drug)
         print "-------------------------------------------------------------------------------------------"
 
         
