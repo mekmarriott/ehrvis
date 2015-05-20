@@ -1,0 +1,1418 @@
+// mimic_notes.json
+
+
+// 36, 79, 846
+
+// myobj  = 
+// {
+// service: foo
+// preview: 
+// fulltext: 
+// visObject: 
+// 	{
+// 	id:-
+// 	start: 'yyyy-mm-dd'
+// 	group: Enum
+// 	}
+// }
+
+// groups: 
+// 1 - Note
+// 2 - Consult
+// 3 - Radiology Report	
+// 4 - Nursing Note
+
+
+notes = {
+		{
+		    visObject:{
+		    	id:0,
+		    	start: '2014-04-20 12:39:00',
+		    	group: 3,
+		    },
+		    type: 'ultrasound',
+			preview: 'IMPRESSION:  Persistent areas of intraluminal thrombus in the left IJ, and within the superficial veins of the left and right cephalic veins, and new thrombus in the superficial left basilic vein.',
+			fulltext: 'Reason: evaluate for DVTs                                           
+		     Admitting Diagnosis: CHEST PAIN/SHORTNESS OF BREATH
+		     ______________________________________________________________________________
+		     UNDERLYING MEDICAL CONDITION:
+		       69 year old man with s/p cabg new PE                                           
+		       
+		     REASON FOR THIS EXAMINATION:
+		      evaluate for DVTs                                                               
+		     ______________________________________________________________________________
+		                                     FINAL REPORT
+		     INDICATION:  A 69-year-old man status post CABG with new PE.  Evaluate for
+		     DVT.
+		     
+		     COMPARISON:  Study from 2014-04-08.
+		     
+		     BILATERAL UPPER EXTREMITY VENOUS ULTRASOUND:  There is limited evaluation of
+		     the right internal jugular vein.  Grayscale and color Doppler sonography was
+		     performed of the right and left cephalic, basilic, brachial, axillary and
+		     subclavian veins, and of the left IJ vein.  The right IJ was not visualized
+		     secondary to overlying bandages.
+		     
+		     Again seen is distention of the left IJ, left cephalic, and right cephalic
+		     with clot, without intraluminal flow.  There is also new occlusion of the left
+		     superficial basilic vein.  The remainder of the venous structures demonstrates
+		     normal flow, compressibility, and augmentation with normal waveforms.
+		     
+		     IMPRESSION:  Persistent areas of intraluminal thrombus in the left IJ, and
+		     within the superficial veins of the left and right cephalic veins, and new
+		     thrombus in the superficial left basilic vein.'
+		},{
+			visObject:{
+				id:0,
+				start: 2014-04-20 09:45:00,
+				group: 3,
+			},
+			hospitalization: 0,
+			type: 'ultrasound'
+			preview: 'IMPRESSION:  Successful placement of 35 cm single lumen PICC via the right basilic vein with its tip in the distal SVC; line ready for use.',
+			fulltext: 'TYPE: "RADIOLOGY_REPORT"
+		     DATE: 2014-4-20 9:45 AM
+		     "PICC LINE PLACMENT SCH                                          Clip # Clip Number (Radiology) 9752
+		     Reason: PICC for IV antibiotics                                     
+		     Admitting Diagnosis: CHEST PAIN/SHORTNESS OF BREATH
+		     ********************************* CPT Codes ********************************
+		     * 36569 PICC W/O State/Zipcode 85 FLUORO GUID PLCT/REPLCT/REMOVE*
+		     * 76937 US GUID FOR VAS. ACCESS                                            *
+		     ****************************************************************************
+		     ______________________________________________________________________________
+		     UNDERLYING MEDICAL CONDITION:
+		       69 year old man s/p sternal rewire                                             
+		       
+		     REASON FOR THIS EXAMINATION:
+		      PICC for IV antibiotics                                                         
+		     ______________________________________________________________________________
+		                                     FINAL REPORT
+		     INDICATION:  69-year-old status post sternal rewiring requiring IV
+		     antibiotics.
+		     
+		     RADIOLOGISTS:  The procedure was performed by Dr. Last Name (STitle) 7276, with Dr. Last Name (STitle) 424,
+		     the attending physician Name Initial (PRE) 6168.
+		     
+		     PROCEDURE AND FINDINGS:  Patient was placed supine on the angiographic table.
+		     Due to prior ultrasounds demonstrating extensive thrombus within the left
+		     upper extremity, the right upper extremity was chosen for the PICC line.
+		     Ultrasound demonstrated an appropriate right basilic vein which was punctured
+		     with a 21-gauge micropuncture needle, through which a 0.018 guide wire was
+		     advanced into the SVC.  A single lumen PICC trimmed to 35 cm and was advanced
+		     under fluoroscopic guidance with its tip placed in the distal SVC.  Final
+		     fluoroscopic image was taken to confirm tip placement.  Hard copy ultrasound
+		     images were printed before and after venous puncture to confirm patency. There
+		     are no immediate post-procedure complications."
+		     
+		     IMPRESSION:  Successful placement of 35 cm single lumen PICC via the right
+		     basilic vein with its tip in the distal SVC; line ready for use.'
+		},{
+		    visObject:{
+		    	id:0,
+		    	start: '2014-04-20 11:57:00',
+		    	group: 3,
+		    },
+			hospitalization: 0,
+		    type: 'plain film x ray',
+			preview: 'IMPRESSION:  Stable postoperative chest findings since 2014-4-18.',
+			fulltext:' DATE: 2014-4-20 11:57 AM
+		     CHEST (PA & LAT)                                                Clip # Clip Number (Radiology) 9753
+		     Reason: evaluate effusions                                          
+		     Admitting Diagnosis: CHEST PAIN/SHORTNESS OF BREATH
+		     ______________________________________________________________________________
+		     UNDERLYING MEDICAL CONDITION:
+		         69 yoM s/p CABG last week now with chest pain at incision site and drainage, 
+		       no fevers. Also has gradual onset of SOB and fatigue.                          
+		            
+		     REASON FOR THIS EXAMINATION:
+		      evaluate effusions                                                              
+		     ______________________________________________________________________________
+		                                     FINAL REPORT
+		     TYPE OF EXAMINATION:  Chest PA and lateral.
+		     
+		     INDICATION:  Status post bypass surgery one week ago, now with chest pain at
+		     incision site and drainage.  No fevers.  Also has gradual onset of shortness
+		     of breath and fatigue.  Evaluate for effusions.
+		     
+		     FINDINGS:  Frontal view demonstrates status post anterior chest wall
+		     reconstruction with four bars of hardware in horizontal position.  Position of
+		     previously described chest tubes is unchanged including right jugular approach
+		     central venous line.  No pneumothorax is identified in the apical regions. 
+		     Since the last preceding study of 4-18, apparently a right-sided PICC line
+		     has been added, seen to terminate overlying the SVC some 3 cm above the level
+		     of the carina.  The mild blunting of the left lateral pleural sinus persists
+		     and the lateral view discloses also some blunting of the posterior pleural
+		     sinuses representing postoperative findings.
+		     
+		     Position of longitudinally directed multiple wire loops in the sternal area
+		     appears unchanged and the row of subcutaneous clips is identified in the
+		     anterior chest wall suture line, but no significant soft tissue changes can be
+		     identified.
+		     
+		     IMPRESSION:  Stable postoperative chest findings since 2014-4-18.'
+		},{
+		    visObject:{
+		    	id:0,
+		    	start: '2014-05-19 13:46:00',
+		    	group: 3,
+		    },
+		    hospitalization: 0,
+		    type: 'ct',
+			preview: 'IMPRESSION:
+		     
+		     1.  New large presternal fluid collection, with apparent communication with
+		     the retrosternal space....',
+			fulltext:'DATE: 2014-5-19 1:46 PM
+		     CT CHEST W/CONTRAST                                             Clip # Clip Number (Radiology) 9755
+		     Reason: s/p bilat. pectoralis flaps, sternal plating with new fluid 
+		      Contrast: OPTIRAY Amt: 
+		     ______________________________________________________________________________
+		     UNDERLYING MEDICAL CONDITION:
+		       69 yr old male with recent history of CABG presented with sternal debridement 
+		      /  unstable stenotomy.
+		     REASON FOR THIS EXAMINATION:
+		      s/p bilat. pectoralis flaps, sternal plating with new fluid collection          
+		     ______________________________________________________________________________
+		                                     FINAL REPORT
+		     INDICATION:  Recent CABG, sternal debridement and repair, now with new fluid
+		     collection.
+		     
+		     TECHNIQUE:  MDCT was used to obtain contiguous axial images through the chest
+		     after uneventful administration of 90 mL of Optiray IV contrast.  Standard and
+		     lung algorithm images as well as coronal reformats were obtained.  This study
+		     was compared with 2014-4-9.
+		     
+		     CHEST CT WITH IV CONTRAST:  Several mediastinal plates are seen; separation of
+		     the sternal halves is still seen, particularly in the inferior aspect.
+		     Additionally, a new large presternal fluid collection is present, greatest in
+		     the space between the topmost and secondmost plates.  In the superior and the
+		     inferior aspect of the sternotomy, it appears to communicate freely with the
+		     retrosternal space (series 2, image 40), though the amount of retrosternal
+		     fluid is markedly diminished since the 2014-4-9 study.  There is no
+		     significant stranding or gas within the fluid collection. The fluid collection
+		     is somewhat broad- based, measuring approximately 3.0 cm A-P, 13.0 cm
+		     transverse.
+		     
+		     Small lymph nodes are noted in the mediastinum, the largest measuring 6 mm in
+		     the precarinal region (2:21).  The pericardium is slightly thickened and
+		     irregular, which is compatible with history of recent pericardial
+		     intervention; the focus of pericardial calcification is unchanged.  The heart
+		     is otherwise normal in size, with extensive coronary vascular calcifications.
+		     
+		     Lungs are notable for mild centrilobular emphysema.  Additionally,
+		     interstitial reticular opacities, most pronounced in the lung periphery and at
+		     the bases, are slightly worse than the last examination.  A 4-mm lung nodule
+		     is seen in the right upper lobe (3:28).  Bilateral pleural effusions are again
+		     seen; the right is slightly larger than the previous, the left slightly
+		     smaller; both remains small.  There is associated compressive atelectasis.
+		     
+		     This study is not designed to examine the abdomen, however, multiple low-
+		     density lesions in the liver are similar to the previous study; several of
+		     these are too small to fully characterize; the largest is in the left lobe
+		     measuring 23 mm, with fluid attenuation characteristics.  A left kidney lesion
+		     measuring 10 mm represents a cyst.  The kidneys are incompletely imaged, but
+		     fullness of the right collecting system is again seen.  No mass lesions are
+		     identified in the imaged portion of the spleen or adrenals. There is a small
+		     layering radiopaque gallstone.
+
+		     BONE WINDOWS:  Aside from the sternal anatomy described above, no suspicious
+		     sclerotic or lytic lesions are identified.  Large lipoma of the left
+		     infraspinatus muscle is noted.
+		     
+		     IMPRESSION:
+		     
+		     1.  New large presternal fluid collection, with apparent communication with
+		     the retrosternal space, but amount of retrosternal fluid is small and has
+		     decreased since prior CT. Findings could represent postoperative seroma, but
+		     infection should be considered in the appropriate clinical setting. No
+		     discrete abscess identified.
+		     
+		     2.  Bilateral pleural effusions, small, right greater than left.
+		     
+		     3.  Worsening mild peripheral and basilar reticular and ground glass
+		     opacities. Given their short interval worsening, a drug reaction should be
+		     considered. Nonspecific interstitial pneumonitis would be less likely to have
+		     such a rapid progression.
+		     
+		     4.  Layering radiopaque gallstones.
+		     
+		     5.  A right kidney cyst and liver cyst, unchanged.  Other numerous liver
+		     lesions are too small to characterize, but similar in appearance to previous
+		     study.
+		     
+		     6.  Fullness of the right renal collecting system is incompletely imaged;
+		     clinical correlation and/or imaging correlation recommended.
+		     
+		     7.  4-mm right lung nodule, for which followup is recommended in one year to
+		     document stability.'
+		},{
+			visObject:{
+		    	id:0,
+		    	start: '2014-05-24 12:32:00',
+		    	group: 3,
+		    },
+		    hospitalization: 0,
+		    type: 'ultrasound',
+			preview: ' IMPRESSION:  Persistent left internal jugular vein thrombus with partial recanalization.',
+			fulltext:'DATE: 2014-5-24 12:32 PM
+		     VENOUS DUP EXT UNI (MAP/DVT) LEFT                               Clip # Clip Number (Radiology) 9756
+		     Reason: HX OF UPPER EXTREMITY DVT
+		     ______________________________________________________________________________
+		                                     FINAL REPORT
+		     VENOUS ULTRASOUND
+		     
+		     INDICATION:  History of upper extremity DVT, now with left neck swelling.
+		     
+		     FINDINGS:  Comparison is made to the examination from 2014-4-20.  There is
+		     persistent thrombus in the left internal jugular vein, which is not
+		     compressible.  Some flow is demonstrated, suggesting partial recanalization. 
+		     No thrombus is seen in the left axillary, subclavian, brachial, cephalic, and
+		     basilic veins.
+		     
+		     IMPRESSION:  Persistent left internal jugular vein thrombus with partial
+		     recanalization.'
+
+		},{
+			visObject:{
+		    	id:0,
+		    	start: '2014-06-14 12:10:00',
+		    	group: 3,
+		    },
+		    hospitalization: 0,
+		    type: 'plain film x ray',
+			preview: 'Four metallic plates and screws, each with associated clip, are seen overlying the sternum, in nominal alignment...',
+			fulltext:'     DATE: 2014-6-14 12:10 PM
+		     STERNUM                                                         Clip # Clip Number (Radiology) 9757
+		     Reason: ?plate separation following sternal replating after median s
+		     ______________________________________________________________________________
+		     UNDERLYING MEDICAL CONDITION:
+		      69 year old man with sternal click after sternal repair
+		     REASON FOR THIS EXAMINATION:
+		      ?plate separation following sternal replating after median sternotomy
+		     ______________________________________________________________________________
+		                                     FINAL REPORT
+		     HISTORY:  Sternal _____ after sternal repair, question plate separation.
+		     
+		     STERNUM THREE VIEWS.
+		     
+		     Four metallic plates and screws, each with associated clip,  are seen
+		     overlying the sternum, in nominal alignment. No hardware loosening or evidence
+		     of plate disruption is detected.
+		     
+		     Additional mediastinal clips are present. Cerclage wires, which appear to be
+		     interrupted, are present.'		
+		},{
+			visObject:{
+		    	id:0,
+		    	start: '2014-04-07 11:02:00',
+		    	group: 1,
+		    },
+		    hospitalization: 0,
+		    type: 'discharge',
+		    service: 'cardiothoracic',
+			preview: 'A/P: this is a 69 yo M w/ h/o HTN and significant tobacco use, who presents for cardiac catheterization after abnormal perfusion scan, which revealed 3VD, prompting CABG. 
+
+			Discharge Disposition: Home with Service',
+			fulltext:'Service: CARDIOTHORACIC
+				Allergies: 
+				Patient recorded as having No Known Allergies to Drugs
+				 
+				Attending:[**First Name3 (LF) 18**] 
+				Chief Complaint:
+				positive stress test ; chest pain during hypertension to 220/110
+
+				 
+				Major Surgical or Invasive Procedure:
+				Cardiac Catheterization [**3195-3-27**]
+				CABGx5 (LIMA-LAD,SVG-Diag,SVG-OM1,SVG-OM2,SVG-PDA)[**3-31**]
+
+				 
+				History of Present Illness:
+				Mr. [**Known patient lastname 1652**] is a 69 yo M w/ h/o HTN and significant tobacco 
+				use, who had a severe headache on [**3195-3-16**] without associated 
+				symptoms (including weakness, visual changes), and was found to 
+				be hypertensive to 220/110.  He was transferred via ambulence to 
+				[**Hospital 51**] Hospital and in route complained of right sided chest 
+				discomfort, associated with dyspnea and diaphoreiss. By report 
+				he was administered SL NTG and nitro paste with improvement in 
+				BP and chest discomfort.  He subsequently underwen ETT with 
+				pMIBI which demonstrated a perfusion deficit at rest and was 
+				referred to [**Hospital1 83**] for cardiac catheterization and renal artery 
+				angiogram. 
+				.
+				Mr. [**Known patient lastname 1652**] also reports decreased exercise tolerance over the 
+				past several months - previously he would be able to climb 
+				several flights of stairs without difficulty; he currently gets 
+				extremely dypsneic after 10 steps (<1 flight); no associated CP, 
+				N, or diahphoresis.  He denies orthopnea and PND.
+				.
+				He denies history of angina or CAD.
+				.
+				Mr. [**Known patient lastname 1652**] [**Last Name (Titles) 22**] cardiac catheterization today and was 
+				found to have 3VD, and a CABG is now planned.  He took a dose of 
+				plavix this morning.
+				.
+				ROS: denies recent illness, fevers, hematuria, melena, bloody 
+				stools, abdominal pain, LE swelling.  Reports 8lb intentional 
+				weight loss (healthier diet)
+				Referred for CABG .
+				 
+				Past Medical History:
+				HTN
+				GERD
+				Bladder ca s/p excision x 2 and the BCG treatment
+				Syncopal episodes x 3 (episodes accompanied by diaphoresis and
+				nausea) with the last episode many years ago
+				H/O pneumonia x 3
+				Depression
+				Chronic back problems including disc herniation, s/p disc 
+				surgery
+				Anxiety
+				COPD
+				BPH
+				 
+				Social History:
+				Married, lives with his wife, 5 children.  He is a retired truck
+				driver and currently helps out in his son���s restaurant.  
+				+tobacco 1ppd x 55 years.  Occasional EtOH. No illicits
+				 
+				Family History:
+				Noncontributory (h/o cancer)
+				 
+				Physical Exam:
+				138/61  51  16  100% RA  5'[**98**]"" Wt:220 lbs
+				Gen: NAD, smiling
+				HEENT: aniecteric, PERRL, EOMI, MMM, no JVD, no bruits
+				CV: regular rhythm, ~60, no M/R/G
+				Chest: CTAB
+				Abd: Soft, NT/ND
+				R Groin: dressing C/D/I, no bruit or thrill
+				Ext: 2+ DP pulses bilaterally
+				Neuro: A&Ox3, fluent speech, normal ambulation, MAE
+				 
+				Pertinent Results:
+				[**3195-3-27**] 10:33AM BLOOD WBC-6.3 RBC-4.50* Hgb-12.6* Hct-35.9* 
+				MCV-80* MCH-27.9 MCHC-35.0 RDW-15.2 Plt Ct-193
+				[**3195-3-27**] 10:33AM BLOOD Glucose-98 UreaN-21* Creat-1.0 Na-137 
+				K-4.1 Cl-107 HCO3-24 AnGap-10
+				[**3195-3-27**] 10:33AM BLOOD ALT-8 AST-12 AlkPhos-63 TotBili-0.5
+				[**3195-3-27**] 10:33AM BLOOD %HbA1c-5.1
+				.
+				Recent testing:
+				[**3195-3-21**]: Echo showed a normal LV size and function.  EF of 
+				60-65%.  The valves were all normal with trace TR.  Pulmonary 
+				systolic pressure was estimated to be 30-35%. [**3195-3-17**]: Nuclear 
+				stress test where the patient exercised for 6 minutes 57 seconds 
+				on [**Initials (NamePattern4) **] [**Last Name (NamePattern4) 1078**] protocol stopping due to shortness of breath and leg 
+				pain.  He achieved 68% of his predicted target heart rate.  He 
+				did not develop any arrhythmias or chest pain.  The nuclear 
+				images demonstrated a normal sized left ventricle. There was a 
+				moderate sized reversible perfusion abnormality involving the 
+				anteroapical and septal portion left ventricle. There was also a 
+				question of a small reversible abnormality involving the 
+				inferolateral portion left ventricle.  The left ventricular wall 
+				motion was normal.  The LVEF was 62%.
+				.
+				[**3195-3-27**] Cardiac Catheterization
+				COMMENTS:      
+				1.  Coronary angiography of this right dominant system revealed 
+				severe three vessel coronary artery disease.  The left main 
+				coronary artery had no angiographically apparent flow limiting 
+				stenoses.  The LAD was ectatic proximally and occluded in the 
+				mid segment after a small diagonal.  The LCX had a 90% stenosis 
+				of the OM1 proximally and a 50% followed by a 70% stenosis in 
+				the proximal and mid segment of the OM2. The RCA had a 90% 
+				stenosis in the mid PDA. 
+				2.  Limited resting hemodynamics revealed mildly to moderately 
+				elevated left sided filling pressures (LVEDP was 18 mm Hg).  
+				Systemic arterial pressure was normal (aortic pressure was 
+				121/73 mm Hg).  There was no significant gradient across the 
+				aortic valve upon pullback of the catheter from the left 
+				ventricle to the ascending aorta. 
+				3.  Left ventriculography revealed a contrast calculated 
+				ejection 
+				fraction of 65%.  No mitral regurgitation was noted. 4.  
+				Bilateral selective renal angiography demonstrated widely patent 
+				renal arteries. 
+				FINAL DIAGNOSIS:     
+				1. Three vessel coronary artery disease. 
+				2. Normal left ventricular systolic function. 
+				3. Mildly to moderately elevated left sided filling pressures. 
+				4. No angiographically apparent renal artery stenosis. 
+				.
+				Pulmonary Function Tests:
+				[**3195-4-4**] 06:25AM BLOOD WBC-7.3 RBC-3.17* Hgb-9.1* Hct-26.3* 
+				MCV-83 MCH-28.7 MCHC-34.6 RDW-15.5 Plt Ct-201#
+				[**3195-4-4**] 06:25AM BLOOD Plt Ct-201#
+				[**3195-4-4**] 06:25AM BLOOD Glucose-101 UreaN-14 Creat-1.3* K-5.1
+
+				Cardiology Report ECHO Study Date of [**3195-3-31**]   
+				 
+				  
+				  
+				PATIENT/TEST INFORMATION: 
+				Indication: Chest pain. Coronary artery disease. Hypertension.  
+				Status: Inpatient 
+				Date/Time: [**3195-3-31**] at 10:41 
+				Test: TEE (Complete) 
+				Doppler: Full Doppler and color Doppler 
+				Contrast: None 
+				Tape Number: 2007AW2-: 
+				Test Location: Anesthesia West OR cardiac 
+				Technical Quality: Adequate 
+				 
+
+				 
+				 
+				REFERRING DOCTOR: DR. [**First Name8 (NamePattern2) **] [**Last Name (NamePattern1) **] 
+				  
+				MEASUREMENTS:  
+				Left Ventricle - Septal Wall Thickness: *1.5 cm (nl 0.6 - 1.1 cm) 
+				Left Ventricle - Ejection Fraction: 45% to 50% (nl >=55%) 
+				Aorta - Ascending: *3.7 cm (nl <= 3.4 cm) 
+				Aortic Valve - Peak Velocity: 1.4 m/sec (nl <= 2.0 m/sec) 
+				  
+				INTERPRETATION:  
+				      
+				Findings:  
+				  
+				LEFT ATRIUM: Normal LA size. No spontaneous echo contrast in the body of the LA. No spontaneous echo contrast or thrombus in the body of the [**Name Prefix (Prefixes) **] [**Last Name (Prefixes) **] LAA.  
+				  
+				RIGHT ATRIUM/INTERATRIAL SEPTUM: Normal RA size. A catheter or pacing wire is seen in the RA and extending into the RV. No ASD by 2D or color Doppler.  
+				  
+				LEFT VENTRICLE: Mild symmetric LVH with normal cavity size. Mild symmetric LVH. Normal LV cavity size. Mild regional LV systolic dysfunction. No LV mass/thrombus. Mildly depressed LVEF. Transmitral Doppler and TVI c/w normal LV diastolic function. No resting LVOT gradient.  
+				  
+				LV WALL MOTION: Regional LV wall motion abnormalities include: anterior apex - hypo;  
+				  
+				RIGHT VENTRICLE: Normal RV chamber size and free wall motion.  
+				  
+				AORTA: Normal aortic diameter at the sinus level. Mildly dilated ascending aorta. Normal aortic arch diameter. Simple atheroma in aortic arch. Normal descending aorta diameter. Simple atheroma in descending aorta.  
+
+				  
+				AORTIC VALVE: Three aortic valve leaflets. Mildly thickened aortic valve leaflets. No AS. Trace AR.  
+				  
+				MITRAL VALVE: Normal mitral valve leaflets with trivial MR. [**Last Name (Titles) 1653**] annular calcification. No MS. Physiologic MR (within normal limits).  
+				  
+				TRICUSPID VALVE: Normal tricuspid valve leaflets with trivial TR.  
+				  
+				PULMONIC VALVE/PULMONARY ARTERY: Normal pulmonic valve leaflets with physiologic PR.  
+				  
+				PERICARDIUM: Trivial/physiologic pericardial effusion.  
+				  
+				GENERAL COMMENTS: A TEE was performed in the location listed above. I certify I was present in compliance with HCFA regulations. No TEE related complications. The patient received antibiotic prophylaxis. The TEE probe was passed with assistance from the anesthesioology staff using a laryngoscope. The patient was under general anesthesia throughout the procedure.  
+				   
+				Conclusions:  
+				PRE-CPB: 
+				1.The left atrium is normal in size. No spontaneous echo contrast is seen in the body of the left atrium. No spontaneous echo contrast or thrombus is seen in the body of the left atrium or left atrial appendage. No atrial septal defect is seen by 2D or color Doppler.  
+				2. There is mild symmetric left ventricular hypertrophy with 
+				normal cavity size. There is mild symmetric left ventricular hypertrophy. The left ventricular cavity size is normal. There is mild regional left ventricular  systolic dysfunction with apical anterior hypokinesis.. No masses or thrombi are seen in the left ventricle. Overall left ventricular systolic function is  mildly depressed. Transmitral Doppler and tissue velocity imaging are consistent with normal LV diastolic function.  
+				3. Right ventricular chamber size and free wall motion are normal.  
+				4. The ascending aorta is mildly dilated at a maximum of 3.7. There are simple  atheroma in the aortic arch. There are simple atheroma in the descending  thoracic aorta.  
+				5. There are three aortic valve leaflets. The aortic valve leaflets are mildly thickened. There is no aortic valve stenosis. Trace aortic regurgitation is seen.  
+				6. The mitral valve appears structurally normal with trivial mitral regurgitation. Physiologic mitral regurgitation is seen (within normal  
+				limits).  
+				7. There is a trivial/physiologic pericardial effusion. POST-CPB: Patient is on phenylephrine infusion. Preserved biventricular  systolic function with improvement of the anteroapical hypokinetic segment. LVEF now 55%. Trace MR. [**Last Name (Titles) 1654**] is normal post decannulation.  
+				  
+				Electronically signed by [**First Name8 (NamePattern2) **] [**Last Name (NamePattern1) 1655**], MD on [**3195-3-31**] 15:02.  
+
+				READING PHYSICIAN:   
+				 
+				  
+				(07-06179G) 
+				   RADIOLOGY  Final Report
+
+				CHEST (PA & LAT)  [**3195-4-3**] 11:20 AM
+
+				CHEST (PA & LAT)
+
+				Reason: r/o ptx 
+
+				UNDERLYING MEDICAL CONDITION:
+				69 yoM s/p CABG and CT removal 
+				REASON FOR THIS EXAMINATION:
+				r/o ptx 
+				TWO VIEW CHEST OF [**3195-4-3**].
+
+				COMPARISON: [**3195-3-31**]
+
+				INDICATION: Chest tube removal.
+
+				Various lines and tubes have been removed since the prior radiograph, and a very small left apical pneumothorax has developed. Cardiac and mediastinal contours are within normal limits for postoperative status of the patient. Small pleural effusions and minor bibasilar atelectasis are noted. These findings are superimposed upon subtle likely more chronic peripheral and basilar interstitial lung disease.
+
+				On the lateral view, small air-fluid level is present in the retrosternal region likely representing an anterior hydropneumothorax, and additional air is present in the retrosternal region, an expected postoperative finding given the time interval since surgery.
+
+				IMPRESSION: Small left pneumothorax following tube removal. 
+				Bibasilar atelectasis and small pleural effusions.
+
+				DR. [**First Name11 (Name Pattern1) **] [**Initial (NamePattern1) **] [**Last Name (NamePattern4) 1656**]
+				Approved: MON [**3195-4-3**] 1:12 PM
+
+				 
+
+				Brief Hospital Course:
+				A/P: this is a 69 yo M w/ h/o HTN and significant tobacco use, 
+				who presents for cardiac catheterization after abnormal 
+				perfusion scan, which revealed 3VD, prompting CABG.  
+				.
+				#CAD:  
+				-medication regiment modified: continue ASA, BB, imdur; 
+				minoxidil discontinued and ACEI started. 
+				.
+				#HTN: well controlled on BB, imdur, and ACEI
+				.
+				#BPH: continue proscar
+				.
+				#Bladder spasm s/p surgery and BCG tx: continue detrol
+				.
+				#GERD: continue ranitidine
+				.
+				#Depression/Anxiety: continue celexa
+				.
+				#h/o syncope: by report worked up extensively at [**Hospital1 51**] w/o 
+				diagnosis
+				-carotid U/S normal
+				-no events on telemetry
+				.
+				#COPD: per patient, recent diagnosis based on CXR at [**Hospital1 51**] 
+				during last hospitalization, not on any active medications
+				-no wheeze, no respiratory distress, good O2 sat
+				-PFTs performed and carotid U/S showed no significant stenoses.
+
+				 Underwent cabg x5 with Dr. [**Last Name (STitle) **] on [**3-31**]. Transferred to the CSRU in stable condition on titrated phenylephrine and propofol drips.Extubated that evening and transferred to the floor on POD #1 to begin increasing his activity level. Chest tubes and pacing wires removed on POD #3.Nicotine patch continued. Made good progress and cleared for discharge to home with VNA on POD #4. Pt. is to make all follow-up appts. as per discharge instructions.
+				 
+				Medications on Admission:
+				Lasix  20 mg daily
+				Minoxidil 25 mg daily
+				Detrol 4 mg daily
+				Ranitidine 300 mg BID
+				Atenolol 25 mg BID
+				Pro-Chlor 20 mEq daily
+				Plavix 75 mg daily (pt started 2 weeks ago but stopped 4 days ago and will restart 4/20/070)
+				Celexa 40 mg daily
+				Endocet 5/325 mg prn
+				ASA 81 mg daily
+				Proscar 5 mg daily
+				Imdur 30 mg daily
+				NTG 0.4 mg sl
+				 
+				Discharge Medications:
+				1. Furosemide 20 mg Tablet Sig: One (1) Tablet PO Q12H (every 12 hours): 20mg BID x7days then 20mg QD x10 days.
+				Disp:*24 Tablet(s)* Refills:*0*
+				2. Potassium Chloride 10 mEq Capsule, Sustained Release Sig: Two (2) Capsule, Sustained Release PO Q12H (every 12 hours): 20 meq BID x 7 days then 20meq QD x 10 days. 
+				Disp:*48 Capsule, Sustained Release(s)* Refills:*0*
+				3. Docusate Sodium 100 mg Capsule Sig: One (1) Capsule PO BID (2 times a day). 
+				Disp:*60 Capsule(s)* Refills:*2*
+				4. Ranitidine HCl 150 mg Tablet Sig: One (1) Tablet PO BID (2 times a day).
+				Disp:*60 Tablet(s)* Refills:*2*
+				5. Aspirin 81 mg Tablet, Delayed Release (E.C.) Sig: One (1) Tablet, Delayed Release (E.C.) PO DAILY (Daily).
+				Disp:*30 Tablet, Delayed Release (E.C.)(s)* Refills:*2*
+				6. Oxycodone-Acetaminophen 5-325 mg Tablet Sig: 1-2 Tablets PO every 4-6 hours as needed for pain.
+				Disp:*50 Tablet(s)* Refills:*0*
+				7. Atorvastatin 20 mg Tablet Sig: One (1) Tablet PO once a day.
+				Disp:*30 Tablet(s)* Refills:*2*
+				8. Nicotine 14 mg/24 hr Patch 24 hr Sig: One (1) Patch 24 hr Transdermal DAILY (Daily) for 2 weeks.
+				Disp:*14 Patch 24 hr(s)* Refills:*0*
+				9. Clopidogrel 75 mg Tablet Sig: One (1) Tablet PO DAILY (Daily).
+				Disp:*30 Tablet(s)* Refills:*2*
+				10. Metoprolol Tartrate 25 mg Tablet Sig: One (1) Tablet PO BID (2 times a day).
+				Disp:*60 Tablet(s)* Refills:*2*
+				11. Finasteride 5 mg Tablet Sig: One (1) Tablet PO DAILY (Daily).
+				Disp:*30 Tablet(s)* Refills:*2*
+				12. Citalopram 40 mg Tablet Sig: One (1) Tablet PO once a day.
+				Disp:*30 Tablet(s)* Refills:*2*
+				13. Detrol 2 mg Tablet Sig: Two (2) Tablet PO once a day.  
+				14. Lisinopril 5 mg Tablet Sig: One (1) Tablet PO once a day.
+				Disp:*30 Tablet(s)* Refills:*2*
+
+				 
+				Discharge Disposition:
+				Home with Service
+				 
+				Discharge Diagnosis:
+				Coronary Artery Disease, s/p CABGx5
+				PMH:Hypertension,Hyperlipidemia,GERD,Bladder 
+				CA,Depression,COPD,BPH
+
+				 
+				Discharge Condition:
+				good
+
+				 
+				Discharge Instructions:
+				keep wounds clean and dry. OK to shower, no bathing or swimming. 
+
+				Take all medications as prescribed.
+				Call for any fever, redness or drainage from wounds
+				no driving for one month
+				no lifting greater than 10 pounds for 10 weeks
+				 
+				Followup Instructions:
+				wound clinic in 2 weeks ( [**Hospital Ward Name **] 2)
+				Dr [**Doctor Last Name 1657**] in 2-3 weeks
+				Dr [**Last Name (STitle) **] in 4 weeks [**Telephone/Fax (1) 175**]
+
+				 
+				                             [**First Name11 (Name Pattern1) **] [**Last Name (NamePattern4) 27**] MD [**MD Number 28**]
+				 
+				Completed by: [**First Name11 (Name Pattern1) **] [**Last Name (NamePattern4) 1471**] NP[**MD Number 1472**] [**3195-4-4**] @ 1502
+				Signed electronically by: DR. [**First Name8 (NamePattern2) **] [**Last Name (NamePattern1) **]
+				 on: FRI [**3195-4-7**] 11:02 AM
+				(End of Report)'
+		},{
+
+			visObject:{
+		    	id:0,
+		    	start: '2013-08-22 06:55:00',
+		    	group: 1,
+		    },
+		    hospitalization: 1,
+		    type: 'discharge',
+		    service: '',
+			preview:'Discharge Diagnosis: Anterior MI.',
+			fulltext:'Admission Date:  [**2013-8-13**]              Discharge Date:   [**2013-8-17**]
+			 
+			Date of Birth:  [**2704-4-29**]             Sex:   M
+			 
+			Service: CMED
+			 
+			Allergies: 
+			Patient recorded as having No Known Allergies to Drugs
+			 
+			Attending:[**First Name3 (LF) 98**] 
+			Chief Complaint:
+			Chest pain due to anterior MI.
+			 
+			Major Surgical or Invasive Procedure:
+			Emergent cardiac catheterization.
+			Removal of thrombus from the LAD coronary artery.
+			Placement of a drug-eluting stent in the proximal LAD.
+
+			 
+			Pertinent Results:
+			Echo on [**2013-8-15**]:
+			Left Atrium - Long Axis Dimension: 3.7 cm (nl <= 4.0 cm)
+			Left Atrium - Four Chamber Length: *5.8 cm (nl <= 5.2 cm)
+			Right Atrium - Four Chamber Length: 4.6 cm (nl <= 5.0 cm)
+			Left Ventricle - Diastolic Dimension: 4.7 cm (nl <= 5.6 cm)
+			Left Ventricle - Ejection Fraction: 35% (nl >=55%)
+			Aorta - Valve Level: 3.0 cm (nl <= 3.6 cm)
+			Aorta - Arch: 1.9 cm (nl <= 3.0 cm)
+			Mitral Valve - E Wave: 0.7 m/sec
+			Mitral Valve - A Wave: 0.8 m/sec
+			Mitral Valve - E/A Ratio: 0.88
+			Mitral Valve - E Wave Deceleration Time: 200 msec
+			TR Gradient (+ RA = PASP): 21 mm Hg (nl <= 25 mm Hg)
+
+			 
+			Brief Hospital Course:
+			No addendum.
+			 
+			Discharge Disposition:
+			Home
+			 
+			Discharge Diagnosis:
+			Anterior MI.
+
+			 
+			Discharge Condition:
+			Good.
+			 
+			Discharge Instructions:
+			Please return to the emergency department for re-evaluation if [**Doctor First Name **] experience chest pain, nausea, shortness of breath, dizziness, disorientation or any other symptoms that concern [**Doctor First Name **].
+
+			It is essential that [**Doctor First Name **] remember to take all your medications on time as prescribed. Remember to keep your appointments.
+			 
+			Followup Instructions:
+			Follow up with your primary care physician, [**Last Name (NamePattern4) **].[**Last Name (STitle) 10859**] ([**Telephone/Fax (1) 9089**]) to achieve appropriate coumadin levels. Your appointment wiht Dr.[**Last Name (STitle) 10859**] is scheduled for 11.30am on Monday [**2013-8-20**]. Follow-up cardiology care has been arranged with Dr.[**First Name8 (NamePattern2) **] [**Last Name (NamePattern1) 10860**] ([**Telephone/Fax (1) **]). [**Doctor First Name 10**] have an appointment to see him at 3.15pm on Tuesday [**2013-8-21**]. Dr[**Last Name (un) 10861**] practice is located at [**Street Address 10862**] in [**Location (un) **], in the old [**Last Name (un) 10863**] Shoe Building. Please remember to bring your [**Company 10864**] card.
+
+			 
+			                             [**First Name11 (Name Pattern1) 15**] [**Last Name (NamePattern4) 112**] MD [**MD Number 113**]
+			 
+			Completed by: [**First Name11 (Name Pattern1) **] [**Last Name (NamePattern4) 1471**] NP[**MD Number 1472**] [**2013-8-17**] @ 1230
+			Signed electronically by: DR. [**First Name4 (NamePattern1) 15**] [**Last Name (NamePattern1) **]
+			 on: WED [**2013-8-22**] 6:55 AM
+			(End of Report)'
+		},{
+			visObject:{
+		    	id:0,
+		    	start: '2013-08-14 11:38:00',
+		    	group: 4,
+		    },
+		    hospitalization: 1,
+		    type: 'admission',
+		    service: 'CCU',
+			preview:'A/P: Wean iab as tol once stabilized. Recheck lytes.Log roll only in view of iab rt fem.Cycle ck'...',
+			fulltext:'Admission note
+				O: pt presented to osh w chest pressure. R/I ant mi transf to [**Hospital1 **] for pci.CC- 1 vessel disease  100% occlus to lad-> angiojetx2 and placemnt of drug eluting stent to lad.Freq hypotensive episodes during cath w aivr prompted rt fem iab placemnt for support.
+				Adm to csru in sr w freq pac's /multifocal pvc's on integrilin.VEA ^'d to runs vt x2->HO updated & lytes corrected w mag sulfate 2gm & kcl 40 meq ivpb. Iabp rt fem 1:2 w fair augmentation despite adjustment, distal pulses initially only by  doppler now palpable. Site oozy for lg amts ss drng, pressure directly over site x 2 to achieve hemostasis.
+				Resp status: bbs clear but diminsh bibas lt> rt. Dry cough at times. O2 pleth difficult to pickup at times. Np at 4 lpm w adeq sats.
+
+				Neuro status: aaoriented, pleasant, talkative(anxious) gentleman. Very talkative initially now resting in naps. Limited movement d/t iabp but pt moving and follows commands.Perl 3mm brisk react.Wife in to visit w pt briefly post cath. Icu visitation policy literature given to wife.
+
+				Gi status: abd soft,flat,+bowel snds & passing flatus. Denies gi upset, on h2 blocker po.
+
+				Gu status: condom cath in place & vd x 1 150cc urine.
+
+				Iv access: bilat antecub lines. Rt fem iab and pa line w gd waveform.Venous sheath in place and oozy at site.
+
+				Heme/ID: hct stable at 38. wbc 15 w low grade temps
+
+				A/P: Wean iab as tol once stabilized. Recheck lytes.Log roll only in view of iab rt fem.Cycle ck's and labs as ordered. Notify ho if vea persists after lyte repletion. Pt teaching re: cardiac rehab once pt adeq rested, less anxious.'
+		},{
+			visObject:{
+		    	id:0,
+		    	start: '2013-08-14 14:32:00',
+		    	group: 4,
+		    },
+		    hospitalization: 1,
+		    type: 'progress',
+		    service: 'CCU',
+			preview:'contniue to monitor in ccu overnoc, cardiac echo, tx to floor tomorrow if stable',
+			fulltext:'pt arrived from [**Location **] @ 1230 with IABP @ 1:2 & integrilin gtt 
+				cv: hr nsr, occasional pvc's & short runs([**4-4**] bts) of v-tach, ho aware, IABP changed to 1:3, fick ci 2.4 on 1:3 & IABP dc'd by fellow @ 1510, swan & r fem venous sheath also dc'd, no active hematoma noted with sheath pull, old small hematoma noted, on po lopressor, to start po captopril this pm, distal pulses by doppler
+
+				resp: on 2 l np, bs+ all lobes & clear, sat 99-100, no sob or resp distress
+
+				gi: npo for IABP dc, to start cardiac diet this pm, no c/o nausea, no stool, po ranitidine
+
+				gu: condom cath on, voiding clear yellow urine
+
+				neuro: A&Ox3, follows commands, moving all extremities
+
+				other: d5w with 150 meq na bicarb/liter up @ 100cc/hr x 1 liter for post cath fluids, family in & updated on pt's condition, integrilin gtt to be dc'd @ 1900 & heparin gtt started @ 600u/hr, ck, troponin sent @ 1500, pt given iv ativan for anxiety for IABP dc
+
+				plan: contniue to monitor in ccu overnoc, cardiac echo, tx to floor tomorrow if stable '
+
+
+		},{
+			visObject:{
+		    	id:0,
+		    	start: '2013-08-14 14:32:00',
+		    	group: 4,
+		    },
+		    hospitalization: 1,
+		    type: 'progress',
+		    service: 'CCU',
+		    preview:'PLAN: transfer to stepdown when bed available. cont' cardiac meds. monitor tele. monitor VS.',
+			fulltext:'CCU progress 3p-7p
+				VSS. IABP + PA line d/c'd by cards fellow. Pt given ativan 0.5mg for anxiety + slept part of evening. Pressure dsg applied to site for small ooze. area ecchymotic and small hematoma noted 3cm below groin stick which was there prior to sheath removal. 
+				wife in to visit. assisted w/ dinner. to lie flat until midnite (8hrs d/t large IABP sheath). faint palpable DP pulses, [**1-31**]+PT. 
+				",,
+				79,12220,90,0,2013-08-15 05:22:00 EST,2013-08-15 05:30:00 EST,313,"N",1,"Nursing/Other","ccu nsg progress note.","
+				ccu nsg progress note.
+				o:pf. borderline bp-0000 captopril dose held. r-fem initially w ooze- pressure held w stasis-hematoma outlined wo further increase. pulses 1+ bilaterally.
+
+				a:[**Last Name (un) 293**] sp iabp dc.
+
+				p:captopril when bp >100. contin present management. slowly increase activity level. support as indicated. ?call-out.  
+				",,
+				79,12220,90,0,2013-08-15 17:48:00 EST,2013-08-15 17:53:00 EST,104,"N",1,"Nursing/Other","CCU progress note 7a-7p","
+				CCU progress note 7a-7p
+				Uneventful day. VSS. OOB to chair. ambulating in room. PT consult ordered.  SEE TRANSFER NOTE.
+
+				CARDIAC: Increased Lopressor to 25mg TID w/ HR still SR 80s-90s - next dose to be increased to Lopressor 37.5mg TID. Captopril 6.25mg TID.  SBP 88-100s. no c/o CP. no runs of VT noted today. R groin ecchymotic w/ hematoma marked, no increase noted. to be started on coumadin tonite. 
+
+				RESP: LS clear. RA. sats 94-95%
+
+				GI/GU: voiding clear yellow. taking po diet well. +BS. no BM. 
+
+				NEURO: A+Ox3. no c/o. pleasant + cooperative. wife calling, updated + talking to husband. 
+
+				PLAN: transfer to stepdown when bed available. cont' cardiac meds. monitor tele. monitor VS.'
+},{
+	visObject:{
+    	id:0,
+    	start: '2012-02-20 07:06:00',
+    	group: 1,
+    },
+    hospitalization: 3,
+    type: 'discharge',
+    service: 'medicine',
+	preview:'Discharge Diagnosis:
+		coronary artery disease
+		carotid artery stenosis',	
+	fulltext:'Admission Date:  [**2012-1-20**]              Discharge Date:   [**2012-1-26**]
+		Date of Birth:  [**2544-9-23**]             Sex:   M
+		 
+		Service: MEDICINE
+		 
+		Allergies: 
+		Patient recorded as having No Known Allergies to Drugs
+		 
+		Attending:[**First Name3 (LF) 340**] 
+		Chief Complaint:
+		Transferred from outside hospital for coronary and carotid cath
+		 
+		Major Surgical or Invasive Procedure:
+		carotid cath
+		coronary cath
+
+		 
+		History of Present Illness:
+		64 yr old hypertensive, diabetic male with CAD s/p CABG '[**01**] and 
+		b/l carotid disease transferred from OSH after an episode of 
+		chest pain and aphasia.   He was in his USOH until [**2012-1-19**] when 
+		at noon he developed substernal chest ""burning"" while sitting at 
+		his office.  He noticed that his speech was slurred and ""the 
+		words wouldn't come out."" When his wife called him she noted 
+		that his words ""made no sense"" ""he was saying nonsense.""  She 
+		thought he might have been hypoglycemia and gave him some coke, 
+		after which his symptoms improved.  They called EMS and were 
+		taken to [**Hospital **] Hospital.  A Head CT was   (-) for bleed and 
+		Trop-I+ 0.87. Ck 200.  He received 2 doses of 1 mg/kg lovenox 
+		and was transferred to [**Hospital1 83**].
+
+		He had LAD stent in [**Hospital1 83**]. A few days later, he has RCA stented 
+		and has myoclonic jerk, NOT seizure in the cath lab per 
+		neurology attending
+
+		ROS: (-) SOB/Palp/Edema/N/V/Weakness/numbness/HA.
+
+		 
+		Past Medical History:
+		##CAD s/p CABG in [**2601**] with EF 50% by LVG.  He has chest pain 
+		with lifting boxes.  LIMA>>LAD, SVG>>Diag
+		-[**9-20**] ETT Thal for 2 minutes with HR 130, 2 mm horizontal 
+		lateral ST depressions.
+		##non-insulin dependent diabetes mellitus x 10 years.
+		##hypertension
+		##hypercholesterolemia
+		##Stroke/TIA with no residual defects.  Carotid U/S in 10/04 
+		with right ICA occlusion and left 80-99% stenosis.  Followed by 
+		Dr. [**First Name8 (NamePattern2) **] [**Last Name (NamePattern1) **] (cardiology) and Dr. [**First Name4 (NamePattern1) **] [**Last Name (NamePattern1) 11742**] (vasc 
+		[**Doctor First Name 668**]).  
+		## B/L Claudication 
+		 
+		Social History:
+		Quit smoking 25 years ago.  No EtOH.  Works as a mechanic.  
+		Lives with wife.  2 adopted children.
+		 
+		Family History:
+		Mother MI at 60
+		 
+		Physical Exam:
+		Temp: afebrile BP:120/82  HR:60  RR:12  O2:99 RA
+		Gen: NAD,  A/O x 3
+		HEENT: PEARLA.  EOMI.  OP w/o lesions.
+		CV:  RR.  Soft II/VI systolic murmur at LLSB.  JVD flat.  
+		Sternotomy incision c/d/i.
+		Pulm: CTA B/L
+		ABD: S/NT/ND  
+		Ext: no edema.  s/p vein graft incision c/d/i.  1+DP/PT
+		Neuro: Motor [**3-23**] at all flexors/extensors.  Sensation: GI to 
+		light touch and pinprick.  [**Doctor First Name **] intact.  FTN intact.  CNII-XII: 
+		GI
+		 
+		Pertinent Results:
+		AT OSH:
+
+		Na:138, K:4.3, BUN:20, Cr:1.4, INR:0.9, WBC:10.1  Hgb:14.6, 
+		Plt:171
+
+		ECG: NSR at 56. Qs in III, F.  J-pt elevation in V1, V2, II, F.  
+		Lateral TWI (dynamic).  Nl Axis/intervals.
+
+		CXR: No CP processes
+
+		[**2012-1-19**]: Chronic Right Occipital Cortical Infarct, chronic deep 
+		white matter infarction due to small vessel disease, small 
+		lacunar infarct in left thalamus.
+
+		cath [**1-25**]:
+		1. Significant native coronary artery disease.
+		2. Severe bilateral internal carotid artery disease.
+		3. Arterial disease in the left subclavian and bilateral 
+		vertebrals
+		4. Successful placement of self-expanding stent in left ICA.
+		5. Successful employment of AccuNet distal embolic protection.
+		6. Self-limited, brief myotoclonus event.
+		COMMENTS: 
+		1. Limited coronary angiography demonstrated a right dominant 
+		system
+		with left main and severe native vessel disease. The LMCA had an 
+		ostial
+		60% lesion. The proximal and midvessel LAD had diffuse calcific 
+		disease.
+		The distal LAD filled via a LIMA which was not selectively 
+		engaged. The
+		D1 branch was totally occluded. The LCx had mild diffuse 
+		disease. The
+		RCA and bypass grafts were not successfully engaged.
+		2. Limited resting hemodynamics revealed a central blood 
+		pressure of
+		132/57 mmHg and a left CFA pressure of 101/67 mmHg. The mean 
+		gradient
+		was 3 mmHg.
+		3. Retrograde access of the left common femoral artery was 
+		obtained for
+		selective carotid, vertebral, and coronary angiography. The 
+		thoracic
+		aorta had a Type I arch. The bilateral subclavian arteries had 
+		mild
+		proximal disease. The left subclavian artery had a 50% lesion in 
+		the
+		origin with a peak to peak gradient of 20 mmHg.
+		4. The right vertebral artery was small and diminutive with a 
+		total
+		occlusion at the base of the skull before entering the brain. 
+		The left
+		vertebral artery was large and was noted to have a 60% origin 
+		lesion and
+		filled the basilar and the cerebellar arteries. The 
+		contralateral PCA
+		filled from the vertebral but the ipsilateral (left) PCA was not 
+		seen.
+		5. The right common carotid artery was without disease but the 
+		ICA was
+		totally occluded. The left common carotid artery was without 
+		disease but
+		the ICA had diffuse tubular 80% disease. The left ICA filled the
+		ipsilateral ACA and MCA as well as the contralateral ACA and MCA 
+		via a
+		large ACOM.
+		6. Successful placement of a [**4-26**] x 40 mm Acculink stent in the 
+		left ICA
+		postdilated with a 4.5 mm balloon. Final angiography 
+		demonstrated no
+		residual stenosis, no angiographically apparent dissection, and 
+		normal
+		flow (See PTCA Comments).
+		7. Transient, self-limited myoclonic event during postdilation 
+		which was
+		though not likely to represent seizure activity.
+		8. Successful Perclose of the left femoral arteriotomy site at 
+		the
+		conclusion of the procedure without complications.
+
+		Cath at OSH [**8-22**]: ""multiple tight stenoses of the proximal LAD 
+		and proximal D1. Proximal D2 occluded. RCA proximally occluded. 
+		LIMA to LAD patent, svg to diag could not be visualized and was 
+		presumed occluded. Left carotid patent, right carotid occluded."" 
+
+
+		cardiac cath [**2012-1-23**]
+		1. Three vessel coronary artery disease.
+		2. Rotation atheterectomy of the proximal LAD.
+		3. Unsuccessful attempt at PTCA/stenting of the D1.
+		COMMENTS: 1. Selective coronary angiography revealed a right
+		dominant system. The RCA was not injected. The SVgs and the LIMA 
+		were
+		not injected. The LMCA had a 60% ostial stenosis. The proximal 
+		LAD [**Last Name (un) **]
+		80% calcific stenosis. The distal LAD was filling via a LIMA 
+		(there was
+		competitive flow). The D1 had a 80% calcific stenosis at the 
+		origin. The
+		LCX had mild diffuise disease.
+		2. Unsuccessful attempt at PTCA/stenting of the D1 due to 
+		inability to
+		cross despite using multiple wires. Rotational atherectomy was 
+		performed
+		in the LAD in an attempt to modify the LAD lesion and allow 
+		crossing
+		inro the D1 (See PTCA comments).
+
+		carotid series [**2012-1-23**]:
+		REASON: Known carotid atherosclerosis, pre-op for stenting. 
+		 
+		FINDINGS: Duplex evaluation was performed of both carotid 
+		arteries. 
+		Significant plaque was identified on the right. There is no flow 
+		in internal 
+		carotid artery including power Doppler technique. Of note there 
+		is no study 
+		for comparison. 
+		 
+		On the left, significant mostly soft appearing homogeneous 
+		plaque is 
+		identified in the internal carotid artery. Of note it appears to 
+		extend 
+		fairly distally in the cervical internal carotid artery. 
+		 
+		On the right, peak systolic velocities are 52, 72 in the CCA, 
+		ECA 
+		respectively. 
+		 
+		On the left, in the internal carotid artery the peak systolic 
+		over diastolic 
+		velocity is 361/123. In the remainder of the vessel the peak 
+		systolic 
+		velocities are 54, 584 in the CCA, ECA respectively. The ICA-CCA 
+		ratio is 6. 
+		This is consistent with an 80-99% stenosis. 
+
+		[**2012-1-20**] 05:48PM   GLUCOSE-97 UREA N-18 CREAT-1.2 SODIUM-143 
+		POTASSIUM-4.0 CHLORIDE-105 TOTAL CO2-28 ANION GAP-14
+		[**2012-1-20**] 05:48PM   ALT(SGPT)-32 AST(SGOT)-29 CK(CPK)-168
+		[**2012-1-20**] 05:48PM   CALCIUM-9.3 PHOSPHATE-3.2 MAGNESIUM-1.8
+		[**2012-1-20**] 05:48PM   WBC-7.5 RBC-4.46* HGB-14.0 HCT-40.8# MCV-92 
+		MCH-31.4 MCHC-34.3 RDW-13.0
+		[**2012-1-20**] 05:48PM   PLT COUNT-195#
+		[**2012-1-20**] 05:48PM   PT-13.2 PTT-32.6 INR(PT)-1.1
+		 
+		Brief Hospital Course:
+		64 y.o. male with CAD status post CABG, history of TIA with 
+		bilateral carotid stenosis presents s/p episode of chest pain 
+		and aphasia with borderline elevation in TN-I and non-specific 
+		ant/lateral ST-T wave changes. He was admitted for coronary and 
+		carotid cath.Patient had cardiac catheterization on [**2012-1-25**] and 
+		was discovered to have severe bilateral internal carotid artery 
+		disease and also arterial disease in the left subclavian and 
+		bilateral vertebrals. Successful placement of self-expanding 
+		stent in left ICA and successful employment of AccuNet distal 
+		embolic protection. Patient was admitted briefly to CCU for 
+		observation overnight. He did well and has no neurological 
+		events. His blood pressure was kept between 120-140. He did well 
+		and was discharged the following day
+
+		 
+		Medications on Admission:
+		Glipizide XL 5, Fish Oil 1000mg, Ca 600 bid, MVI, Garlic Pill 
+		1250, Loratadine, ASA 325, Atenolol 50, Metformin 1000mg, Nexium 
+		40 daily, Lisinopril 5 tid, Lipitor 20, Zetia 10, Doxazosin 4.  
+		Coumadin was D/C'd 3 months ago
+		 
+		Discharge Medications:
+		1. Ezetimibe 10 mg Tablet Sig: One (1) Tablet PO DAILY (Daily).
+		Disp:*30 Tablet(s)* Refills:*2*
+		2. Aspirin 325 mg Tablet Sig: One (1) Tablet PO DAILY (Daily).
+		Disp:*30 Tablet(s)* Refills:*2*
+		3. Calcium Carbonate 500 mg Tablet, Chewable Sig: One (1) 
+		Tablet, Chewable PO BID (2 times a day).
+		Disp:*60 Tablet, Chewable(s)* Refills:*2*
+		4. Multivitamin     Capsule Sig: One (1) Cap PO DAILY (Daily).
+		Disp:*30 Cap(s)* Refills:*2*
+		5. Omega-3 Fatty Acids 120-180-1.8 mg-mg-unit Capsule Sig: One 
+		(1) Capsule PO BID (2 times a day).
+		Disp:*60 Capsule(s)* Refills:*2*
+		6. Fexofenadine HCl 60 mg Capsule Sig: One (1) Capsule PO BID (2 
+		times a day).
+		Disp:*60 Capsule(s)* Refills:*2*
+		7. Glipizide 5 mg Tab, Sust Release Osmotic Push Sig: One (1) 
+		Tab, Sust Release Osmotic Push PO DAILY (Daily).
+		Disp:*30 Tab, Sust Release Osmotic Push(s)* Refills:*2*
+		8. Clopidogrel Bisulfate 75 mg Tablet Sig: One (1) Tablet PO 
+		DAILY (Daily).
+		Disp:*30 Tablet(s)* Refills:*9*
+		9. Atorvastatin Calcium 40 mg Tablet Sig: Two (2) Tablet PO 
+		DAILY (Daily).
+		Disp:*60 Tablet(s)* Refills:*2*
+
+		 
+		Discharge Disposition:
+		Home
+		 
+		Discharge Diagnosis:
+		coronary artery disease
+		carotid artery stenosis
+
+		 
+		Discharge Condition:
+		stable
+		 
+		Discharge Instructions:
+		Please return to the hospital or call your doctor if [**Doctor First Name **] have 
+		chest pain/shortness of breath/dizziness/blur vision or if there 
+		are any concerns at all
+
+		PLease take all your prescribed medication
+		 
+		Followup Instructions:
+		Please call Dr. [**First Name (STitle) **], [**First Name3 (LF) **] TOMORROW to schedule an 
+		appointment
+
+		 
+		                             [**First Name11 (Name Pattern1) 190**] [**Last Name (NamePattern4) 352**] MD [**MD Number 353**]
+		 
+		Completed by: [**Name6 (MD) 496**] [**Name8 (MD) 497**] MD [**MD Number 498**] [**2012-2-14**] @ 0948
+		Signed electronically by: DR. [**First Name11 (Name Pattern1) 190**] [**Initial (NamePattern1) **] [**Last Name (NamePattern4) 189**]
+		 on: MON [**2012-2-20**] 7:06 AM
+		(End of Report)'
+	},{
+		visObject:{
+	    	id:0,
+	    	start: '2012-01-23 08:23:00',
+	    	group: 3,
+	    },
+	    hospitalization: 3,
+	    type: 'ultrasound',
+	    service: '',
+		preview:'IMPRESSION:
+	     Occluded right internal carotid artery.  Of note there is no prior study for
+	     comparison.  On the left, there is a significant plaque with an 80-99% carotid
+	     stenosis.',	
+		fulltext:'     DATE: [**2012-1-23**] 8:37 AM
+	     CAROTID SERIES COMPLETE                                         Clip # [**Clip Number (Radiology) 7969**]
+	     Reason: Please evaluate b/l carotids with doppler.                  
+	     Admitting Diagnosis: CHEST PAIN;TIA
+	     ______________________________________________________________________________
+	     UNDERLYING MEDICAL CONDITION:
+	      64 year old man with known b/l carotid stenosis awaiting carotid stenting.      
+	     REASON FOR THIS EXAMINATION:
+	      Please evaluate b/l carotids with doppler.                                      
+	     ______________________________________________________________________________
+	                                     FINAL REPORT
+	     CAROTID SERIES COMPLETE:
+	     
+	     REASON:  Known carotid atherosclerosis, pre-op for stenting.
+	     
+	     FINDINGS:  Duplex evaluation was performed of both carotid arteries.
+	     Significant plaque was identified on the right.  There is no flow in internal
+	     carotid artery including power Doppler technique.  Of note there is no study
+	     for comparison.
+	     
+	     On the left, significant mostly soft appearing homogeneous plaque is
+	     identified in the internal carotid artery.  Of note it appears to extend
+	     fairly distally in the cervical internal carotid artery.
+	     
+	     On the right, peak systolic velocities are 52, 72 in the CCA, ECA
+	     respectively.
+	     
+	     On the left, in the internal carotid artery the peak systolic over diastolic
+	     velocity is 361/123.  In the remainder of the vessel the peak systolic
+	     velocities are 54, 584 in the CCA, ECA respectively.  The ICA-CCA ratio is 6.
+	     This is consistent with an 80-99% stenosis.
+	     
+	     There is antegrade flow in both vertebral arteries.
+	     
+	     IMPRESSION:
+	     
+	     Occluded right internal carotid artery.  Of note there is no prior study for
+	     comparison.  On the left, there is a significant plaque with an 80-99% carotid
+	     stenosis.'
+	},{
+		visObject:{
+	    	id:0,
+	    	start: '2012-01-25 09:52:00',
+	    	group: 3,
+	    },
+	    hospitalization: 3,
+	    type: 'plain film x ray',
+	    service: '',
+		preview:'IMPRESSION:  No findings of CHF or pneumonia',	
+		fulltext:' DATE: [**2012-1-25**] 9:52 AM
+	     CHEST (PA & LAT)                                                Clip # [**Clip Number (Radiology) 7970**]
+	     Reason: r/o pneumonia                                               
+	     Admitting Diagnosis: CHEST PAIN;TIA
+	     ______________________________________________________________________________
+	     UNDERLYING MEDICAL CONDITION:
+	      64 year old man with fever & rising WBC                                         
+	     REASON FOR THIS EXAMINATION:
+	      r/o pneumonia                                                                   
+	     ______________________________________________________________________________
+	                                     FINAL REPORT
+	     INDICATION:  Rising white blood cell count and fever.
+	     
+	     No prior radiographs for comparison.
+	     
+	     PA AND LATERAL CHEST RADIOGRAPHS:  The patient is post-median sternotomy.
+	     There are aortic calcifications.  The heart size is at upper limits of normal.
+	     The pulmonary vasculature has a normal appearance.  The lungs are clear
+	     without focal consolidations.  There is no effusion or pneumothorax.  A
+	     solitary calcified granuloma is seen in the right apex.
+	     
+	     IMPRESSION:  No findings of CHF or pneumonia.'
+	},{
+		visObject:{
+	    	id:0,
+	    	start: '2012-01-26 05:53:00',
+	    	group: 4,
+	    },
+	    hospitalization: 3,
+	    type: 'progress',
+	    service: 'CCU',
+		preview:'',	
+		fulltext:'CCU Nursing Progress Note 1900-0700
+			S: ""I feel pretty good""
+
+			O: Please see careview for complete VS/additional objective data.
+
+			In brief this is a 54 yo gentleman w/ significant hx for HTN, NIDDM w/ CAD s/p CABG [**01**] and carotid ds. Pt was transferred from OSH after episode of CP, blurred vision and aphasia w/borderline troponin elevation and nonspecific ant/lat ST-Twave changes. ? TIA vs hypoglycemia. Ct infarct. Cath revealed 3VD. S/P rotational artherectomy of LAD following unsuccessful PTCA of calcified D1. On [**1-25**] pt underwent stent to TO R ICA. Pt tolerated intervention well although pt was noted to have a single myoclonus event post dilitation but not likely true seizure but a result of reperfusion.
+
+			MS: Completely neurologically intact. No deficits noted. MAE. PEARL. 3mm in size. Brisk in response. Repositions self. Dangled and sat at bedside while urinating. Tolerated well. Pt denies any additional blurriness/ aphasia etc. 
+
+			CV: Pt arrived to CCU VSS. NIBP goal per HO 120-160. Neo/Nitro ordered but never needed overnoc. SBP started to trend down and while asleep noted to be 96. Team notified and Dr. [**First Name (STitle) 241**] reestablished goals that as long as SBP >90 not to start pressors. HR 58-68. No ectopy. Transient drop to ^40s noted rarely. NIBP 96-156/42-55. MAPs>60. Left groin site CDI. Cont post stent treatment includingDSD remains intact. Distal pulses dopplerable. 
+
+			Resp: Occ noted for apnea. O2 sats briefly noted at 90% while asleep. Placed pt on NC 2L w/ good effect. RR 15-23. Pt denies SOB. O2 sats 97-100%. Good cough. No secretions. Pt c/o sinus stuffiness. Ordered for Afrin but didn't arrive to unit until pt was asleep. Pt denies SOB.
+
+			GI/GU: Abd soft/obese. +BS. No stool. Minimal intake. + BS. No stool.
+			DTV upon arrival to CCU. Pt received IVFB 250cc NSx2 for lack of output and in attempt to improve SBP. Condom catheter remains on. Pt -225cc and remains + LOS. BUN/CR 16/1.1.
+
+			ID: Cont to have low grade temp. Tmax 100.4 po. Tylenol 650mg x1 given. No abx at present. WBC 13.5.
+
+			SKin: Intact. 
+
+			Access: 1 PIV. Pt has h/o PVD. Difficult to obtain access. 
+
+			A/P: Significant cardiac hx. 3vd recent  catheterization and rot artherctomy of LAD. Unable to cross wire and address D1 80% lesion. ? TIA upon admission to OSH. CT positive for infarct. R ICA TO and L ICA 80-99%. S/P successfully stenting of R ICA. To CCU for observation. Pt remained hemodynamically stable  overnoc. Cont to support pt and family. Advance diet and activity as tolerated. ? Call out to the floor today.'
+
+
+	},{
+		visObject:{
+	    	id:0,
+	    	start: '2012-04-16 06:11:00',
+	    	group: 3,
+	    },
+	    hospitalization: 3,
+	    type: 'plain film x ray',
+	    service: '',
+		preview:'IMPRESSION:  The heart is in the upper limits of normal for size.  There is no evidence of acute CHF or pneumonia.',	
+		fulltext:'     DATE: [**2012-4-16**] 6:11 AM
+	     CHEST (PORTABLE AP)                                             Clip # [**Clip Number (Radiology) 7971**]
+	     Reason: chf, pna                                                    
+	     ______________________________________________________________________________
+	     UNDERLYING MEDICAL CONDITION:
+	      64 year old man with SOB, DOE                                                   
+	     REASON FOR THIS EXAMINATION:
+	      chf, pna                                                                        
+	     ______________________________________________________________________________
+	                                     FINAL REPORT
+	     INDICATION:  64-year-old male with shortness of breath and dyspnea or
+	     exertion.  Rule out CHF or pneumonia.
+	     
+	     COMPARISONS:  No comparisons are available at this time.  The study is
+	     partially compared to report of a study performed.
+	     
+	     FINDINGS:  The patient is status post median sternotomy.  There are again
+	     noted aortic calcifications.  The heart size is in the upper limits of normal.
+	     The pulmonary vasculature is within normal limits.  There is no evidence of
+	     CHF.  The lung fields are grossly clear without evidence of pneumonia or
+	     pneumothorax.
+	     
+	     IMPRESSION:  The heart is in the upper limits of normal for size.  There is no
+	     evidence of acute CHF or pneumonia.'
+	},{
+		visObject:{
+	    	id:0,
+	    	start: '2012-07-25 09:08:00',
+	    	group: 3,
+	    },
+	    hospitalization: 3,
+	    type: '',
+	    service: '',
+		preview:'IMPRESSION:  Significant aortobiiliac and likely left superficial femoral
+	     artery occlusive disease.  In addition, there may be proximal femoral artery
+	     disease on the right.  With very limited exercise, there is a severe decrement
+	     in bilateral ABI.',	
+		fulltext:'DATE: [**2012-7-25**] 9:08 AM
+	     CAROTID SERIES COMPLETE; ART EXT (REST&EXERCISE)                Clip # [**Clip Number (Radiology) 7972**]
+	     Reason: history carotid stent and PVD for surveillance
+	     ______________________________________________________________________________
+	     UNDERLYING MEDICAL CONDITION:
+	      64 year old man with carotid stent and PVD for surveillance
+	     REASON FOR THIS EXAMINATION:
+	      history carotid stent and PVD for surveillance
+	     ______________________________________________________________________________
+	                                     FINAL REPORT
+	     STUDY #1, CAROTID SERIES COMPLETE.
+	     
+	     REASON:  Narrowing of carotid artery.
+	     
+	     STUDY #2, ARTERIAL DOPPLER CLAUDICATION.
+	     
+	     FINDINGS:  Duplex evaluation was performed of both carotid arteries.  The
+	     right internal carotid artery is occluded.  On the left, a carotid stent is
+	     visualized and is patent but has significant elevated velocities as will be
+	     described below.
+	     
+	     On the right, peak systolic velocities are 45, 115 in the CCA and ECA
+	     respectively.
+	     
+	     On the left in the internal carotid artery, the peak systolic over diastolic
+	     velocity is 319/124.  In the remainder of the vessel, the peak systolic
+	     velocities are 56, 123 in the CCA, ECA respectively.  The ICA to CCA ratio is
+	     5.6.  This is consistent with an 80% to 99% stenosis.
+	     
+	     There is antegrade flow in both vertebral arteries.
+	     
+	     Although velocities in the left internal carotid artery stent are consistent
+	     with a high-grade stenosis, this is likely falsely elevated to both to the
+	     stent and also to the contralateral occlusion.
+	     
+	     IMPRESSION:  Occluded right internal carotid artery.  On the left, the stent
+	     is patent, but the velocities are elevated, consistent with an 80% to 99%
+	     stenosis.  However, as stated above, that is likely to be artifactually
+	     elevated.
+	     
+	     Doppler evaluation was performed of both lower extremity arterial systems at
+	     rest and with exercise.  Exercise consist of toe-ups for 1 minute and 45
+	     seconds.  Pain developed in both calves at 1 minute.
+	     
+	     On the right, Doppler tracings are triphasic at all levels from the femoral to
+	     the dorsalis pedis artery.  The ankle brachial index is 1.06.  Pulse volume
+	     recordings are maintained to the calf and show drop off at the ankle and
+	     metatarsals.  After exercise, the ABI dropped to 0.47 and the waveforms in the
+	     common femoral artery becomes monophasic.
+	     
+	     On the left, Doppler tracings are triphasic at the femoral level only.  They
+	     are monophasic below.  The ankle brachial index is 0.69.  With exercise, this
+	     decreases to 0.27.  Pulse volume recordings are dampened at low thigh level
+	     and approximately 7 mm at the metatarsals.
+	     
+	     IMPRESSION:  Significant aortobiiliac and likely left superficial femoral
+	     artery occlusive disease.  In addition, there may be proximal femoral artery
+	     disease on the right.  With very limited exercise, there is a severe decrement
+	     in bilateral ABI.'
+	},{
+		visObject:{
+	    	id:0,
+	    	start: '2012-12-08 10:17:00',
+	    	group: 3,
+	    },
+	    hospitalization: 3,
+	    type: 'ultrasound',
+	    service: '',
+		preview:'CONCLUSION: No significant change as compared to the two prior available
+	     comparison from March and [**2012-7-20**], with:
+	     1. a known occlusion of the right internal carotid artery, and
+	     2. status post stent placement in the region of the left carotid bulb, and
+	     increased velocities in the mid and distal portion of the left internal
+	     carotid artery consistent with a stenosis estimated between 80 and 99% in
+	     diameter (closer to 80%)',	
+		fulltext:'DATE: [**2012-12-8**] 10:17 AM
+	     CAROTID SERIES COMPLETE                                         Clip # [**Clip Number (Radiology) 7973**]
+	     Reason: history carotid stent for surveillance
+	     ______________________________________________________________________________
+	     UNDERLYING MEDICAL CONDITION:
+	      64 year old man with carotid stent for surveillance
+	     REASON FOR THIS EXAMINATION:
+	      history carotid stent for surveillance
+	     ______________________________________________________________________________
+	                                     FINAL REPORT
+	     INDICATION: Surveillance of carotid artery stent in a 64-year-old man.
+	     
+	     COMPARISON: There were two available comparisons, from [**1-23**] and [**7-25**], 2005, respectively. They showed a stable, 80-99% diameter narrowing of the
+	     left internal carotid artery and a known, complete occlusion of the right
+	     internal carotid artery.
+	     
+	     TECHNIQUE AND FINDINGS: Duplex ultrasonography was performed at the level of
+	     the cervical portions of the bilateral carotid and vertebral arteries.
+	     
+	     The chronic occlusion of the right internal carotid artery is found again,
+	     with no intraluminal flow detectable by spectral or color Doppler imaging. The
+	     peak systolic velocities in the right common and external carotid arteries are
+	     57 and 109 cm/second, respectively.
+	     
+	     The left carotid stent is visualized at the level of the internal and common
+	     carotid arteries. The peak systolic velocities in the left internal, common,
+	     and external carotid arteries are 291, 53, and 446 cm/second. The end-
+	     diastolic velocities are 100 cm/second in the left internal carotid artery and
+	     25 cm/sec in the left common carotid artery. The acceleration in the
+	     internal carotid artery seems localized to its mid and distal cervical
+	     portions but spares its ostium. Systolic turbulences are found in the distal
+	     portion of the left internal carotid artery. These values and findings are
+	     again consistent with a luminal narrowing between 80 and 99% in diameter
+	     (probably closer to 80%.).
+	     
+	     Antegrade flow is found in the bilateral vertebral arteries, in their
+	     intertransverse portions.
+	     
+	     CONCLUSION: No significant change as compared to the two prior available
+	     comparison from March and [**2012-7-20**], with:
+	     1. a known occlusion of the right internal carotid artery, and
+	     2. status post stent placement in the region of the left carotid bulb, and
+	     increased velocities in the mid and distal portion of the left internal
+	     carotid artery consistent with a stenosis estimated between 80 and 99% in
+	     diameter (closer to 80%).'
+	}
+}
