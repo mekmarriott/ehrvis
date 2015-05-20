@@ -51,14 +51,17 @@ class MedicationHistory(object):
     def __init__(self):
         self.meds = []
         self.minDate = datetime.datetime.now()
+        self.medNames = []
 
     def add_meds(self, med_array):
         med_array_set = set(med_array);
         med_array = list(med_array_set);
+        med_names_set = set([med.name for med in med_array])
+        self.medNames = list(med_names_set)
         for med in med_array:
             if type(med) is MedicationEntry:
                 self.meds.append(med.to_dict())
-                if med.start < self.minDate and med.start != "n/a":
+                if med.start != "n/a" and med.start < self.minDate:
                     self.minDate = med.start
         self.minDate = self.minDate - datetime.timedelta(days=30)
                 
