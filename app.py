@@ -55,7 +55,7 @@ def medications():
     medication_data = load_patient1_meds()
     print medication_data.medNames
     return jsonify({'medication_data': medication_data.meds, 
-                    'minDate': medication_data.minDate)
+                    'minDate': medication_data.minDate})
 #=======================================================================
 
 
