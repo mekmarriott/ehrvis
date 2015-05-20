@@ -25,7 +25,6 @@
 	  <label><input type="checkbox" id="note_focus" checked> Focus on selection</label>
 	</p>
 	<div id="note_visualization">
-		<p>Note visualization placeholder</p>
 	</div>
 </div>
 
@@ -86,6 +85,8 @@
 				medDataArray.push(medEvent);
 			}
 			createMedicationTimeline(medDataArray, minDate);
+			createNoteTimeline(medDataArray, minDate);
+
 		});
 	}
 
