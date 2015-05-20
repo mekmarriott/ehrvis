@@ -52,6 +52,8 @@ class MedicationHistory(object):
         self.meds = []
 
     def add_meds(self, med_array):
+        med_array_set = set(med_array);
+        med_array = list(med_array_set);
         for med in med_array:
             if type(med) is MedicationEntry:
                 self.meds.append(med.to_dict())

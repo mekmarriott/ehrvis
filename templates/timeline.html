@@ -27,6 +27,30 @@
 
 <!-- Custom javascript for timeline manipulation -->
 <script>
+	var timeline;
+	
+    function addEventListeners() {
+    	// attach events to the navigation buttons
+	    document.getElementById('zoomIn').onclick    = function () { zoom(-0.2); };
+	    document.getElementById('zoomOut').onclick   = function () { zoom( 0.2); };
+	    document.getElementById('moveLeft').onclick  = function () { move( 0.2); };
+	    document.getElementById('moveRight').onclick = function () { move(-0.2); };
+
+	    /**
+	     *Select + move window dynamically to view selections
+	    */
+	    var selection = document.getElementById('selection');
+		var select = document.getElementById('select');
+		var focus = document.getElementById('focus');
+
+		select.onclick = function () {
+			var ids = selection.value.split(',').map(function (value) {
+			  return value.trim();
+			});
+			timeline.setSelection(ids, {focus: focus.checked});
+		};
+    }
+
 	window.onload = function(){
 		console.log("Loading");
 		addEventListeners();
@@ -75,7 +99,7 @@
 			editable: false
 		};
 
-		var timeline = new vis.Timeline(container);
+		timeline = new vis.Timeline(container);
 		timeline.setOptions(options);
 		timeline.setGroups(groups);
 		timeline.setItems(items);
@@ -139,28 +163,6 @@
             start: range.start.valueOf() - interval * percentage,
             end:   range.end.valueOf()   + interval * percentage
         });
-    }
-
-    function addEventListeners() {
-    	// attach events to the navigation buttons
-	    document.getElementById('zoomIn').onclick    = function () { zoom(-0.2); };
-	    document.getElementById('zoomOut').onclick   = function () { zoom( 0.2); };
-	    document.getElementById('moveLeft').onclick  = function () { move( 0.2); };
-	    document.getElementById('moveRight').onclick = function () { move(-0.2); };
-
-	    /**
-	     *Select + move window dynamically to view selections
-	    */
-	    var selection = document.getElementById('selection');
-		var select = document.getElementById('select');
-		var focus = document.getElementById('focus');
-
-		select.onclick = function () {
-			var ids = selection.value.split(',').map(function (value) {
-			  return value.trim();
-			});
-			timeline.setSelection(ids, {focus: focus.checked});
-		};
     }
 
 </script>
