@@ -8,7 +8,9 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 """
 
 import os
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+from medications import load_patient1_meds
+import json
 
 #=======================================================================
 #       Application Configuration
@@ -48,8 +50,11 @@ def notes():
 
 @app.route('/_medications/')
 def medications():
+    print "Called"
     """Return all medication information."""
-    return None
+    medication_data = load_patient1_meds()
+    print "returning med"
+    return jsonify({'medication_data': medication_data.meds})
 #=======================================================================
 
 

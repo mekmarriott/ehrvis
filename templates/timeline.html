@@ -14,11 +14,11 @@
 	</p>
 	<div id="visualization">
 		<div class="menu">
-        <input type="button" id="zoomIn" value="Zoom in"/>
-        <input type="button" id="zoomOut" value="Zoom out"/>
-        <input type="button" id="moveLeft" value="Move left"/>
-        <input type="button" id="moveRight" value="Move right"/>
-    </div>
+	        <input type="button" id="zoomIn" value="Zoom in"/>
+	        <input type="button" id="zoomOut" value="Zoom out"/>
+	        <input type="button" id="moveLeft" value="Move left"/>
+	        <input type="button" id="moveRight" value="Move right"/>
+    	</div>
 	</div>
 </div>
 <!-- JavaScript HERE (at the bottom for fast page loading) -->
@@ -27,6 +27,16 @@
 
 <!-- Custom javascript for timeline manipulation -->
 <script>
+	window.onload = function(){
+		console.log("Loading");
+		$.getJSON( "/_medications/", function(result) {
+			console.log(result);
+		});
+		// $.getJSON( "/static/FHIR_Sandbox/patient1_medications.json", function(result) {
+		// 	console.log("HS");
+		// });
+	}
+
 	var groups = new vis.DataSet([
 		{id: 0, content: 'First', value: 1},
 		{id: 1, content: 'Third', value: 3},
@@ -70,6 +80,22 @@
 	timeline.setOptions(options);
 	timeline.setGroups(groups);
 	timeline.setItems(items);
+
+	/**
+     * When the timeline selects an object (or multiple objects), add object(s) 
+     * as defined in properties to the chart below
+     */
+	timeline.on('select', function (properties) {
+      console.log("adding- " + JSON.stringify(properties))
+    });
+
+    /**
+     * When the timeline range is changed, trigger the chart to readjust the 
+     * range according to the time range defined in properties
+     */
+	timeline.on('rangechanged', function (properties) {
+      console.log("changing range- " + JSON.stringify(properties));
+    });
 
 	/**
      * Move the timeline a given percentage to left or right

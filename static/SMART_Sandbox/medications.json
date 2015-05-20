@@ -1,0 +1,752 @@
+{
+  "resourceType": "Bundle",
+  "title": "FHIR Atom Feed",
+  "id": "https://fhir-api.smarthealthit.org/MedicationPrescription/_search?patient%3APatient=1577780",
+  "link": [
+    {
+      "rel": "self",
+      "href": "https://fhir-api.smarthealthit.org/MedicationPrescription/_search?patient%3APatient=1577780"
+    }
+  ],
+  "totalResults": 10,
+  "updated": "2015-05-19T20:34:05.562-00:00",
+  "author": [
+    {
+      "name": "groovy.config.atom.author-name",
+      "uri": "groovy.config.atom.author-uri"
+    }
+  ],
+  "entry": [
+    {
+      "title": "MedicationPrescription/162",
+      "id": "https://fhir-api.smarthealthit.org/MedicationPrescription/162",
+      "updated": "2015-05-19T20:34:05.562-00:00",
+      "content": {
+        "resourceType": "MedicationPrescription",
+        "text": {
+          "status": "generated",
+          "div": "<div>\n      mesalamine 400 MG Enteric Coated Tablet [Asacol] (rxnorm: 104112)\n    </div>"
+        },
+        "contained": [
+          {
+            "resourceType": "Medication",
+            "id": "med",
+            "name": "mesalamine 400 MG Enteric Coated Tablet [Asacol]",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "104112",
+                  "display": "mesalamine 400 MG Enteric Coated Tablet [Asacol]"
+                }
+              ]
+            }
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "reference": "Patient/1577780"
+        },
+        "medication": {
+          "reference": "#med"
+        },
+        "dosageInstruction": [
+          {
+            "text": "2 tid",
+            "timingSchedule": {
+              "event": [
+                {
+                  "start": "2009-02-02"
+                }
+              ],
+              "repeat": {
+                "frequency": 3,
+                "duration": 1,
+                "units": "d"
+              }
+            },
+            "doseQuantity": {
+              "value": 2,
+              "units": "{tablet}",
+              "system": "http://unitsofmeasure.org",
+              "code": "{tablet}"
+            }
+          }
+        ],
+        "dispense": {
+          "numberOfRepeatsAllowed": 1,
+          "quantity": {
+            "value": 180,
+            "units": "{tablet}",
+            "system": "http://unitsofmeasure.org",
+            "code": "{tablet}"
+          },
+          "expectedSupplyDuration": {
+            "value": 30,
+            "units": "days",
+            "system": "http://unitsofmeasure.org",
+            "code": "d"
+          }
+        }
+      }
+    },
+    {
+      "title": "MedicationPrescription/163",
+      "id": "https://fhir-api.smarthealthit.org/MedicationPrescription/163",
+      "updated": "2015-05-19T20:34:05.562-00:00",
+      "content": {
+        "resourceType": "MedicationPrescription",
+        "text": {
+          "status": "generated",
+          "div": "<div>\n      irbesartan 150 MG Oral Tablet [Avapro] (rxnorm: 153666)\n    </div>"
+        },
+        "contained": [
+          {
+            "resourceType": "Medication",
+            "id": "med",
+            "name": "irbesartan 150 MG Oral Tablet [Avapro]",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "153666",
+                  "display": "irbesartan 150 MG Oral Tablet [Avapro]"
+                }
+              ]
+            }
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "reference": "Patient/1577780"
+        },
+        "medication": {
+          "reference": "#med"
+        },
+        "dosageInstruction": [
+          {
+            "text": "1 daily",
+            "timingSchedule": {
+              "event": [
+                {
+                  "start": "2009-02-10"
+                }
+              ],
+              "repeat": {
+                "frequency": 1,
+                "duration": 1,
+                "units": "d"
+              }
+            },
+            "doseQuantity": {
+              "value": 1,
+              "units": "{tablet}",
+              "system": "http://unitsofmeasure.org",
+              "code": "{tablet}"
+            }
+          }
+        ],
+        "dispense": {
+          "numberOfRepeatsAllowed": 1,
+          "quantity": {
+            "value": 30,
+            "units": "{tablet}",
+            "system": "http://unitsofmeasure.org",
+            "code": "{tablet}"
+          },
+          "expectedSupplyDuration": {
+            "value": 30,
+            "units": "days",
+            "system": "http://unitsofmeasure.org",
+            "code": "d"
+          }
+        }
+      }
+    },
+    {
+      "title": "MedicationPrescription/164",
+      "id": "https://fhir-api.smarthealthit.org/MedicationPrescription/164",
+      "updated": "2015-05-19T20:34:05.562-00:00",
+      "content": {
+        "resourceType": "MedicationPrescription",
+        "text": {
+          "status": "generated",
+          "div": "<div>\n      Simvastatin 40 MG Oral Tablet (rxnorm: 198211)\n    </div>"
+        },
+        "contained": [
+          {
+            "resourceType": "Medication",
+            "id": "med",
+            "name": "Simvastatin 40 MG Oral Tablet",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "198211",
+                  "display": "Simvastatin 40 MG Oral Tablet"
+                }
+              ]
+            }
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "reference": "Patient/1577780"
+        },
+        "medication": {
+          "reference": "#med"
+        },
+        "dosageInstruction": [
+          {
+            "text": "1 qhs",
+            "timingSchedule": {
+              "event": [
+                {
+                  "start": "2009-03-23"
+                }
+              ],
+              "repeat": {
+                "frequency": 1,
+                "duration": 1,
+                "units": "d"
+              }
+            },
+            "doseQuantity": {
+              "value": 1,
+              "units": "{tablet}",
+              "system": "http://unitsofmeasure.org",
+              "code": "{tablet}"
+            }
+          }
+        ],
+        "dispense": {
+          "numberOfRepeatsAllowed": 1,
+          "quantity": {
+            "value": 90,
+            "units": "{tablet}",
+            "system": "http://unitsofmeasure.org",
+            "code": "{tablet}"
+          },
+          "expectedSupplyDuration": {
+            "value": 90,
+            "units": "days",
+            "system": "http://unitsofmeasure.org",
+            "code": "d"
+          }
+        }
+      }
+    },
+    {
+      "title": "MedicationPrescription/165",
+      "id": "https://fhir-api.smarthealthit.org/MedicationPrescription/165",
+      "updated": "2015-05-19T20:34:05.562-00:00",
+      "content": {
+        "resourceType": "MedicationPrescription",
+        "text": {
+          "status": "generated",
+          "div": "<div>\n      Thyroxine 0.2 MG Oral Tablet [Levothroid] (rxnorm: 206533)\n    </div>"
+        },
+        "contained": [
+          {
+            "resourceType": "Medication",
+            "id": "med",
+            "name": "Thyroxine 0.2 MG Oral Tablet [Levothroid]",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "206533",
+                  "display": "Thyroxine 0.2 MG Oral Tablet [Levothroid]"
+                }
+              ]
+            }
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "reference": "Patient/1577780"
+        },
+        "medication": {
+          "reference": "#med"
+        },
+        "dosageInstruction": [
+          {
+            "text": "1 daily",
+            "timingSchedule": {
+              "event": [
+                {
+                  "start": "2009-03-23"
+                }
+              ],
+              "repeat": {
+                "frequency": 1,
+                "duration": 1,
+                "units": "d"
+              }
+            },
+            "doseQuantity": {
+              "value": 1,
+              "units": "{tablet}",
+              "system": "http://unitsofmeasure.org",
+              "code": "{tablet}"
+            }
+          }
+        ],
+        "dispense": {
+          "numberOfRepeatsAllowed": 1,
+          "quantity": {
+            "value": 78,
+            "units": "{tablet}",
+            "system": "http://unitsofmeasure.org",
+            "code": "{tablet}"
+          },
+          "expectedSupplyDuration": {
+            "value": 90,
+            "units": "days",
+            "system": "http://unitsofmeasure.org",
+            "code": "d"
+          }
+        }
+      }
+    },
+    {
+      "title": "MedicationPrescription/166",
+      "id": "https://fhir-api.smarthealthit.org/MedicationPrescription/166",
+      "updated": "2015-05-19T20:34:05.562-00:00",
+      "content": {
+        "resourceType": "MedicationPrescription",
+        "text": {
+          "status": "generated",
+          "div": "<div>\n      24 HR venlafaxine 75 MG Extended Release Capsule [Effexor] (rxnorm: 729929)\n    </div>"
+        },
+        "contained": [
+          {
+            "resourceType": "Medication",
+            "id": "med",
+            "name": "24 HR venlafaxine 75 MG Extended Release Capsule [Effexor]",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "729929",
+                  "display": "24 HR venlafaxine 75 MG Extended Release Capsule [Effexor]"
+                }
+              ]
+            }
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "reference": "Patient/1577780"
+        },
+        "medication": {
+          "reference": "#med"
+        },
+        "dosageInstruction": [
+          {
+            "text": "1 daily",
+            "timingSchedule": {
+              "event": [
+                {
+                  "start": "2009-05-18"
+                }
+              ],
+              "repeat": {
+                "frequency": 1,
+                "duration": 1,
+                "units": "d"
+              }
+            },
+            "doseQuantity": {
+              "value": 1,
+              "units": "{tablet}",
+              "system": "http://unitsofmeasure.org",
+              "code": "{tablet}"
+            }
+          }
+        ],
+        "dispense": {
+          "numberOfRepeatsAllowed": 1,
+          "quantity": {
+            "value": 90,
+            "units": "{tablet}",
+            "system": "http://unitsofmeasure.org",
+            "code": "{tablet}"
+          },
+          "expectedSupplyDuration": {
+            "value": 90,
+            "units": "days",
+            "system": "http://unitsofmeasure.org",
+            "code": "d"
+          }
+        }
+      }
+    },
+    {
+      "title": "MedicationPrescription/167",
+      "id": "https://fhir-api.smarthealthit.org/MedicationPrescription/167",
+      "updated": "2015-05-19T20:34:05.562-00:00",
+      "content": {
+        "resourceType": "MedicationPrescription",
+        "text": {
+          "status": "generated",
+          "div": "<div>\n      Amoxicillin 875 MG / Clavulanate 125 MG Oral Tablet (rxnorm: 562508)\n    </div>"
+        },
+        "contained": [
+          {
+            "resourceType": "Medication",
+            "id": "med",
+            "name": "Amoxicillin 875 MG / Clavulanate 125 MG Oral Tablet",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "562508",
+                  "display": "Amoxicillin 875 MG / Clavulanate 125 MG Oral Tablet"
+                }
+              ]
+            }
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "reference": "Patient/1577780"
+        },
+        "medication": {
+          "reference": "#med"
+        },
+        "dosageInstruction": [
+          {
+            "text": "1 bid",
+            "timingSchedule": {
+              "event": [
+                {
+                  "start": "2009-06-01"
+                }
+              ],
+              "repeat": {
+                "frequency": 2,
+                "duration": 1,
+                "units": "d"
+              }
+            },
+            "doseQuantity": {
+              "value": 1,
+              "units": "{tablet}",
+              "system": "http://unitsofmeasure.org",
+              "code": "{tablet}"
+            }
+          }
+        ],
+        "dispense": {
+          "numberOfRepeatsAllowed": 1,
+          "quantity": {
+            "value": 20,
+            "units": "{tablet}",
+            "system": "http://unitsofmeasure.org",
+            "code": "{tablet}"
+          },
+          "expectedSupplyDuration": {
+            "value": 10,
+            "units": "days",
+            "system": "http://unitsofmeasure.org",
+            "code": "d"
+          }
+        }
+      }
+    },
+    {
+      "title": "MedicationPrescription/168",
+      "id": "https://fhir-api.smarthealthit.org/MedicationPrescription/168",
+      "updated": "2015-05-19T20:34:05.562-00:00",
+      "content": {
+        "resourceType": "MedicationPrescription",
+        "text": {
+          "status": "generated",
+          "div": "<div>\n      Tamoxifen 10 MG Oral Tablet (rxnorm: 198240)\n    </div>"
+        },
+        "contained": [
+          {
+            "resourceType": "Medication",
+            "id": "med",
+            "name": "Tamoxifen 10 MG Oral Tablet",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "198240",
+                  "display": "Tamoxifen 10 MG Oral Tablet"
+                }
+              ]
+            }
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "reference": "Patient/1577780"
+        },
+        "medication": {
+          "reference": "#med"
+        },
+        "dosageInstruction": [
+          {
+            "text": "1 bid",
+            "timingSchedule": {
+              "event": [
+                {
+                  "start": "2009-06-17"
+                }
+              ],
+              "repeat": {
+                "frequency": 2,
+                "duration": 1,
+                "units": "d"
+              }
+            },
+            "doseQuantity": {
+              "value": 1,
+              "units": "{tablet}",
+              "system": "http://unitsofmeasure.org",
+              "code": "{tablet}"
+            }
+          }
+        ],
+        "dispense": {
+          "numberOfRepeatsAllowed": 1,
+          "quantity": {
+            "value": 180,
+            "units": "{tablet}",
+            "system": "http://unitsofmeasure.org",
+            "code": "{tablet}"
+          },
+          "expectedSupplyDuration": {
+            "value": 90,
+            "units": "days",
+            "system": "http://unitsofmeasure.org",
+            "code": "d"
+          }
+        }
+      }
+    },
+    {
+      "title": "MedicationPrescription/169",
+      "id": "https://fhir-api.smarthealthit.org/MedicationPrescription/169",
+      "updated": "2015-05-19T20:34:05.562-00:00",
+      "content": {
+        "resourceType": "MedicationPrescription",
+        "text": {
+          "status": "generated",
+          "div": "<div>\n      Metformin 1000 MG / sitagliptin 50 MG Oral Tablet [Janumet 50/1000] (rxnorm: 861771)\n    </div>"
+        },
+        "contained": [
+          {
+            "resourceType": "Medication",
+            "id": "med",
+            "name": "Metformin 1000 MG / sitagliptin 50 MG Oral Tablet [Janumet 50/1000]",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "861771",
+                  "display": "Metformin 1000 MG / sitagliptin 50 MG Oral Tablet [Janumet 50/1000]"
+                }
+              ]
+            }
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "reference": "Patient/1577780"
+        },
+        "medication": {
+          "reference": "#med"
+        },
+        "dosageInstruction": [
+          {
+            "text": "1 bid",
+            "timingSchedule": {
+              "event": [
+                {
+                  "start": "2009-06-17"
+                }
+              ],
+              "repeat": {
+                "frequency": 2,
+                "duration": 1,
+                "units": "d"
+              }
+            },
+            "doseQuantity": {
+              "value": 1,
+              "units": "{tablet}",
+              "system": "http://unitsofmeasure.org",
+              "code": "{tablet}"
+            }
+          }
+        ],
+        "dispense": {
+          "numberOfRepeatsAllowed": 1,
+          "quantity": {
+            "value": 180,
+            "units": "{tablet}",
+            "system": "http://unitsofmeasure.org",
+            "code": "{tablet}"
+          },
+          "expectedSupplyDuration": {
+            "value": 90,
+            "units": "days",
+            "system": "http://unitsofmeasure.org",
+            "code": "d"
+          }
+        }
+      }
+    },
+    {
+      "title": "MedicationPrescription/170",
+      "id": "https://fhir-api.smarthealthit.org/MedicationPrescription/170",
+      "updated": "2015-05-19T20:34:05.562-00:00",
+      "content": {
+        "resourceType": "MedicationPrescription",
+        "text": {
+          "status": "generated",
+          "div": "<div>\n      200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler [ProAir HFA] (rxnorm: 745752)\n    </div>"
+        },
+        "contained": [
+          {
+            "resourceType": "Medication",
+            "id": "med",
+            "name": "200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler [ProAir HFA]",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "745752",
+                  "display": "200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler [ProAir HFA]"
+                }
+              ]
+            }
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "reference": "Patient/1577780"
+        },
+        "medication": {
+          "reference": "#med"
+        },
+        "dosageInstruction": [
+          {
+            "text": "2 puffs qid prn SOB",
+            "timingSchedule": {
+              "event": [
+                {
+                  "start": "2009-07-06"
+                }
+              ],
+              "repeat": {
+                "frequency": 4,
+                "duration": 1,
+                "units": "d"
+              }
+            },
+            "asNeededBoolean": true,
+            "doseQuantity": {
+              "value": 2,
+              "units": "{puff}",
+              "system": "http://unitsofmeasure.org",
+              "code": "{puff}"
+            }
+          }
+        ],
+        "dispense": {
+          "numberOfRepeatsAllowed": 1,
+          "quantity": {
+            "value": 1,
+            "units": "{puff}",
+            "system": "http://unitsofmeasure.org",
+            "code": "{puff}"
+          },
+          "expectedSupplyDuration": {
+            "value": 25,
+            "units": "days",
+            "system": "http://unitsofmeasure.org",
+            "code": "d"
+          }
+        }
+      }
+    },
+    {
+      "title": "MedicationPrescription/171",
+      "id": "https://fhir-api.smarthealthit.org/MedicationPrescription/171",
+      "updated": "2015-05-19T20:34:05.562-00:00",
+      "content": {
+        "resourceType": "MedicationPrescription",
+        "text": {
+          "status": "generated",
+          "div": "<div>\n      venlafaxine 75 MG Oral Tablet (rxnorm: 313586)\n    </div>"
+        },
+        "contained": [
+          {
+            "resourceType": "Medication",
+            "id": "med",
+            "name": "venlafaxine 75 MG Oral Tablet",
+            "code": {
+              "coding": [
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "313586",
+                  "display": "venlafaxine 75 MG Oral Tablet"
+                }
+              ]
+            }
+          }
+        ],
+        "status": "active",
+        "patient": {
+          "reference": "Patient/1577780"
+        },
+        "medication": {
+          "reference": "#med"
+        },
+        "dosageInstruction": [
+          {
+            "text": "1 bid",
+            "timingSchedule": {
+              "event": [
+                {
+                  "start": "2009-07-12"
+                }
+              ],
+              "repeat": {
+                "frequency": 2,
+                "duration": 1,
+                "units": "d"
+              }
+            },
+            "doseQuantity": {
+              "value": 1,
+              "units": "{tablet}",
+              "system": "http://unitsofmeasure.org",
+              "code": "{tablet}"
+            }
+          }
+        ],
+        "dispense": {
+          "numberOfRepeatsAllowed": 1,
+          "quantity": {
+            "value": 60,
+            "units": "{tablet}",
+            "system": "http://unitsofmeasure.org",
+            "code": "{tablet}"
+          },
+          "expectedSupplyDuration": {
+            "value": 30,
+            "units": "days",
+            "system": "http://unitsofmeasure.org",
+            "code": "d"
+          }
+        }
+      }
+    }
+  ]
+}

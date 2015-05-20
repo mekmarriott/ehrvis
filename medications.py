@@ -1,29 +1,30 @@
 #!/usr/bin/env python
 # Need to parse query output to store information of interest
 
-from flask import Flask, request
-import json
+from flask import Flask, request, json
+from dateutil import parser
+import datetime
 from pprint import pprint
 
-class MedicationEntry():
+class MedicationEntry(object):
     '''This class ...'''
 
-    def __init__(self, data):
+    def __init__(self, name, start, status, prescriber, dose, admMethod, end):
         try:
             # This gives the display name of the medication:
-            self.name =  data["content"]["medication"]["display"]
+            self.name =  name
             # Date written:
-            self.start = data["content"]["dateWritten"]
+            self.start = start
             # Status:
-            self.status = data["content"]["status"]
+            self.status = status
             # Prescriber (right now it is a URL. need to deal with that): 
-            self.prescriber = data["content"]["prescriber"]["reference"]
+            self.prescriber = prescriber
             # Dose: Another way to get this could be parsing the name field. Talk to group about this option
-            self.dose = data["content"]["dosageInstruction"][0]["doseQuantity"]["value"] 
+            self.dose = dose
             # AdministrationMethod: 
-            self.admMethod = data["content"]["dosageInstruction"][0]["route"]["text"]
+            self.admMethod = admMethod
             # End Date: 
-            self.end = data["content"]["dosageInstruction"][0]["timingSchedule"]["repeat"]["end"]
+            self.end = end
             # Duration: 
             # Reason: I haven't figured out how to get this yet
             # Class: I haven't figured out how to get this yet
@@ -34,31 +35,83 @@ class MedicationEntry():
     def __str__(self):
         result = ""
         result += "Name: " + self.name + "\n"
-        result += "Start Date:" + self.start + "\n"
+        result += "Start Date:" + str(self.start) + "\n"
         result += "Status: " + self.status + "\n"
         result += "Prescriber: " + self.prescriber + "\n"
-        result += "Dose: " + self.dose + "\n"
+        result += "Dose: " + str(self.dose) + "\n"
         result += "Admin Method: " + self.admMethod + "\n"
-        result += "End Date: " + self.end
+        result += "End Date: " + str(self.end)
         return result
 
-#class MedicationTrack():
-#    '''This class represents a specific medication that a patient is taking over time. This encompasses MedicationEvents such as changing the dose or 
-#       changing to another brand/generic version of the same compound. I need to think about how to most effectively store MedicationEvents associated with this. '''
-
-#    def __init__(self):
-#        pass
+    def to_dict(self):
+        return {'name': self.name, 'start': self.start, 'status': self.status, 'prescriber': self.prescriber, 'dose': self.dose, 'administrationMethod': self.admMethod, 'end': self.end}
 
 
-with open('static/FHIR_Sandbox/medications.json') as data_file:    
-    data = json.load(data_file)
-    #pprint(data)
-    #need to split the query results into individual entries
-    entryList = data["entry"]
-    for entry in entryList:
-        drug = MedicationEntry(entry)
-        print str(drug)
-        print "-------------------------------------------------------------------------------------------"
+class MedicationHistory(object):
+    def __init__(self):
+        self.meds = []
+
+    def add_meds(self, med_array):
+        for med in med_array:
+            if type(med) is MedicationEntry:
+                self.meds.append(med.to_dict())
+                
+def initialize_epic(data):
+    try:
+        name =  data["content"]["medication"]["display"]
+        start = data["content"]["dateWritten"]
+        status = data["content"]["status"]
+        prescriber = data["content"]["prescriber"]["reference"]
+        dose = data["content"]["dosageInstruction"][0]["doseQuantity"]["value"] 
+        admMethod = data["content"]["dosageInstruction"][0]["route"]["text"]
+        end = data["content"]["dosageInstruction"][0]["timingSchedule"]["repeat"]["end"]
+        return MedicationEntry(name, start, status, prescriber, dose, admMethod, end)
+    except: 
+        print "Malformed data for object initialization"
+        return None
+
+# with open('static/SMART_Sandbox/medications.json') as data_file:    
+#     data = json.load(data_file)
+#     #pprint(data)
+#     #need to split the query results into individual entries
+#     entryList = data["entry"]
+#     for entry in entryList:
+#         drug = MedicationEntry(entry)
+#         print str(drug)
+#         print "-------------------------------------------------------------------------------------------"
+
+def intialize_hapi(entry):
+    try:
+        start = entry["resource"]["dateWritten"]
+        start = parser.parse(start)
+        name = entry["resource"]["medication"]["display"]
+        duration = datetime.timedelta(days=1)
+        timeUnit = entry["resource"]["dispense"]["expectedSupplyDuration"]["units"]
+        if timeUnit == "months":
+            duration *= 30
+        elif timeUnit == "weeks":
+            duration *= 7
+        numUnits = entry["resource"]["dispense"]["expectedSupplyDuration"]["value"]
+        duration *= int(numUnits)
+        end = start + duration
+        dose = entry["resource"]["dispense"]["quantity"]["value"]
+        if "units" in entry["resource"]["dispense"]["quantity"]:
+            dose += " " + entry["resource"]["dispense"]["quantity"]["units"]
+        drug = MedicationEntry(name, start, "n/a", "n/a", dose, "n/a", end)
+        return drug
+    except:
+        return None
+
+def load_patient1_meds():
+    with open('static/FHIR_Sandbox/patient1_medications.json') as medication_json:
+        entryList = json.load(medication_json)
+        returnList = []
+        for entry in entryList:
+            returnList.append(intialize_hapi(entry))
+        history = MedicationHistory();
+        history.add_meds(returnList)
+        return history
+
 
         
     
