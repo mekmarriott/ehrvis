@@ -50,6 +50,7 @@ class MedicationEntry(object):
 class MedicationHistory(object):
     def __init__(self):
         self.meds = []
+        self.minDate = datetime.datetime.now()
 
     def add_meds(self, med_array):
         med_array_set = set(med_array);
@@ -57,6 +58,9 @@ class MedicationHistory(object):
         for med in med_array:
             if type(med) is MedicationEntry:
                 self.meds.append(med.to_dict())
+                if med.start < self.minDate and med.start != "n/a":
+                    self.minDate = med.start
+        self.minDate = self.minDate - datetime.timedelta(days=30)
                 
 def initialize_epic(data):
     try:

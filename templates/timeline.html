@@ -28,7 +28,7 @@
 <!-- Custom javascript for timeline manipulation -->
 <script>
 	var timeline;
-	
+
     function addEventListeners() {
     	// attach events to the navigation buttons
 	    document.getElementById('zoomIn').onclick    = function () { zoom(-0.2); };
@@ -56,6 +56,7 @@
 		addEventListeners();
 		$.getJSON( "/_medications/", function(result) {
 			medEvents = result['medication_data']
+			minDate = result['minDate']
 			var medDataArray = []
 			for (var i in medEvents){
 				var medEvent = {
@@ -67,11 +68,12 @@
 				}
 				medDataArray.push(medEvent);
 			}
-			createMedicationTimeline(medDataArray);
+			createMedicationTimeline(medDataArray, minDate);
 		});
 	}
 
-	function createMedicationTimeline(medDataArray) {
+	function createMedicationTimeline(medDataArray, minDate) {
+		console.log(minDate);
 		items = new vis.DataSet(medDataArray);
 		
 		var groups = new vis.DataSet([
@@ -83,10 +85,10 @@
 		// create visualization
 		var container = document.getElementById('visualization');
 		var options = {
-			min: new Date(2014, 0, 1),                // lower limit of visible range
-		    max: new Date(2015, 0, 1),                // upper limit of visible range
-		    zoomMin: 1000 * 60 * 60 * 24,             // one day in milliseconds
-		    zoomMax: 1000 * 60 * 60 * 24 * 31 * 3,    // about three months in milliseconds
+			min: minDate,             // lower limit of visible range
+		    max: new Date(),                // upper limit of visible range
+		    zoomMin: 7 * 1000 * 60 * 60 * 24,             // one week in milliseconds
+		    zoomMax: 365 * 1000 * 60 * 60 * 24 * 31 * 3,    // about three years in milliseconds
 		
 		// option groupOrder can be a property name or a sort function
 		// the sort function must compare two groups and return a value
