@@ -28,6 +28,12 @@
 	</div>
 </div>
 
+<style>
+  label {
+    display: inline-block;
+    width: 5em;
+  }
+</style>
 <!-- Custom javascript for timeline manipulation -->
 <script>
 	var med_timeline;
@@ -58,7 +64,7 @@
 		var note_select = document.getElementById('note_select');
 		var note_focus = document.getElementById('note_focus');
 
-		med_select.onclick = function () {
+		note_select.onclick = function () {
 			var ids = note_selection.value.split(',').map(function (value) {
 			  return value.trim();
 			});
@@ -71,14 +77,14 @@
 		console.log("Loading");
 		addEventListeners();
 		$.getJSON( "/_medications/", function(result) {
-			medEvents = result['medication_data']
-			minDate = result['minDate']
-			var medDataArray = []
+			medEvents = result['medication_data'];
+			minDate = result['minDate'];
+			var medDataArray = [];
 			for (var i in medEvents){
 				var medEvent = {
 					id: i,
 					group: i%3,
-					content: medEvents[i].name,
+					content: '<a href="#" title="' + medEvents[i].name +'">' + medEvents[i].name + '</a>',
 					start: medEvents[i].start,
 					end: medEvents[i].end,
 				}
@@ -87,6 +93,9 @@
 			createMedicationTimeline(medDataArray, minDate);
 			createNoteTimeline(medDataArray, minDate);
 
+		});
+		$(function() {
+			$(document).tooltip();
 		});
 	}
 
