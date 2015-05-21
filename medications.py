@@ -60,6 +60,8 @@ class MedicationHistory(object):
                 self.meds.append(med.to_dict())
                 if med.start != "n/a" and med.start < self.minDate:
                     self.minDate = med.start
+                if med.name not in self.medNames:
+                    self.medNames.append(med.name)
         self.minDate = self.minDate - datetime.timedelta(days=30)
                 
 def initialize_epic(data):

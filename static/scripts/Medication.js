@@ -1,5 +1,4 @@
 function createMedicationTimeline(medDataArray, minDate) {
-	console.log(minDate);
 	var items = new vis.DataSet(medDataArray);
 	
 	var groups = new vis.DataSet([
