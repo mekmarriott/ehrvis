@@ -1,6 +1,7 @@
 function createMedicationTimeline(medDataArray, minDate) {
 	var items = new vis.DataSet(medDataArray);
-	
+	var maxDate = new Date();
+
 	var groups = new vis.DataSet([
 		{id: 0, content: 'First', value: 1},
 		{id: 1, content: 'Third', value: 3},
@@ -11,7 +12,7 @@ function createMedicationTimeline(medDataArray, minDate) {
 	var container = document.getElementById('med_visualization');
 	var options = {
 		min: minDate,             // lower limit of visible range
-	    max: new Date(),                // upper limit of visible range
+	    max: maxDate,                // upper limit of visible range
 	    zoomMin: 7 * 1000 * 60 * 60 * 24,             // one week in milliseconds
 	    zoomMax: 365 * 1000 * 60 * 60 * 24 * 31 * 3,    // about three years in milliseconds
 	
@@ -30,6 +31,8 @@ function createMedicationTimeline(medDataArray, minDate) {
 	med_timeline.setOptions(options);
 	med_timeline.setGroups(groups);
 	med_timeline.setItems(items);
+	med_timeline.setWindow(minDate,maxDate);
+
 
 	/**
      * When the med_timeline selects an object (or multiple objects), add object(s) 

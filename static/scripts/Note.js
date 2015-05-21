@@ -1,6 +1,7 @@
 function createNoteTimeline(noteDataArray, minDate) {
 	console.log(minDate);
 	var items = new vis.DataSet(noteDataArray);
+	var maxDate = new Date();
 	
 	var groups = new vis.DataSet([
 		{id: 1, content: 'Notes', value: 1},
@@ -13,7 +14,7 @@ function createNoteTimeline(noteDataArray, minDate) {
 	var container = document.getElementById('note_visualization');
 	var options = {
 		min: minDate,             // lower limit of visible range
-	    max: new Date(),                // upper limit of visible range
+	    max: maxDate,                // upper limit of visible range
 	    zoomMin: 7 * 1000 * 60 * 60 * 24,             // one week in milliseconds
 	    zoomMax: 365 * 1000 * 60 * 60 * 24 * 31 * 3,    // about three years in milliseconds
 	
@@ -32,6 +33,7 @@ function createNoteTimeline(noteDataArray, minDate) {
 	note_timeline.setOptions(options);
 	note_timeline.setGroups(groups);
 	note_timeline.setItems(items);
+	note_timeline.setWindow(minDate,maxDate);
 
 	/**
      * When the note_timeline selects an object (or multiple objects), add object(s) 

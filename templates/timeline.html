@@ -99,7 +99,7 @@
 			minDate = result['minDate']
 			var noteDataArray = []
 			for (var i in noteEvents){
-				console.log(noteEvents[i].visObject)
+				noteEvents[i].visObject.content = '<a href="#" title=" \nService:\n' + noteEvents[i].service + ' \n\nPreview:\n' + noteEvents[i].preview +'"><span class="glyphicon glyphicon-file"></span></a>'
 				noteDataArray.push(noteEvents[i].visObject);
 			}
 			createNoteTimeline(noteDataArray, minDate);
