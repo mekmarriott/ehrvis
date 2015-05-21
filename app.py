@@ -1,3 +1,11 @@
+# TODO: formatting notes/get better notes
+# TODO: get better med list?
+# TODO: replace toastr with polymer toast
+# TODO: organize medications by name
+# TODO: get medication groupings (snomed code?)
+
+
+
 """
 References:
 
@@ -55,7 +63,9 @@ def medications():
     medication_data = load_patient1_meds()
     print medication_data.medNames
     return jsonify(medication_data=medication_data.meds, 
-                            minDate=medication_data.minDate)
+                            minDate=medication_data.minDate,
+                            med_indices=[k for k in medication_data.idx2med],
+                            med_names=[medication_data.idx2med[k] for k in medication_data.idx2med])
 
 @app.route('/_notes/')
 def notes():
@@ -74,7 +84,6 @@ def note_fulltext(note_id):
     print "Called from toast"
     print note_data.notes[i]
     try:
-        print note_data.notes[i]
         return jsonify(fulltext=note_data.notes[i]['fulltext'])
     except:
         return jsonify(fulltext="Unavailable")

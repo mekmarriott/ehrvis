@@ -28,6 +28,8 @@ class MedicationEntry(object):
             # Duration: 
             # Reason: I haven't figured out how to get this yet
             # Class: I haven't figured out how to get this yet
+            # Display group
+            self.display_group = 0
         except: 
             print "Malformed data for object initialization"
     '''Function: str 
@@ -40,11 +42,12 @@ class MedicationEntry(object):
         result += "Prescriber: " + self.prescriber + "\n"
         result += "Dose: " + str(self.dose) + "\n"
         result += "Admin Method: " + self.admMethod + "\n"
-        result += "End Date: " + str(self.end)
+        result += "End Date: " + str(self.end) + "\n"
+        result += "Display Group:" + str(self.display_group) + "\n"
         return result
 
     def to_dict(self):
-        return {'name': self.name, 'start': self.start, 'status': self.status, 'prescriber': self.prescriber, 'dose': self.dose, 'administrationMethod': self.admMethod, 'end': self.end}
+        return {'name': self.name, 'start': self.start, 'status': self.status, 'prescriber': self.prescriber, 'dose': self.dose, 'administrationMethod': self.admMethod, 'end': self.end, 'display_group': self.display_group}
 
 
 class MedicationHistory(object):
@@ -52,16 +55,33 @@ class MedicationHistory(object):
         self.meds = []
         self.minDate = datetime.datetime.now()
         self.medNames = []
+        self.med2idx = {}
+        self.idx2med = {}
 
     def add_meds(self, med_array):
+        # make list of (unique) medication names
         self.medNames = list(set([med.name for med in med_array]))
+
+        # map medication names to display groups (for tracked display)
+        for i,name in enumerate(self.medNames):
+            self.idx2med[i]=name
+            self.med2idx[name]=i
+
+        # add each MedicationEvent from the input array to the MedicationHistory
         for med in med_array:
             if type(med) is MedicationEntry:
+                # set display group for current medication using the mapping generated above
+                med.display_group = self.med2idx[med.name]
+
+                # add MedicationEvent to history
                 self.meds.append(med.to_dict())
+
+                # update earliest time in history, if relevant
                 if med.start != "n/a" and med.start < self.minDate:
                     self.minDate = med.start
-                if med.name not in self.medNames:
-                    self.medNames.append(med.name)
+
+
+        # viewing buffer for time window
         self.minDate = self.minDate - datetime.timedelta(days=30)
                 
 def initialize_epic(data):

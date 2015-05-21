@@ -52,6 +52,28 @@ function createNoteTimeline(noteDataArray, minDate) {
     });
 }
 
+
+function addNoteEventListeners() {
+	// attach events to the navigation buttons
+    document.getElementById('note_zoomIn').onclick    = function () { note_zoom(-0.2); };
+    document.getElementById('note_zoomOut').onclick   = function () { note_zoom( 0.2); };
+    document.getElementById('note_moveLeft').onclick  = function () { note_move( 0.2); };
+    document.getElementById('note_moveRight').onclick = function () { note_move(-0.2); };
+
+
+    var note_selection = document.getElementById('note_selection');
+	var note_select = document.getElementById('note_select');
+	var note_focus = document.getElementById('note_focus');
+
+	note_select.onclick = function () {
+		var ids = note_selection.value.split(',').map(function (value) {
+		  return value.trim();
+		});
+		note_timeline.setSelection(ids, {focus: "checked"});
+	};
+}
+
+
 function getToast(note_index){
 	$.getJSON( "/_note/" + note_index, function(result) {
 		console.log(result);
@@ -76,4 +98,32 @@ function getToast(note_index){
 		  "hideMethod": "fadeOut"
 		}
 	});
+}
+
+/**
+ * Move the timeline a given percentage to left or right
+ * @param {Number} percentage   For example 0.1 (left) or -0.1 (right)
+ */
+function note_move (percentage) {
+    var range = note_timeline.getWindow();
+    var interval = range.end - range.start;
+
+    note_timeline.setWindow({
+        start: range.start.valueOf() - interval * percentage,
+        end:   range.end.valueOf()   - interval * percentage
+    });
+}
+
+/**
+ * Zoom the timeline a given percentage in or out
+ * @param {Number} percentage   For example 0.1 (zoom out) or -0.1 (zoom in)
+ */
+function note_zoom (percentage) {
+    var range = note_timeline.getWindow();
+    var interval = range.end - range.start;
+
+    note_timeline.setWindow({
+        start: range.start.valueOf() - interval * percentage,
+        end:   range.end.valueOf()   + interval * percentage
+    });
 }
