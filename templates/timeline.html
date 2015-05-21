@@ -3,14 +3,17 @@
 <!-- styling specific to timeline here -->
 {% block css %}
 <link href="/static/css/vis.min.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 {% endblock %}
 
 <!-- Html for timeline here -->
 {% block main %}
+<script src = "//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 <div class="container-fluid">
 	<p>
 	  Select item(s): <input type="text" id="med_selection" value="1, 2"><input type="button" id="med_select" value="Select"><br>
-	  <label><input type="checkbox" id="med_focus" checked> Focus on selection</label>
 	</p>
 	<div id="med_visualization">
 		<div class="menu">
@@ -22,7 +25,6 @@
 	</div>
 	<p>
 	  Select item(s): <input type="text" id="note_selection" value="1, 2"><input type="button" id="note_select" value="Select"><br>
-	  <label><input type="checkbox" id="note_focus" checked> Focus on selection</label>
 	</p>
 	<div id="note_visualization">
 	</div>
@@ -57,7 +59,7 @@
 			var ids = med_selection.value.split(',').map(function (value) {
 			  return value.trim();
 			});
-			med_timeline.setSelection(ids, {focus: med_focus.checked});
+			med_timeline.setSelection(ids, {focus: "checked"});
 		};
 
 	    var note_selection = document.getElementById('note_selection');
@@ -68,7 +70,7 @@
 			var ids = note_selection.value.split(',').map(function (value) {
 			  return value.trim();
 			});
-			note_timeline.setSelection(ids, {focus: note_focus.checked});
+			note_timeline.setSelection(ids, {focus: "checked"});
 		};
 
     }
@@ -84,9 +86,11 @@
 				var medEvent = {
 					id: i,
 					group: i%3,
-					content: '<a href="#" title="' + medEvents[i].name +'">' + medEvents[i].name + '</a>',
+					content: '<a href="#" title="' + medEvents[i].name + '">' + medEvents[i].name + '</a>',
+					// title = "put text for tooltip here", what goes between > < is what you want shown on the timeline
 					start: medEvents[i].start,
 					end: medEvents[i].end,
+					//subgroup: <- fill in subgroup
 				}
 				medDataArray.push(medEvent);
 			}
@@ -99,15 +103,11 @@
 			minDate = result['minDate']
 			var noteDataArray = []
 			for (var i in noteEvents){
-				noteEvents[i].visObject.content = '<a href="#" title=" \nService:\n' + noteEvents[i].service + ' \n\nPreview:\n' + noteEvents[i].preview +'"><span class="glyphicon glyphicon-file"></span></a>'
+				noteEvents[i].visObject.content = '<a onclick="getToast(' + i + ')" title=" \nService:\n' + noteEvents[i].service + ' \n\nPreview:\n' + noteEvents[i].preview +'"><span class="glyphicon glyphicon-file"></span></a>'
 				noteDataArray.push(noteEvents[i].visObject);
 			}
 			createNoteTimeline(noteDataArray, minDate);
 
-		});
-
-		$(function() {
-			$(document).tooltip();
 		});
 
 	}
@@ -126,7 +126,7 @@
             start: range.start.valueOf() - interval * percentage,
             end:   range.end.valueOf()   - interval * percentage
         });
-    }
+	}
 
     /**
      * Zoom the timeline a given percentage in or out

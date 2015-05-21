@@ -13,6 +13,9 @@ from medications import load_patient1_meds
 from notes import load_mimic_notes
 import json
 
+global medication_data
+global note_data
+
 #=======================================================================
 #       Application Configuration
 #=======================================================================
@@ -46,6 +49,7 @@ def timeline():
 #=======================================================================
 @app.route('/_medications/')
 def medications():
+    global medication_data
     print "Called"
     """Return all medication information."""
     medication_data = load_patient1_meds()
@@ -55,12 +59,25 @@ def medications():
 
 @app.route('/_notes/')
 def notes():
+    global note_data
     print "Called"
     """Return all note information."""
     note_data = load_mimic_notes()
-    print note_data
+    # print note_data
     return jsonify(note_data=note_data.notes, 
                             minDate=note_data.minDate)
+
+@app.route('/_note/<note_id>/')
+def note_fulltext(note_id):
+    global note_data
+    i=int(note_id)
+    print "Called from toast"
+    print note_data.notes[i]
+    try:
+        print note_data.notes[i]
+        return jsonify(fulltext=note_data.notes[i]['fulltext'])
+    except:
+        return jsonify(fulltext="Unavailable")
 #=======================================================================
 
 
