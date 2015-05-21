@@ -85,9 +85,20 @@
 				medDataArray.push(medEvent);
 			}
 			createMedicationTimeline(medDataArray, minDate);
-			createNoteTimeline(medDataArray, minDate);
 
 		});
+		$.getJSON( "/_notes/", function(result) {
+			noteEvents = result['note_data']
+			minDate = result['minDate']
+			var noteDataArray = []
+			for (var i in noteEvents){
+				console.log(noteEvents[i].visObject)
+				noteDataArray.push(noteEvents[i].visObject);
+			}
+			createNoteTimeline(noteDataArray, minDate);
+
+		});
+
 	}
 
 	
