@@ -1,61 +1,108 @@
 #!/usr/bin/env python
 # Need to parse query output to store information of interest
 
-from flask import Flask, request
-import json
+from flask import Flask, request, json
+from dateutil import parser
+import datetime 
 from pprint import pprint
 
-class NoteEntry():
-    '''This class ...'''
+# note JSON format:
+# // var note  = 
+# // {
+# // service: foo
+# // preview: 
+# // fulltext: 
+# // visObject: 
+# //  {
+# //  id:-
+# //  start: 'yyyy-mm-dd'
+# //  group: Enum
+# //  }
+# // }
 
-    def __init__(self, data):
+# group enumeration:
+# // 1 - Note
+# // 2 - Consult
+# // 3 - Radiology Report 
+# // 4 - Nursing Note
+
+
+class NoteEntry(object):
+
+    groupList = {1:"Note", 2:"Consult", 3:"Radiology Report", 4:"Nursing Note"}  
+
+    def __init__(self, service, preview, fulltext, _id, start, group):
         try:
-            # This gives the display name of the medication:
-            self.name =  data["content"]["medication"]["display"]
-            # Date written:
-            self.start = data["content"]["dateWritten"]
-            # Status:
-            self.status = data["content"]["status"]
-            # Prescriber (right now it is a URL. need to deal with that): 
-            self.prescriber = data["content"]["prescriber"]["reference"]
-            # Dose: Another way to get this could be parsing the name field. Talk to group about this option
-            self.dose = data["content"]["dosageInstruction"][0]["doseQuantity"]["value"] 
-            # AdministrationMethod: 
-            self.admMethod = data["content"]["dosageInstruction"][0]["route"]["text"]
-            # End Date: 
-            self.end = data["content"]["dosageInstruction"][0]["timingSchedule"]["repeat"]["end"]
-            # Duration: 
-            # Reason: I haven't figured out how to get this yet
-            # Class: I haven't figured out how to get this yet
+            self.service = service
+            self.preview = preview
+            self.fulltext = fulltext
+            self.visObject = {'id': _id,'start': start,'group':group}
         except: 
             print "Malformed data for object initialization"
-    '''Function: str 
-        Prints out the string representation of the drug (for debugging/information purposes)'''
+
+
     def __str__(self):
         result = ""
-        result += "Name: " + self.name + "\n"
-        result += "Start Date:" + self.start + "\n"
-        result += "Status: " + self.status + "\n"
-        result += "Prescriber: " + self.prescriber + "\n"
-        result += "Dose: " + self.dose + "\n"
-        result += "Admin Method: " + self.admMethod + "\n"
-        result += "End Date: " + self.end
+        result += "Group: " + self.visObject["group"] + "\n"
+        result += "Service: " + self.service + "\n"
+        result += "Date: " + str(self.visObject["start"]) + "\n"
+        result += "Preview: " + self.preview + "\n"
         return result
 
-#class MedicationTrack():
-#    '''This class represents a specific medication that a patient is taking over time. This encompasses MedicationEvents such as changing the dose or 
-#       changing to another brand/generic version of the same compound. I need to think about how to most effectively store MedicationEvents associated with this. '''
+    def get_start(self):
+        return self.visObject['start']
 
-#    def __init__(self):
-#        pass
+    def to_dict(self):
+        return {'service':self.service, 'preview':self.preview,'fulltext':self.fulltext,'visObject':self.visObject}
+
+class NoteHistory(object):
+    def __init__(self):
+        self.notes = []
+        self.minDate = datetime.datetime.now()
+
+    def __str__(self):
+        result = ""
+        for i,note in enumerate(self.notes):
+            result += "Note " + str(i) + " preview:" + note["preview"] + "\n"
+        return result
+
+    def add_notes(self, note_array):
+        for note in note_array:
+            if type(note) is NoteEntry:
+                self.notes.append(note.to_dict())
+                start = note.get_start()
+                if start != "n/a" and start < self.minDate:
+                    self.minDate = start
+        self.minDate = self.minDate - datetime.timedelta(days=30)
 
 
-with open('static/Note_Sandbox/notes.json') as data_file:    
-    data = json.load(data_file)
-    #pprint(data)
-    #need to split the query results into individual entries
-    entryList = data["entry"]
-    for entry in entryList:
-        drug = MedicationEntry(entry)
-        print str(drug)
-        print "-------------------------------------------------------------------------------------------"
+def initialize_mimic(entry):
+    try:
+        service = entry["service"]
+        preview = entry["preview"]
+        fulltext = entry["fulltext"]
+        _id = entry["visObject"]["id"]
+        start = entry["visObject"]["start"]
+        start = parser.parse(start)
+        group = entry["visObject"]["group"]
+        
+        return NoteEntry(service, preview, fulltext, _id, start, group)
+    except:
+        return None
+
+def load_mimic_notes():
+    entryList = json.load(open('static/Note_Sandbox/mimic_notes.json'))
+    returnList = []
+    for i,entry in enumerate(entryList):
+        returnList.append(initialize_mimic(entry))
+        returnList[-1].visObject["id"]=i
+    history = NoteHistory();
+    history.add_notes(returnList)
+    return history
+
+
+
+
+
+
+
