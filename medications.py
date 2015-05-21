@@ -54,8 +54,7 @@ class MedicationHistory(object):
         self.medNames = []
 
     def add_meds(self, med_array):
-        med_array_set = set(med_array);
-        med_array = list(med_array_set);
+        self.medNames = list(set([med.name for med in med_array]))
         for med in med_array:
             if type(med) is MedicationEntry:
                 self.meds.append(med.to_dict())
@@ -112,14 +111,13 @@ def intialize_hapi(entry):
         return None
 
 def load_patient1_meds():
-    with open('static/FHIR_Sandbox/patient1_medications.json') as medication_json:
-        entryList = json.load(medication_json)
-        returnList = []
-        for entry in entryList:
-            returnList.append(intialize_hapi(entry))
-        history = MedicationHistory();
-        history.add_meds(returnList)
-        return history
+    entryList = json.load(open('static/FHIR_Sandbox/patient1_medications.json'))
+    returnList = []
+    for entry in entryList:
+        returnList.append(intialize_hapi(entry))
+    history = MedicationHistory();
+    history.add_meds(returnList)
+    return history
 
 
         

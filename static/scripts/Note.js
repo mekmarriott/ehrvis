@@ -1,15 +1,16 @@
-function createNoteTimeline(medDataArray, minDate) {
+function createNoteTimeline(noteDataArray, minDate) {
 	console.log(minDate);
-	var items = new vis.DataSet(medDataArray);
+	var items = new vis.DataSet(noteDataArray);
 	
 	var groups = new vis.DataSet([
-		{id: 0, content: 'First', value: 1},
-		{id: 1, content: 'Third', value: 3},
-		{id: 2, content: 'Second', value: 2}
+		{id: 1, content: 'Notes', value: 1},
+		{id: 2, content: 'Consults', value: 2},
+		{id: 3, content: 'Radiology Reports', value: 3},
+		{id: 4, content: 'Nursing Notes', value: 4}
 	]);
 
 	// create visualization
-	var container = document.getElementById('med_visualization');
+	var container = document.getElementById('note_visualization');
 	var options = {
 		min: minDate,             // lower limit of visible range
 	    max: new Date(),                // upper limit of visible range
