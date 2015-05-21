@@ -49,3 +49,29 @@ function createNoteTimeline(noteDataArray, minDate) {
       console.log("changing range- " + JSON.stringify(properties));
     });
 }
+
+function getToast(note_index){
+	$.getJSON( "/_note/" + note_index, function(result) {
+		console.log(result);
+		var text= result.fulltext;
+		var title ="note";
+		Command: toastr["info"](text, title.toUpperCase())
+
+		toastr.options = {
+		  "closeButton": true,
+		  "debug": false,
+		  "newestOnTop": true,
+		  "progressBar": false,
+		  "positionClass": "toast-top-center",
+		  "preventDuplicates": false,
+		  "showDuration": "3000",
+		  "hideDuration": "1000",
+		  "timeOut": "50000",
+		  "extendedTimeOut": "1000",
+		  "showEasing": "swing",
+		  "hideEasing": "linear",
+		  "showMethod": "fadeIn",
+		  "hideMethod": "fadeOut"
+		}
+	});
+}

@@ -13,6 +13,9 @@ from medications import load_patient1_meds
 from notes import load_mimic_notes
 import json
 
+global medication_data
+global note_data
+
 #=======================================================================
 #       Application Configuration
 #=======================================================================
@@ -61,6 +64,14 @@ def notes():
     print note_data
     return jsonify(note_data=note_data.notes, 
                             minDate=note_data.minDate)
+
+@app.route('/_note/<note_id>/')
+def note_fulltext(note_id):
+    try:
+        print note_data.notes[i]
+        return jsonify(fulltext=note_data.notes[i]['fulltext'])
+    except:
+        return jsonify(fulltext="Unavailable")
 #=======================================================================
 
 
