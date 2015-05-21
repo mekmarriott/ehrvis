@@ -52,6 +52,15 @@ def medications():
     print medication_data.medNames
     return jsonify(medication_data=medication_data.meds, 
                             minDate=medication_data.minDate)
+
+@app.route('/_notes/')
+def notes():
+    print "Called"
+    """Return all note information."""
+    note_data = load_mimic_notes()
+    print note_data
+    return jsonify(note_data=note_data.notes, 
+                            minDate=note_data.minDate)
 #=======================================================================
 
 
