@@ -5,6 +5,7 @@ from flask import Flask, request, json
 from dateutil import parser
 import datetime
 from pprint import pprint
+import urllib2
 
 class MedicationEntry(object):
     '''This class ...'''
@@ -139,6 +140,13 @@ def load_patient1_meds():
     history.add_meds(returnList)
     return history
 
+#RXnorm testing for determining drug class
+drug = "metronidazole"
+classURL = 'http://rxnav.nlm.nih.gov/REST/rxclass/class/byDrugName.json?drugName=' + drug + '&relaSource=ATC'
+classReq = urllib2.urlopen(classURL)
+rxclass = json.loads(classReq.read())
+#print rxclass
+print rxclass["rxclassDrugInfoList"]["rxclassDrugInfo"][0]["rxclassMinConceptItem"]["className"]
 
         
     
