@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Need to parse query output to store information of interest
+# The classes and methods in this file are used to parse and organize medication information from the Ajax queries made in app.py
 
 from flask import Flask, request, json
 from dateutil import parser
@@ -8,26 +8,23 @@ from pprint import pprint
 import urllib2
 
 class MedicationEntry(object):
-    '''This class ...'''
+    '''This class represents a single medication entry in a patient's record. Its attributes consist of basic information about the drug originally
+       obtained from a JSON-formatted query result. '''
 
-    def __init__(self, name, start, status, prescriber, dose, admMethod, end):
+    def __init__(self, name, start, status, dose, admMethod, end):
         try:
-            # This gives the display name of the medication:
+            # This gives the display name of the medication. Generally includes a dose:
             self.name =  name
             # Date written:
             self.start = start
             # Status:
             self.status = status
-            # Prescriber (right now it is a URL. need to deal with that): 
-            self.prescriber = prescriber
-            # Dose: Another way to get this could be parsing the name field. Talk to group about this option
+            # Dose: Another way to get this could be parsing the name field. Talk to group about this option. Also, may need variable for dose units.
             self.dose = dose
             # AdministrationMethod: 
             self.admMethod = admMethod
             # End Date: 
             self.end = end
-            # Duration: 
-            # Reason: I haven't figured out how to get this yet
             # Class: ATC drug classification obtained using the RxNorm API. For now, if a medication belongs to multiple subgroups, we will use the first one.
             self.classification = getClassification(self.name)
             # Display group
@@ -41,7 +38,6 @@ class MedicationEntry(object):
         result += "Name: " + self.name + "\n"
         result += "Start Date:" + str(self.start) + "\n"
         result += "Status: " + self.status + "\n"
-        result += "Prescriber: " + self.prescriber + "\n"
         result += "Dose: " + str(self.dose) + "\n"
         result += "Admin Method: " + self.admMethod + "\n"
         result += "End Date: " + str(self.end) + "\n"
@@ -50,10 +46,11 @@ class MedicationEntry(object):
         return result
 
     def to_dict(self):
-        return {'name': self.name, 'start': self.start, 'status': self.status, 'prescriber': self.prescriber, 'dose': self.dose, 'administrationMethod': self.admMethod, 'end': self.end, 'classification': self.classification, 'display_group': self.display_group}
+        return {'name': self.name, 'start': self.start, 'status': self.status, 'dose': self.dose, 'administrationMethod': self.admMethod, 'end': self.end, 'classification': self.classification, 'display_group': self.display_group}
 
 
 class MedicationHistory(object):
+    '''This class '''
     def __init__(self):
         self.meds = []
         self.minDate = datetime.datetime.now()
@@ -92,11 +89,10 @@ def initialize_epic(data):
         name =  data["content"]["medication"]["display"]
         start = data["content"]["dateWritten"]
         status = data["content"]["status"]
-        prescriber = data["content"]["prescriber"]["reference"]
         dose = data["content"]["dosageInstruction"][0]["doseQuantity"]["value"] 
         admMethod = data["content"]["dosageInstruction"][0]["route"]["text"]
         end = data["content"]["dosageInstruction"][0]["timingSchedule"]["repeat"]["end"]
-        return MedicationEntry(name, start, status, prescriber, dose, admMethod, end)
+        return MedicationEntry(name, start, status, dose, admMethod, end)
     except: 
         print "Malformed data for object initialization"
         return None
@@ -128,7 +124,7 @@ def intialize_hapi(entry):
         dose = entry["resource"]["dispense"]["quantity"]["value"]
         if "units" in entry["resource"]["dispense"]["quantity"]:
             dose += " " + entry["resource"]["dispense"]["quantity"]["units"]
-        drug = MedicationEntry(name, start, "n/a", "n/a", dose, "n/a", end)
+        drug = MedicationEntry(name, start, "n/a", dose, "n/a", end)
         return drug
     except:
         return None
@@ -153,5 +149,4 @@ def getClassification(name):
         return classification
     except:
         return None
-
 
