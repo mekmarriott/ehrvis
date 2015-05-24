@@ -28,7 +28,8 @@ class MedicationEntry(object):
             self.end = end
             # Duration: 
             # Reason: I haven't figured out how to get this yet
-            # Class: I haven't figured out how to get this yet
+            # Class: ATC drug classification obtained using the RxNorm API. For now, if a medication belongs to multiple subgroups, we will use the first one.
+            self.classification = getClassification(self.name)
             # Display group
             self.display_group = 0
         except: 
@@ -44,11 +45,12 @@ class MedicationEntry(object):
         result += "Dose: " + str(self.dose) + "\n"
         result += "Admin Method: " + self.admMethod + "\n"
         result += "End Date: " + str(self.end) + "\n"
-        result += "Display Group:" + str(self.display_group) + "\n"
+        result += "Classification: " + str(self.classification) + "\n"
+        result += "Display Group:" + str(self.display_group) + "\n" 
         return result
 
     def to_dict(self):
-        return {'name': self.name, 'start': self.start, 'status': self.status, 'prescriber': self.prescriber, 'dose': self.dose, 'administrationMethod': self.admMethod, 'end': self.end, 'display_group': self.display_group}
+        return {'name': self.name, 'start': self.start, 'status': self.status, 'prescriber': self.prescriber, 'dose': self.dose, 'administrationMethod': self.admMethod, 'end': self.end, 'classification': self.classification, 'display_group': self.display_group}
 
 
 class MedicationHistory(object):
@@ -140,13 +142,16 @@ def load_patient1_meds():
     history.add_meds(returnList)
     return history
 
-#RXnorm testing for determining drug class
-drug = "metronidazole"
-classURL = 'http://rxnav.nlm.nih.gov/REST/rxclass/class/byDrugName.json?drugName=' + drug + '&relaSource=ATC'
-classReq = urllib2.urlopen(classURL)
-rxclass = json.loads(classReq.read())
-#print rxclass
-print rxclass["rxclassDrugInfoList"]["rxclassDrugInfo"][0]["rxclassMinConceptItem"]["className"]
+def getClassification(name):
+    # Get ATC classification of a drug using the RxNorm API.
+    drug = name.split(' ')[0]
+    classURL = 'http://rxnav.nlm.nih.gov/REST/rxclass/class/byDrugName.json?drugName=' + drug + '&relaSource=ATC'
+    classReq = urllib2.urlopen(classURL)
+    rxclass = json.loads(classReq.read())
+    try:
+        classification = rxclass["rxclassDrugInfoList"]["rxclassDrugInfo"][0]["rxclassMinConceptItem"]["className"]
+        return classification
+    except:
+        return None
 
-        
-    
+
