@@ -5,6 +5,7 @@
 <link href="/static/css/vis.min.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+<!-- <link rel="stylesheet" href="/static/css/style.css"> -->
 {% endblock %}
 
 <!-- Html for timeline here -->
@@ -70,8 +71,9 @@
 				var medEvent = {
 					id: i,
 					group: medEvents[i].display_group,
-					content: '<a href="#" title="' + medEvents[i].name + '">' + medEvents[i].name + '</a>',
+					content: '<a href="#" title="' + medEvents[i].name + '"></a>',
 					// title = "put text for tooltip here", what goes between > < is what you want shown on the timeline
+					className: 'orange',
 					start: medEvents[i].start,
 					end: medEvents[i].end,
 					//subgroup: <- fill in subgroup

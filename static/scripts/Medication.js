@@ -50,7 +50,11 @@ function createMedicationTimeline(medDataArray, minDate) {
 		groupOrder: function (a, b) {
 		  return a.value - b.value;
 		},
-		editable: false
+		editable: false,
+		margin: {
+	      item: 20,
+	      axis: 40
+	    }
 	};
 
 	med_timeline = new vis.Timeline(container);
