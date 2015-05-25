@@ -47,7 +47,7 @@ class NoteEntry(object):
 
     def __str__(self):
         result = ""
-        result += "Group: " + self.visObject["group"] + "\n"
+        result += "Group: " + str(self.visObject["group"]) + "\n"
         result += "Service: " + self.service + "\n"
         result += "Date: " + str(self.visObject["start"]) + "\n"
         result += "Preview: " + self.preview + "\n"
@@ -99,6 +99,7 @@ def initialize_mimic(entry):
 
 def initialize_epic(entry):
     try:
+
         service = entry["service"]
         preview = entry["preview"]
         fulltext = entry["fulltext"]
@@ -110,8 +111,8 @@ def initialize_epic(entry):
         inpatient = entry["inpatient"]
         admission = entry["admission"]
         discharge = entry["discharge"]
-        
-        return NoteEntry(service, preview, fulltext, _id, start, group, _type, inpatient, admisison, discharge)
+
+        return NoteEntry(service,preview,fulltext,_id,start,group,_type,inpatient,admission,discharge)
     except:
         print "Malformed data for NoteEntry object population"
         return None    
