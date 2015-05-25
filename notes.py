@@ -31,12 +31,16 @@ class NoteEntry(object):
 
     groupList = {1:"Note", 2:"Consult", 3:"Radiology Report", 4:"Nursing Note"}  
 
-    def __init__(self, service, preview, fulltext, _id, start, group):
+    def __init__(self, service, preview, fulltext, _id, start, group=1, _type = "", inpatient=False, admission=False, discharge=False):
         try:
             self.service = service
             self.preview = preview
             self.fulltext = fulltext
             self.visObject = {'id': _id,'start': start,'group':group}
+            self._type = _type
+            self.inpatient = inpatient
+            self.admission = admission
+            self.discharge = discharge
         except: 
             print "Malformed data for object initialization"
 
@@ -49,11 +53,13 @@ class NoteEntry(object):
         result += "Preview: " + self.preview + "\n"
         return result
 
+
     def get_start(self):
         return self.visObject['start']
 
     def to_dict(self):
-        return {'service':self.service, 'preview':self.preview,'fulltext':self.fulltext,'visObject':self.visObject}
+        return {'service':self.service, 'preview':self.preview,'fulltext':self.fulltext,'visObject':self.visObject,         
+                'type':self._type, 'inpatient': self.inpatient, 'admission':self.admission, 'discharge':self.discharge}
 
 class NoteHistory(object):
     def __init__(self):
@@ -88,7 +94,37 @@ def initialize_mimic(entry):
         
         return NoteEntry(service, preview, fulltext, _id, start, group)
     except:
+        print "Malformed data for NoteEntry object population"
         return None
+
+def initialize_epic(entry):
+    try:
+        service = entry["service"]
+        preview = entry["preview"]
+        fulltext = entry["fulltext"]
+        _id = entry["visObject"]["id"]
+        start = entry["visObject"]["start"]
+        start = parser.parse(start)
+        group = entry["visObject"]["group"]
+        _type = entry["type"]
+        inpatient = entry["inpatient"]
+        admission = entry["admission"]
+        discharge = entry["discharge"]
+        
+        return NoteEntry(service, preview, fulltext, _id, start, group, _type, inpatient, admisison, discharge)
+    except:
+        print "Malformed data for NoteEntry object population"
+        return None    
+
+def load_epic_notes():
+    entryList = json.load(open('static/Note_Sandbox/notes.json'))
+    returnList = []
+    for i,entry in enumerate(entryList):
+        returnList.append(initialize_epic(entry))
+        returnList[-1].visObject["id"]=i
+    history = NoteHistory();
+    history.add_notes(returnList)
+    return history    
 
 def load_mimic_notes():
     entryList = json.load(open('static/Note_Sandbox/mimic_notes.json'))

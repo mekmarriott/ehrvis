@@ -72,7 +72,8 @@ def notes():
     global note_data
     print "Called"
     """Return all note information."""
-    note_data = load_mimic_notes()
+    # note_data = load_mimic_notes()
+    note_data = load_epic_notes()
     # print note_data
     return jsonify(note_data=note_data.notes, 
                             minDate=note_data.minDate)
