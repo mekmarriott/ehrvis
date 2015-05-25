@@ -13,21 +13,28 @@
 
 <div class="container-fluid">
 	<p>
+	  Select item(s): <input type="text" id="note_selection" value="1, 2"><input type="button" id="note_select" value="Select"><br>
+	</p>
+	<div id="note_visualization">
+		<div class="menu">
+	        <input type="button" id="note_zoomIn" value="Zoom in"/>
+	        <input type="button" id="note_zoomOut" value="Zoom out"/>
+	        <input type="button" id="note_moveLeft" value="Move left"/>
+	        <input type="button" id="note_moveRight" value="Move right"/>
+    	</div>
+	</div>
+	<p>
 	  Select item(s): <input type="text" id="med_selection" value="1, 2"><input type="button" id="med_select" value="Select"><br>
 	</p>
 	<div id="med_visualization">
 		<div class="menu">
-	        <input type="button" id="zoomIn" value="Zoom in"/>
-	        <input type="button" id="zoomOut" value="Zoom out"/>
-	        <input type="button" id="moveLeft" value="Move left"/>
-	        <input type="button" id="moveRight" value="Move right"/>
+	        <input type="button" id="med_zoomIn" value="Zoom in"/>
+	        <input type="button" id="med_zoomOut" value="Zoom out"/>
+	        <input type="button" id="med_moveLeft" value="Move left"/>
+	        <input type="button" id="med_moveRight" value="Move right"/>
     	</div>
 	</div>
-	<p>
-	  Select item(s): <input type="text" id="note_selection" value="1, 2"><input type="button" id="note_select" value="Select"><br>
-	</p>
-	<div id="note_visualization">
-	</div>
+	
 </div>
 
 <style>
@@ -40,52 +47,29 @@
 <script>
 	var med_timeline;
 	var note_timeline;
+	var med_display_indices;
+	var med_display_names;
 
-    function addEventListeners() {
-    	// attach events to the navigation buttons
-	    document.getElementById('zoomIn').onclick    = function () { zoom(-0.2); };
-	    document.getElementById('zoomOut').onclick   = function () { zoom( 0.2); };
-	    document.getElementById('moveLeft').onclick  = function () { move( 0.2); };
-	    document.getElementById('moveRight').onclick = function () { move(-0.2); };
-
-	    /**
-	     *Select + move window dynamically to view selections
-	    */
-	    var med_selection = document.getElementById('med_selection');
-		var med_select = document.getElementById('med_select');
-		var med_focus = document.getElementById('med_focus');
-
-		med_select.onclick = function () {
-			var ids = med_selection.value.split(',').map(function (value) {
-			  return value.trim();
-			});
-			med_timeline.setSelection(ids, {focus: "checked"});
-		};
-
-	    var note_selection = document.getElementById('note_selection');
-		var note_select = document.getElementById('note_select');
-		var note_focus = document.getElementById('note_focus');
-
-		note_select.onclick = function () {
-			var ids = note_selection.value.split(',').map(function (value) {
-			  return value.trim();
-			});
-			note_timeline.setSelection(ids, {focus: "checked"});
-		};
-
-    }
 
 	window.onload = function(){
 		console.log("Loading");
-		addEventListeners();
+		addMedEventListeners();
+		addNoteEventListeners();
+
+
+		// ----------------------------------------
+		// load medication data and create timeline
+		// ----------------------------------------
 		$.getJSON( "/_medications/", function(result) {
 			medEvents = result['medication_data'];
 			minDate = result['minDate'];
+			med_display_indices = result['med_indices']
+			med_display_names = result['med_names']
 			var medDataArray = [];
 			for (var i in medEvents){
 				var medEvent = {
 					id: i,
-					group: i%3,
+					group: medEvents[i].display_group,
 					content: '<a href="#" title="' + medEvents[i].name + '">' + medEvents[i].name + '</a>',
 					// title = "put text for tooltip here", what goes between > < is what you want shown on the timeline
 					start: medEvents[i].start,
@@ -95,55 +79,27 @@
 				medDataArray.push(medEvent);
 			}
 			createMedicationTimeline(medDataArray, minDate);
-
 		});
 
+		// ----------------------------------
+		// load note data and create timeline
+		// ----------------------------------
 		$.getJSON( "/_notes/", function(result) {
 			noteEvents = result['note_data']
 			minDate = result['minDate']
 			var noteDataArray = []
 			for (var i in noteEvents){
-				console.log(noteEvents[i].visObject)
-				var obj = noteEvents[i].visObject;
-				// obj.content = '<a href="/_note/' + i + '" title="' + noteEvents[i].preview + '"><span class="glyphicon glyphicon-file"></span></a>';
-				obj.content = '<a onclick="getToast(' + i + ')" title="' + noteEvents[i].preview + '"><span class="glyphicon glyphicon-file"></span></a>';
-				noteDataArray.push(obj);
+				noteEvents[i].visObject.content = '<a onclick="getToast(' + i + ')" title=" \nService:\n' + noteEvents[i].service + ' \n\nPreview:\n' + noteEvents[i].preview +'"><span class="glyphicon glyphicon-file"></span></a>'
+				noteDataArray.push(noteEvents[i].visObject);
 			}
 			createNoteTimeline(noteDataArray, minDate);
-
 		});
+
 
 	}
 
 	
 
-	/**
-     * Move the timeline a given percentage to left or right
-     * @param {Number} percentage   For example 0.1 (left) or -0.1 (right)
-     */
-    function move (percentage) {
-        var range = med_timeline.getWindow();
-        var interval = range.end - range.start;
-
-        med_timeline.setWindow({
-            start: range.start.valueOf() - interval * percentage,
-            end:   range.end.valueOf()   - interval * percentage
-        });
-	}
-
-    /**
-     * Zoom the timeline a given percentage in or out
-     * @param {Number} percentage   For example 0.1 (zoom out) or -0.1 (zoom in)
-     */
-    function zoom (percentage) {
-        var range = med_timeline.getWindow();
-        var interval = range.end - range.start;
-
-        med_timeline.setWindow({
-            start: range.start.valueOf() - interval * percentage,
-            end:   range.end.valueOf()   + interval * percentage
-        });
-    }
 
 </script>
 
