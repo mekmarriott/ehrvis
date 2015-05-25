@@ -50,6 +50,11 @@ def about():
 def timeline():
     """Render prototype of timeline"""
     return render_template('timeline.html')
+
+@app.route('/flot/')
+def flot():
+    """Render prototype of timeline"""
+    return render_template('flot.html')
 #=======================================================================
 
 #=======================================================================
