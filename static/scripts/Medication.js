@@ -1,26 +1,3 @@
-function loadMedicationData(){
-	$.getJSON( "/_medications/", function(result) {
-		medEvents = result['medication_data'];
-		minDate = result['minDate'];
-		med_display_indices = result['med_indices']
-		med_display_names = result['med_names']
-		var medDataArray = [];
-		for (var i in medEvents){
-			var medEvent = {
-				id: i,
-				group: medEvents[i].display_group,
-				content: '<a href="#" title="' + medEvents[i].name + '">' + medEvents[i].name + '</a>',
-				// title = "put text for tooltip here", what goes between > < is what you want shown on the timeline
-				start: medEvents[i].start,
-				end: medEvents[i].end,
-				//subgroup: <- fill in subgroup
-			}
-			medDataArray.push(medEvent);
-		}
-		createMedicationTimeline(medDataArray, minDate);
-	});
-}
-
 function createMedicationTimeline(medDataArray, minDate) {
 	var items = new vis.DataSet(medDataArray);
 	var maxDate = new Date();
@@ -107,6 +84,12 @@ function addMedEventListeners() {
         var range = note_timeline.getWindow();
         var interval = range.end - range.start;
 
+
+        note_timeline.setWindow({
+            start: range.start.valueOf() - interval * percentage,
+            end:   range.end.valueOf()   - interval * percentage
+        });
+
         med_timeline.setWindow({
             start: range.start.valueOf() - interval * percentage,
             end:   range.end.valueOf()   - interval * percentage
@@ -120,6 +103,11 @@ function addMedEventListeners() {
     function med_zoom (percentage) {
         var range = note_timeline.getWindow();
         var interval = range.end - range.start;
+
+        note_timeline.setWindow({
+            start: range.start.valueOf() - interval * percentage,
+            end:   range.end.valueOf()   + interval * percentage
+        });
 
         med_timeline.setWindow({
             start: range.start.valueOf() - interval * percentage,
