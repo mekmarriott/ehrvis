@@ -26,7 +26,8 @@ function createNoteTimeline(noteDataArray, minDate) {
 		groupOrder: function (a, b) {
 		  return a.value - b.value;
 		},
-		editable: false
+		editable: false,
+		type: 'point'
 	};
 
 	note_timeline = new vis.Timeline(container);
