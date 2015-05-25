@@ -63,7 +63,7 @@ function getToast(note_index){
 		  "newestOnTop": true,
 		  "progressBar": false,
 		  "positionClass": "toast-top-center",
-		  "preventDuplicates": false,
+		  "preventDuplicates": true,
 		  "showDuration": "3000",
 		  "hideDuration": "1000",
 		  "timeOut": "50000",
