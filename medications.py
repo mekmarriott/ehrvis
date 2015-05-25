@@ -6,6 +6,7 @@ from dateutil import parser
 import datetime
 from pprint import pprint
 import urllib2
+from sortedcontainers import SortedListWithKey
 
 class MedicationEntry(object):
     '''This class represents a single medication entry in a patient's record. Its attributes consist of basic information about the drug originally
@@ -48,9 +49,25 @@ class MedicationEntry(object):
     def to_dict(self):
         return {'name': self.name, 'start': self.start, 'status': self.status, 'dose': self.dose, 'administrationMethod': self.admMethod, 'end': self.end, 'classification': self.classification, 'display_group': self.display_group}
 
+class MedicationTrack(name, eventList):
+    ''' This is a container for MedicationEvents related to a single drug  '''
+    def__init__(self):
+        self.name = name
+        self.intervals = SortedListWithKey(key=lambda val:val.end)
+        self.lastEnd = datetime.datetime.now()
+        self.lastStart = datetime.datetime.now()
+
+    def addEvent(self, event):
+        ''' This function adds a medication event to the medication track '''
+       # Make sure that the medication is correct
+       if event.name != self.name:
+           print "MedicationEvent does not match MedicationTrack"
+           raise NameError(event.name)
+       self.intervals.add(event)
+
 
 class MedicationHistory(object):
-    '''This class '''
+    '''This class looks at all medications a patient is on and keeps track of unique medication names and the minimum date among them.'''
     def __init__(self):
         self.meds = []
         self.minDate = datetime.datetime.now()
@@ -97,16 +114,6 @@ def initialize_epic(data):
         print "Malformed data for object initialization"
         return None
 
-# with open('static/SMART_Sandbox/medications.json') as data_file:    
-#     data = json.load(data_file)
-#     #pprint(data)
-#     #need to split the query results into individual entries
-#     entryList = data["entry"]
-#     for entry in entryList:
-#         drug = MedicationEntry(entry)
-#         print str(drug)
-#         print "-------------------------------------------------------------------------------------------"
-
 def intialize_hapi(entry):
     try:
         start = entry["resource"]["dateWritten"]
@@ -149,4 +156,15 @@ def getClassification(name):
         return classification
     except:
         return None
+
+# -----------------For Testing Only- remove later-------------------
+# with open('static/SMART_Sandbox/medications.json') as data_file:
+#     data = json.load(data_file)
+#     #pprint(data)
+#     #need to split the query results into individual entries
+#     entryList = data["entry"]
+#     for entry in entryList:
+#         drug = MedicationEntry(entry)
+#         print str(drug)
+#         print "-------------------------------------------------------------------------------------------"
 
