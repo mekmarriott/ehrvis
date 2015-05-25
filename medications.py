@@ -6,22 +6,25 @@ from dateutil import parser
 import datetime
 from pprint import pprint
 import urllib2
-from sortedcontainers import SortedListWithKey
+from sortedcontainers import SortedListWithKey, SortedList
+from dateutil.parser import *
 
 class MedicationEntry(object):
     '''This class represents a single medication entry in a patient's record. Its attributes consist of basic information about the drug originally
        obtained from a JSON-formatted query result. '''
 
-    def __init__(self, name, start, status, dose, admMethod, end):
+    def __init__(self, name, start, status, dose, doseUnits, admMethod, end):
         try:
             # This gives the display name of the medication. Generally includes a dose:
-            self.name =  name
+            self.name = name
             # Date written:
             self.start = start
             # Status:
             self.status = status
             # Dose: Another way to get this could be parsing the name field. Talk to group about this option. Also, may need variable for dose units.
             self.dose = dose
+            # Dose units
+            self.doseUnits = doseUnits
             # AdministrationMethod: 
             self.admMethod = admMethod
             # End Date: 
@@ -40,6 +43,7 @@ class MedicationEntry(object):
         result += "Start Date:" + str(self.start) + "\n"
         result += "Status: " + self.status + "\n"
         result += "Dose: " + str(self.dose) + "\n"
+        result += "Dose Units: " + str(self.doseUnits) + "\n"
         result += "Admin Method: " + self.admMethod + "\n"
         result += "End Date: " + str(self.end) + "\n"
         result += "Classification: " + str(self.classification) + "\n"
@@ -47,24 +51,36 @@ class MedicationEntry(object):
         return result
 
     def to_dict(self):
-        return {'name': self.name, 'start': self.start, 'status': self.status, 'dose': self.dose, 'administrationMethod': self.admMethod, 'end': self.end, 'classification': self.classification, 'display_group': self.display_group}
+        return {'name': self.name, 'start': self.start, 'status': self.status, 'dose': self.dose, 'doseUnits': self.doseUnits, 'administrationMethod': self.admMethod, 'end': self.end, 'classification': self.classification, 'display_group': self.display_group}
 
-class MedicationTrack(name, eventList):
+class MedicationTrack(object):
     ''' This is a container for MedicationEvents related to a single drug  '''
-    def__init__(self):
-        self.name = name
-        self.intervals = SortedListWithKey(key=lambda val:val.end)
-        self.lastEnd = datetime.datetime.now()
-        self.lastStart = datetime.datetime.now()
+
+    def __init__(self, name):
+        try:
+            self.name = name
+            self.intervals = SortedListWithKey(key=lambda val:val.start)
+            self.lastEnd = datetime.datetime.now()
+            self.lastStart = datetime.datetime.now()
+        except:
+            print "Malformed data for object initialization"
+
+    def __str__(self):
+        result = ""
+        result += "Drug Name: " + str(self.name) + "\n"
+        result += "Intervals:" + "\n"
+        for block in self.intervals:
+            result += "\t" + str(block.dose) + " " + str(block.start) + " to " + str(block.end) + "\n"
+        return result
 
     def addEvent(self, event):
         ''' This function adds a medication event to the medication track '''
-       # Make sure that the medication is correct
-       if event.name != self.name:
-           print "MedicationEvent does not match MedicationTrack"
-           raise NameError(event.name)
-       self.intervals.add(event)
-
+        # Make sure that the medication is correct
+        if (event.name != self.name):
+            print "MedicationEvent does not match MedicationTrack"
+            raise NameError(event.name)
+        self.intervals.add(event)
+        return
 
 class MedicationHistory(object):
     '''This class looks at all medications a patient is on and keeps track of unique medication names and the minimum date among them.'''
@@ -103,13 +119,21 @@ class MedicationHistory(object):
                 
 def initialize_epic(data):
     try:
+        defaultEnd = datetime.datetime.now()
         name =  data["content"]["medication"]["display"]
-        start = data["content"]["dateWritten"]
+        start = parse(data["content"]["dosageInstruction"][0]["timingSchedule"]["event"][0]["start"])
         status = data["content"]["status"]
-        dose = data["content"]["dosageInstruction"][0]["doseQuantity"]["value"] 
+        dose = int(data["content"]["dosageInstruction"][0]["doseQuantity"]["value"]) 
+        doseUnits = None
+        frequency = int(data["content"]["dosageInstruction"][0]["timingSchedule"]["repeat"]["frequency"])
+        dose = dose*frequency
         admMethod = data["content"]["dosageInstruction"][0]["route"]["text"]
         end = data["content"]["dosageInstruction"][0]["timingSchedule"]["repeat"]["end"]
-        return MedicationEntry(name, start, status, dose, admMethod, end)
+        if (end == "0001-01-01T00:00:00"):
+            end = defaultEnd
+        else:
+            end = parse(end)
+        return MedicationEntry(name, start, status, dose, doseUnits, admMethod, end)
     except: 
         print "Malformed data for object initialization"
         return None
@@ -128,10 +152,11 @@ def intialize_hapi(entry):
         numUnits = entry["resource"]["dispense"]["expectedSupplyDuration"]["value"]
         duration *= int(numUnits)
         end = start + duration
+        doseUnits = None
         dose = entry["resource"]["dispense"]["quantity"]["value"]
         if "units" in entry["resource"]["dispense"]["quantity"]:
-            dose += " " + entry["resource"]["dispense"]["quantity"]["units"]
-        drug = MedicationEntry(name, start, "n/a", dose, "n/a", end)
+            doseUnits = entry["resource"]["dispense"]["quantity"]["units"]
+        drug = MedicationEntry(name, start, "n/a", dose, doseUnits, "n/a", end)
         return drug
     except:
         return None
@@ -158,13 +183,23 @@ def getClassification(name):
         return None
 
 # -----------------For Testing Only- remove later-------------------
-# with open('static/SMART_Sandbox/medications.json') as data_file:
-#     data = json.load(data_file)
+with open('static/FHIR_Sandbox/test_meds.json') as data_file:
+    data = json.load(data_file)
 #     #pprint(data)
 #     #need to split the query results into individual entries
-#     entryList = data["entry"]
-#     for entry in entryList:
-#         drug = MedicationEntry(entry)
-#         print str(drug)
+    entryList = data["entry"]
+    medEvents = []
+    dates = SortedList()
+    for entry in entryList:
+        drug = initialize_epic(entry)
+        medEvents.append(drug)
+        dates.add(drug.end)
+    drug1 = (medEvents[0]).name
+    medTrack = MedicationTrack(drug1)
+    medTrack.addEvent(medEvents[0])
+    medTrack.addEvent(medEvents[1])
+    medTrack.addEvent(medEvents[2])
+    #print dates
+    print str(medTrack) 
 #         print "-------------------------------------------------------------------------------------------"
 
