@@ -113,6 +113,12 @@ function note_move (percentage) {
         start: range.start.valueOf() - interval * percentage,
         end:   range.end.valueOf()   - interval * percentage
     });
+
+
+    med_timeline.setWindow({
+        start: range.start.valueOf() - interval * percentage,
+        end:   range.end.valueOf()   - interval * percentage
+    });
 }
 
 /**
@@ -127,4 +133,11 @@ function note_zoom (percentage) {
         start: range.start.valueOf() - interval * percentage,
         end:   range.end.valueOf()   + interval * percentage
     });
+
+
+    med_timeline.setWindow({
+        start: range.start.valueOf() - interval * percentage,
+        end:   range.end.valueOf()   + interval * percentage
+    });
+
 }
