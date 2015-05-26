@@ -35,7 +35,7 @@ class NoteEntry(object):
 
     def to_dict(self):
         # omit "fulltext" for faster loading
-        return {'service':self.service, 'preview':self.preview,'time':self.time,         
+        return {'service':self.service, 'preview':self.preview,'time':str(self.time),         
                 'type':self._type, 'inpatient': self.inpatient, 'id':self._id, 'heightcount':self.heightcount}
 
 class NoteHistory(object):

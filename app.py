@@ -81,7 +81,7 @@ def notes():
     note_data = load_epic_notes()
     # print note_data
     return jsonify(note_data=note_data.notesByDate, plotting_series=note_data.series, 
-                    hospitalizations=note_data.hospitalizations, minDate=note_data.minDate, maxDate=note_data.maxDate)
+                    hospitalizations=note_data.hospitalizations, minDate=str(note_data.minDate), maxDate=str(note_data.maxDate))
 
 @app.route('/_note/<note_id>/')
 def note_fulltext(note_id):

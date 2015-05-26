@@ -48,6 +48,7 @@
 <script>
 	var med_timeline;
 	var note_timeline;
+	var notes_by_date;
 	var med_display_indices;
 	var med_display_names;
 
@@ -86,16 +87,29 @@
 		// ----------------------------------
 		// load note data and create timeline
 		// ----------------------------------
+
+
 		$.getJSON( "/_notes/", function(result) {
-			noteEvents = result['note_data']
+			notes_by_date = result['note_data']
+			console.log(notes_by_date)
+			noteSeries = result['plotting_series']
+			console.log(noteSeries)
 			minDate = result['minDate']
-			var noteDataArray = []
-			for (var i in noteEvents){
-				noteEvents[i].visObject.content = '<a onclick="getToast(' + i + ')" title=" \nService:\n' + noteEvents[i].service + ' \n\nPreview:\n' + noteEvents[i].preview +'"><span class="glyphicon glyphicon-file"></span></a>'
-				noteDataArray.push(noteEvents[i].visObject);
-			}
-			createNoteTimeline(noteDataArray, minDate);
+			maxDate = result['maxDate']
+			hospitalStays = result['hospitalizations']
+			plotNoteTimeline(noteSeries, hospitalStays, minDate, maxDate);
 		});
+
+		// $.getJSON( "/_notes/", function(result) {
+		// 	noteEvents = result['note_data']
+		// 	minDate = result['minDate']
+		// 	var noteDataArray = []
+		// 	for (var i in noteEvents){
+		// 		noteEvents[i].visObject.content = '<a onclick="getToast(' + i + ')" title=" \nService:\n' + noteEvents[i].service + ' \n\nPreview:\n' + noteEvents[i].preview +'"><span class="glyphicon glyphicon-file"></span></a>'
+		// 		noteDataArray.push(noteEvents[i].visObject);
+		// 	}
+		// 	createNoteTimeline(noteDataArray, minDate);
+		// });
 
 
 	}
