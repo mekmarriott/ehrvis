@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 # The classes and methods in this file are used to parse and organize medication information from the Ajax queries made in app.py
+# TODO: Dose units
+# TODO: In MedicationTrack, may want to merge entries that are adjacent if they have the same dosage
+# TODO: Add to MedTrack method that figures out which MedicationTrack a drug should be added to (or makes a new one if none exist)
+# TODO: Add data structure that will store all MedicationTracks- perhaps a sorted Dict?
 
 from flask import Flask, request, json
 from dateutil import parser
@@ -56,12 +60,18 @@ class MedicationEntry(object):
 class MedicationTrack(object):
     ''' This is a container for MedicationEvents related to a single drug  '''
 
-    def __init__(self, name):
+    def __init__(self, entry):
         try:
-            self.name = name
-            self.intervals = SortedListWithKey(key=lambda val:val.start)
-            self.lastEnd = datetime.datetime.now()
-            self.lastStart = datetime.datetime.now()
+            self.name = entry.name
+            self.typicalDose = None
+            self.doseUnits = entry.doseUnits
+            self.admMethod = entry.admMethod
+            self.classification = entry.classification
+            self.intervals = SortedListWithKey(key=lambda val:val.end)
+            self.lastEnd = entry.start
+            self.lastStart = entry.end
+            # Add the initializing MedicationEntry to the track's intervals
+            self.addEvent(entry)
         except:
             print "Malformed data for object initialization"
 
@@ -79,8 +89,14 @@ class MedicationTrack(object):
         if (event.name != self.name):
             print "MedicationEvent does not match MedicationTrack"
             raise NameError(event.name)
+        # Add MedicationEntry to the track. It will be sorted by end date in ascending order
         self.intervals.add(event)
         return
+
+def addAllMedsToTracks(entryList, trackMap):
+    # Given a list of MedicationEntry objects, this function adds them to MedicationTracks, creating new tracks where appropriate
+    pass    
+
 
 class MedicationHistory(object):
     '''This class looks at all medications a patient is on and keeps track of unique medication names and the minimum date among them.'''
@@ -195,8 +211,8 @@ with open('static/FHIR_Sandbox/test_meds.json') as data_file:
         medEvents.append(drug)
         dates.add(drug.end)
     drug1 = (medEvents[0]).name
-    medTrack = MedicationTrack(drug1)
-    medTrack.addEvent(medEvents[0])
+    medTrack = MedicationTrack(medEvents[0])
+    #medTrack.addEvent(medEvents[0])
     medTrack.addEvent(medEvents[1])
     medTrack.addEvent(medEvents[2])
     #print dates
