@@ -18,7 +18,7 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from medications import load_patient1_meds
-from notes import load_mimic_notes, load_epic_notes
+from notes import load_epic_notes
 import json
 
 global medication_data
@@ -80,17 +80,17 @@ def notes():
     # note_data = load_mimic_notes()
     note_data = load_epic_notes()
     # print note_data
-    return jsonify(note_data=note_data.notes, 
-                            minDate=note_data.minDate)
+    return jsonify(note_data=note_data.notesByDate, plotting_series=note_data.series, 
+                    hospitalizations=note_data.hospitalizations, minDate=note_data.minDate, maxDate=note_data.maxDate)
 
 @app.route('/_note/<note_id>/')
 def note_fulltext(note_id):
     global note_data
     i=int(note_id)
     print "Called from toast"
-    print note_data.notes[i]
+    print note_data.notes[t]
     try:
-        return jsonify(fulltext=note_data.notes[i]['fulltext'])
+        return jsonify(fulltext=note_data.notesByID[i].fulltext)
     except:
         return jsonify(fulltext="Unavailable")
 #=======================================================================
