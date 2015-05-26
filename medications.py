@@ -4,6 +4,7 @@
 # TODO: In MedicationTrack, may want to merge entries that are adjacent if they have the same dosage
 # TODO: Add to MedTrack method that figures out which MedicationTrack a drug should be added to (or makes a new one if none exist)
 # TODO: Add data structure that will store all MedicationTracks- perhaps a sorted Dict?
+# TODO: MedicationTrack: Figure out the desired complexity of objects stored in interval list
 
 from flask import Flask, request, json
 from dateutil import parser
@@ -67,7 +68,7 @@ class MedicationTrack(object):
             self.doseUnits = entry.doseUnits
             self.admMethod = entry.admMethod
             self.classification = entry.classification
-            self.intervals = SortedListWithKey(key=lambda val:val.end)
+            self.intervals = SortedListWithKey(key=lambda val:(val.end, val.start))
             self.lastEnd = entry.start
             self.lastStart = entry.end
             # Add the initializing MedicationEntry to the track's intervals
@@ -89,7 +90,7 @@ class MedicationTrack(object):
         if (event.name != self.name):
             print "MedicationEvent does not match MedicationTrack"
             raise NameError(event.name)
-        # Add MedicationEntry to the track. It will be sorted by end date in ascending order
+        # Add MedicationEntry to the track. It will be sorted by end date in ascending order, and then by start date in ascending order
         self.intervals.add(event)
         return
 
@@ -137,7 +138,7 @@ def initialize_epic(data):
     try:
         defaultEnd = datetime.datetime.now()
         name =  data["content"]["medication"]["display"]
-        start = parse(data["content"]["dosageInstruction"][0]["timingSchedule"]["event"][0]["start"])
+        start = parse("12:50:18.297550")# parse(data["content"]["dosageInstruction"][0]["timingSchedule"]["event"][0]["start"])
         status = data["content"]["status"]
         dose = int(data["content"]["dosageInstruction"][0]["doseQuantity"]["value"]) 
         doseUnits = None
