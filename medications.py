@@ -74,8 +74,10 @@ class MedicationTrack(object):
             self.lastEnd = end
             self.lastStart = start
             self.intervals = []
+            self.mergedIntervals = []
             # Add the initializing MedicationEntry to the track's intervals
             self.intervals.append(triple)
+         
         except:
             print "Malformed data for MedicationTrack object initialization"
 
@@ -91,9 +93,9 @@ class MedicationTrack(object):
     def __dict__(self):
         ''' This function packages the MedicationTrack as a dict, which is processed by the app front end to display the medication track.'''
         plotData = []
-        for entry in self.intervals:
-            plotData.append([entry.start, entry.dose])
-            plotData.append([entry.end, entry.dose])
+        for entry in self.mergedIntervals:
+            plotData.append([entry[0], entry[2]])
+            plotData.append([entry[1], entry[2]])
             plotData.append(None) #spacer
         return { 'plotData': plotData, 'drugName': self.name, 'maxDose': self.maxDose, 'doseUnits': doseUnits, 'admMethod': self.admMethod, 
                'classification': self.classification, 'trackStart': self.lastStart, 'trackEnd': self.lastEnd }  
@@ -115,6 +117,43 @@ class MedicationTrack(object):
         if(currDose > self.maxDose):
             self.maxDose = currDose
         return
+
+    def consolidateTrack(self):
+        '''This function takes in a series of start-end-dose tuples from a MedicationTrack and merges overlapping ranges. If the doses of conflicting ranges are different, the higher dose is prioritized.'''
+        result = []
+        sortedTrack = sorted(self.intervals, key=lambda x:(x[1], x[0]))
+
+        if len(sortedTrack) == 1:
+            return sortedTrack
+
+        initInterval = sortedTrack[0]
+        result.append(initInterval)
+        currStart = initInterval[0]
+        currEnd =  initInterval[1]
+        currDose =  initInterval[2]
+
+        for start, end, dose in sortedTrack[1:]:
+            if start > currEnd:
+                # This interval starts after its predecessor stops, so just add it to results
+                result.append((start, end, dose))
+                currStart, currEnd, currDose = start, end, dose
+            else: 
+                # There is overlap, so we need to merge
+                if currDose == dose:
+                    # Since the dose is the same, we can consolidate these into one big interval
+                    result[-1] = (currStart, end, dose)
+                else:
+                    result[-1] = (currStart, start, currDose)
+                    result.append((start, max(currEnd, end), dose))
+                    currStart = start
+                    currDose = dose
+                currEnd = max(currEnd, end)
+        self.mergedIntervals = result
+        for i in result:
+            print str(i[0]) + " " + str(i[1]) + " " + str(i[2]) + "\n"
+
+        return
+
 
 class MedicationHistory(object):
     '''This class looks at all medications a patient is on and keeps track of unique medication names and the minimum date among them.'''
@@ -183,34 +222,6 @@ def addToTrack(entry, tracks):
         tracks[name] = newTrack
     return
 
-def consolidateTrack(track):
-    '''This function takes in a series of start-end-dose tuples from a MedicationTrack and merges overlapping ranges. If the doses of conflicting ranges are different, the higher dose is prioritized.'''
-    result = []
-    sortedTrack = sorted(track.intervals, key=lambda x:(x[1], x[0]))
-    initInterval = sortedTrack[0]
-
-    result.append(initInterval)
-    currStart = initInterval[0]
-    currEnd =  initInterval[1]
-    currDose =  initInterval[2]
-
-    for start, end, dose in sortedTrack[1:]:
-        if start > currEnd:
-            # This interval starts after its predecessor stops, so just add it to results
-            result.append((start, end, dose))
-            currStart, currEnd, currDose = start, end, dose
-        else: 
-            # There is overlap, so we need to merge
-            if currDose == dose:
-                # Since the dose is the same, we can consolidate these into one big interval
-                result[-1] = (currStart, end, dose)
-            else:
-                result[-1] = (currStart, start, currDose)
-                result.append((start, max(currEnd, end), dose))
-                currStart = start
-                currDose = dose
-            currEnd = max(currEnd, end)
-    return result
 
 
 def initialize_hapi(entry):
@@ -243,10 +254,8 @@ def load_patient1_meds():
         medEntry = initialize_hapi(entry)
         addToTrack(medEntry, tracks)
     y = tracks.get("Oxygen")
-    y = consolidateTrack(y)
-    for i in y:
-        print str(i[0]) + " " + str(i[1]) + " " + str(i[2]) + "\n"
-   # consolidateTrack(y)
+    y.consolidateTrack()
+      # consolidateTrack(y)
     #return history
 
 def getClassification(name):
