@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # The classes and methods in this file are used to parse and organize medication information from the Ajax queries made in app.py
-# TODO: Add data structure that will store all MedicationTracks- perhaps a sorted Dict?
 
 from flask import Flask, request, json
 from dateutil import parser
@@ -9,6 +8,7 @@ from pprint import pprint
 import urllib2
 from sortedcontainers import SortedListWithKey, SortedList
 from dateutil.parser import *
+from operator import itemgetter
 
 class MedicationEntry(object):
     '''This class represents a single medication entry in a patient's record. Its attributes consist of basic information about the drug originally
@@ -91,11 +91,16 @@ class MedicationTrack(object):
     def getDict(self):
         ''' This function packages the MedicationTrack as a dict, which is processed by the app front end to display the medication track.'''
         plotData = []
+        if self.mergedIntervals is None:
+            print self.name
+            return None
         for entry in self.mergedIntervals:
             plotData.append([entry[0], entry[2]])
             plotData.append([entry[1], entry[2]])
             plotData.append(None) #spacer
-        return { 'plotData': plotData, 'drugName': self.name, 'maxDose': self.maxDose, 'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 
+        #print (self.mergedIntervals[-1])[0]
+        #exit()
+        return { 'plotData': plotData, 'lastEnd': self.lastEnd, 'lastStart': self.lastStart, 'drugName': self.name, 'maxDose': self.maxDose, 'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 
                'classification': self.classification, 'trackStart': self.lastStart, 'trackEnd': self.lastEnd }  
         
     def addEvent(self, triple):
@@ -133,16 +138,16 @@ class MedicationTrack(object):
         for start, end, dose in sortedTrack[1:]:
             if start > currEnd:
                 # This interval starts after its predecessor stops, so just add it to results
-                result.append((start, end, dose))
+                result.append([start, end, dose])
                 currStart, currEnd, currDose = start, end, dose
             else: 
                 # There is overlap, so we need to merge
                 if currDose == dose:
                     # Since the dose is the same, we can consolidate these into one big interval
-                    result[-1] = (currStart, end, dose)
+                    result[-1] = [currStart, end, dose]
                 else:
-                    result[-1] = (currStart, start, currDose)
-                    result.append((start, max(currEnd, end), dose))
+                    result[-1] = [currStart, start, currDose]
+                    result.append([start, max(currEnd, end), dose])
                     currStart = start
                     currDose = dose
                 currEnd = max(currEnd, end)
@@ -245,17 +250,23 @@ def load_patient1_meds():
     entryList = json.load(open('static/FHIR_Sandbox/patient1_medications.json'))
     returnList = []
     tracks = {}
+    outputTracks = []
     for entry in entryList:
         medEntry = initialize_hapi(entry)
         addToTrack(medEntry, tracks)
-    y = tracks.get("Oxygen")
-    y.consolidateTrack()
-    print y.getDict()
-    #return history
+    for key, track in tracks.items():
+        track.consolidateTrack()
+        d = track.getDict()
+        outputTracks.append(d)
+    output = sorted(outputTracks, key=lambda x:(x.get('lastEnd'), x.get('lastStart')), reverse = True)
+    for t in output:
+        print str(t.get('lastStart')) + " " + str(t.get('lastEnd'))
+    return output
 
 def getClassification(name):
     # Get ATC classification of a drug using the RxNorm API.
-    drug = name.split(' ')[0]
+    #drug = name.split(' ')[0]
+    drug = name.replace (" ", "+")
     classURL = 'http://rxnav.nlm.nih.gov/REST/rxclass/class/byDrugName.json?drugName=' + drug + '&relaSource=ATC'
     classReq = urllib2.urlopen(classURL)
     rxclass = json.loads(classReq.read())
@@ -265,25 +276,4 @@ def getClassification(name):
     except:
         return None
 
-# -----------------For Testing Only- remove later-------------------
 load_patient1_meds()
-#with open('static/FHIR_Sandbox/test_meds.json') as data_file:
-#    data = json.load(data_file)
-#     #pprint(data)
-#     #need to split the query results into individual entries
-#    entryList = data["entry"]
-#    medEvents = []
-#    dates = SortedList()
-#    for entry in entryList:
-#        drug = initialize_epic(entry)
-#        medEvents.append(drug)
-#        dates.add(drug.end)
-#    drug1 = (medEvents[0]).name
-#    medTrack = MedicationTrack(medEvents[0])
-#    #medTrack.addEvent(medEvents[0])
-#    medTrack.addEvent(medEvents[1])
-#    medTrack.addEvent(medEvents[2])
-#    #print dates
-#    print str(medTrack) 
-#         print "-------------------------------------------------------------------------------------------"
-
