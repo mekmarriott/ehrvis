@@ -100,7 +100,18 @@ class MedicationTrack(object):
         return result
 
     def getDict(self):
-        ''' This function packages the MedicationTrack as a dict, which is processed by the app front end to display the medication track.'''
+        ''' This function packages the MedicationTrack as a dict, which is processed by the app front end to display the medication track. 
+
+            Keys/Values
+            plotData: a list of lists with the following structure: [ [range1_start, dose], [range1_end, dose], None, [range2_start, dose], [range2_end, dose] ...]
+            lastEnd: is the end point of the track.
+            lastStart: the start date of the final range in the track
+            drugName: the name of the drug represented by the track
+            maxDose: the maximum dose in the track
+            doseUnits: the units of the doses
+            admMethod: how the drug is administered
+            classification: ATC classification of the drug obtained through RxNorm
+        '''
         plotData = []
         if self.mergedIntervals is None:
             print self.name
@@ -110,7 +121,7 @@ class MedicationTrack(object):
             plotData.append([entry[1], entry[2]])
             plotData.append(None) #spacer
         return { 'plotData': plotData, 'lastEnd': self.lastEnd, 'lastStart': self.lastStart, 'drugName': self.name, 'maxDose': self.maxDose, 'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 
-               'classification': self.classification, 'trackStart': self.lastStart, 'trackEnd': self.lastEnd }  
+               'classification': self.classification}  
         
     def addEvent(self, triple):
         ''' This function adds a medication event to the medication track '''
