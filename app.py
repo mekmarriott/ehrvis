@@ -95,7 +95,7 @@ def note_fulltext(service_id,note_id):
     except:
         return jsonify(fulltext="Unavailable")
 
-@app.route('/_note/<series_id>/<note_id>/preview/')
+@app.route('/_note/<service_id>/<note_id>/preview/')
 def note_preview(sevice_id,note_id):
     global note_data
     i=int(note_id)

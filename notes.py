@@ -3,9 +3,9 @@
 
 from flask import Flask, request, json
 from dateutil import parser
-import datetime 
 from pprint import pprint
 from time import mktime
+from datetime import datetime, timedelta
 
 
 class NoteEntry(object):
@@ -41,7 +41,7 @@ class NoteEntry(object):
 class NoteHistory(object):
 
     services = ["Medicine", "Emergency Medicine", "Critical Care", "Other"]
-    serv2color = {services[0]:'#ee2222',services[1]:'#2222dd',services[2]:'#ee22cc',services[-1]:'#222222'}
+    serv2color = {services[0]:'#2222dd',services[1]:'#ee2222',services[2]:'#ee22cc',services[-1]:'#222222'}
 
 
     def __init__(self):
@@ -49,8 +49,8 @@ class NoteHistory(object):
         self.notesByDate = {}
         self.notesByService = {}
         self.previewsByService = {}
-        self.minDate = datetime.datetime.now().date()      # as late as any possible dates
-        self.maxDate = datetime.datetime(1900,1,1).date()  # earlier than all reasonable dates
+        self.minDate = datetime.now().date()      # as late as any possible dates
+        self.maxDate = datetime(1900,1,1).date()  # earlier than all reasonable dates
         self.series = {}
         self.hospitalizations = []
 
@@ -76,6 +76,9 @@ class NoteHistory(object):
         else:
             return self.services[-1]
 
+    def date2utc(self,timestamp):
+        return 1000*mktime(timestamp.date().timetuple())
+
     def compile_hospitalizations(self):
         try:
             if not self.notes:
@@ -95,18 +98,17 @@ class NoteHistory(object):
                 idx+=1
 
 
+
                 # look for next inpatient note. this defines the start date of the hospitalization
                 if self.notes[ks[idx]].inpatient:
-                    hosp = [str(self.notes[ks[idx]].time.date())]
+                    hosp.append(self.date2utc(self.notes[ks[idx]].time.date()))
 
                     while idx < max_:
                         # look for next outpatient note. this defines the end date of the hospitalization
                         idx += 1 
                         if idx == max_:
                             # if reach end of notes without reverting to outpatient, put today's date as end date
-                            hosp.append(str(datetime.datetime.now().date()))
-
-
+                            hosp.append(self.date2utc(datetime.now()))
 
                             # append current hospitalization to hospitalization list
                             self.hospitalizations.append(hosp)
@@ -117,7 +119,7 @@ class NoteHistory(object):
 
                         if not self.notes[ks[idx]].inpatient:
                             # append time from PREVIOUS note to "hosp" as end date
-                            hosp.append(str(self.notes[ks[idx-1]].time.date()))
+                            hosp.append(self.date2utc(self.notes[ks[idx-1]].time.date()))
 
                             # append current hospitalization to hospitalization list
                             self.hospitalizations.append(hosp)
@@ -207,7 +209,7 @@ class NoteHistory(object):
                     self.notesByService[s][_id]=note
                     
                     # 3. add preview of current note to corresponding dictionary position
-                    self.previewsByService[s][_id]=note.preview
+                    self.previewsByService[s][_id]=note.to_dict()
 
             # add viewing buffer to latest and earliest times
             self.minDate = self.minDate - datetime.timedelta(days=1)

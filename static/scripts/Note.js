@@ -21,37 +21,24 @@ Note.plot_max = 1;
 Note.plotOptions = {};
 Note.plotOptions.series = { lines: {show: false}, points: {show: true }};
 Note.plotOptions.grid = { hoverable: true, clickable: true, markings: [] };
-Note.plotOptions.yaxis = { min: 0, autoscaleMargin: 0.5 }; 
-Note.plotOptions.xaxis = { min: 0, max: 1, mode: "time" };
+Note.plotOptions.yaxis = { min: 1-0.1, autoscaleMargin: 0.1, zoomRange: false, ticks: [], panRange: false }; 
+Note.plotOptions.xaxis = { min: 0, max: 1, mode: "time", zoomRange: false, panRange: false };
+Note.plotOptions.zoom = { interactive: true };
+Note.plotOptions.pan = { interactive: true }; 
+
 
 // plotting options for navigation strip
 
 Note.navOptions = {};
 Note.navOptions.series = { lines: {show: false}, points: {show: true }};
 Note.navOptions.grid = { hoverable: true, clickable: true, markings: [] };
-Note.navOptions.yaxis = { min: 0, autoscaleMargin: 0.5 }; 
-Note.navOptions.xaxis = { min: 0, max: 1, mode: "time" };
+Note.navOptions.yaxis = { min: 0, autoscaleMargin: 0.5, ticks: [], panRange: false }; 
+Note.navOptions.xaxis = { min: 0, max: 1, mode: "time", ticks: [], panRange: false };
+Note.navOptions.shift = { interactive: true };
 
-
-		// var sin = [],
-		// 	cos = [];
-
-		// for (var i = 0; i < 14; i += 0.5) {
-		// 	sin.push([i, Math.sin(i)]);
-		// 	cos.push([i, Math.cos(i)]);
-		// }
-
-		// var plot = $.plot("#placeholder", [
-		// 	{ data: sin, label: "sin(x)"},
-		// 	{ data: cos, label: "cos(x)"}
-		// ], 
 
 
 function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
-
-
-	// for now...
-	return
 
 	// assign dataseries:
 	Note.plotData = noteSeries;
@@ -61,12 +48,16 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 		height_conversion(Note.plotData[i].data)
 	};
 
-
-	//TODO: CONVERT TIMESTAMPS
+	// ISSUE: X-AXIS LABELS ARE WRONG (MAIN PLOT)
+	// ISSUE: NAV PLOT SHOWS NOTHING
+	// ISSUE: MAIN PLOT SHOWS ALL POINTS INSTEAD OF 3-MONTH WINDOW
+	// ISSUE: CONTROLS DON'T SEEM TO WORK
 
 	// set main plot window to [t_max-90days,t_max] by default
 	Note.plotOptions.xaxis.min = maxDate - 90 * (24 * 60 * 60 * 1000);
 	Note.plotOptions.xaxis.max = maxDate;
+	Note.plotOptions.xaxis.panRange = [maxDate - 90 * (24 * 60 * 60 * 1000), maxDate];
+
 	// set nav plot window to [t_min, t_max] permanently
 	Note.plotOptions.xaxis.min = minDate;
 	Note.plotOptions.xaxis.max = maxDate;
@@ -77,8 +68,8 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 	}
 
 	// plot dataseries
-	 $.plot("#note_plot_target", Note.plotData, Note.plotOptions);
-	 $.plot("#note_nav_target", Note.plotData, Note.navOptions);
+	 var note_plot = $.plot("#note_plot_target", Note.plotData, Note.plotOptions);
+	 var note_nav = $.plot("#note_nav_target", Note.plotData, Note.navOptions);
 
 
 	// create tooltip div 
@@ -95,14 +86,13 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
     //Bind tooltip to plot
     $("#note_plot_target").bind("plothover", function (event, pos, item) {
       if (item) {
-        var t = item.datapoint[0],
-          h = item.datapoint[1];
 
         // set tooltip contents
-        set_preview_data(t,h)
+        set_preview_data(item.series.label,item.dataIndex)
 
         // $("#tooltip").html("<strong>Percentile:</strong> " + y + "<br><strong> Dose: </strong> " + x + " Gy")
-        $("#note_tooltip").html(Note.curr_timestamp + "<br><strong> Type: </strong> " + Note.curr_type + "<br><strong> Service: </strong> " + Note.curr_service + "<br><br><strong> Preview: </strong>" + Note.curr_preview)
+        $("#note_tooltip").html(Note.curr_timestamp + "<br><strong> Type: </strong> " + Note.curr_type + "<br><strong> \
+        	Service: </strong> " + Note.curr_service + "<br><strong> Preview: </strong>" + Note.curr_preview)
           .css({top: item.pageY+5, left: item.pageX+5})
           .fadeIn(200);
       } else {
@@ -115,7 +105,46 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 		$("#note_tooltip").hide();     
 	});
 
+
+	function replot(ranges){
+		if (ranges.xaxis.from != ranges.xaxis.to){
+			var axis = note_plot.getAxes().xaxis;
+			var opts = axis.options;
+			opts.min = ranges.xaxis.from;
+			opts.max = ranges.xaxis.to;
+			note_plot.setupGrid();
+			note_plot.draw();
+			note_plot.clearSelection();
+		}
+	}
+	// now connect the two
+
+	$("#note_nav_target").bind("plotselected", function (event, ranges) {
+		note_plot.setSelection(ranges);
+	});
+
+	$("#note_plot_target").bind("plotpan", function (event, plot) {
+		var axes = note_plot.getAxes();
+		var ranges = { xaxis: { from: axes.xaxis.min, to: axes.xaxis.max }, yaxis: { from: axes.yaxis.min, to: axes.yaxis.max } }
+		note_nav.setSelection(ranges, true);
+	});
+
+	$("#note_plot_target").bind("plotzoom", function (event, plot) {
+		var axes = note_plot.getAxes();
+		var ranges = { xaxis: { from: axes.xaxis.min, to: axes.xaxis.max }, yaxis: { from: axes.yaxis.min, to: axes.yaxis.max } }
+		note_nav.setSelection(ranges, true);
+	});
+
+	$("#note_nav_target").bind("plotshift", function (event, plot) {
+		newrange = note_nav.getNewSelection();
+		note_nav.setSelection(newrange, true);
+		replot(newrange);
+	});
+
 }
+
+
+
 
 
 function count2height(count){
@@ -140,29 +169,25 @@ function height_conversion(data_array){
 }
 
 
-function set_preview_data(date,height){
-	idx = height2arrayidx(height);
-	Note.curr_preview = note_dictionary[date][idx]['preview'];
-	Note.curr_service = note_dictionary[date][idx]['service'];
-	Note.curr_type = note_dictionary[date][idx]['type'];
-	Note.curr_timestamp = note_dictionary[date][idx]['time'];
-	Note.curr_noteID = note_dictionary[date][idx]['id'];
-
+function set_preview_data(service,idx){
+	Note.curr_preview = notePreviews[service][idx]['preview'];
+	console.log(Note.curr_preview);
+	Note.curr_service = notePreviews[service][idx]['service'];
+	Note.curr_type = notePreviews[service][idx]['type'];
+	Note.curr_timestamp = notePreviews[service][idx]['time'];
+	Note.curr_noteID = notePreviews[service][idx]['id'];
 }
 
-function get_fulltext_byID(note_id){
+function get_fulltext(service,idx){
 	var text;
-	$.getJSON( "/_note/" + note_id, function(result) {
+	$.getJSON( "/_note/" + service + "/" + idx + "/" , function(result) {
 		console.log(result);
 		text= result.fulltext;
 	});
 	return text;
 }
 
-function get_fulltext(date,height){
-	idx = height2arrayidx(height);
-	return get_fulltext_byindex(note_dictionary[date][idx]['id']);
-}
+
 
 
 
