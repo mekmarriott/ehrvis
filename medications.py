@@ -125,17 +125,19 @@ class MedicationTrack(object):
         
     def addEvent(self, triple):
         ''' This function adds a medication event to the medication track '''
-        # Add MedicationEntry to the track. It will be sorted by end date in ascending order, and then by start date in ascending order
+        # Add MedicationEntry to the track.
         self.intervals.append(triple)
 
         currStart = triple[0]
         currEnd = triple[1]
         currDose = triple[2]
+
         # Adjust lastStart and lastEnd if necessary
         if(currEnd > self.lastEnd):
             self.lastEnd = currEnd
         if(currStart > self.lastStart):
             self.lastStart = currStart
+
         # Update maximum dose if the current event has a higher dose than the previous maximum
         if(currDose > self.maxDose):
             self.maxDose = currDose
@@ -175,40 +177,40 @@ class MedicationTrack(object):
         return
 
 
-class MedicationHistory(object):
-    '''This class looks at all medications a patient is on and keeps track of unique medication names and the minimum date among them.'''
-    def __init__(self):
-        self.meds = []
-        self.minDate = date.today()
-        self.medNames = []
-        self.med2idx = {}
-        self.idx2med = {}
-
-    def add_meds(self, med_array):
-        # make list of (unique) medication names
-        self.medNames = list(set([med.name for med in med_array]))
-
-        # map medication names to display groups (for tracked display)
-        for i,name in enumerate(self.medNames):
-            self.idx2med[i]=name
-            self.med2idx[name]=i
+#class MedicationHistory(object):
+#    '''This class looks at all medications a patient is on and keeps track of unique medication names and the minimum date among them.'''
+#    def __init__(self):
+#        self.meds = []
+#        self.minDate = date.today()
+#        self.medNames = []
+#        self.med2idx = {}
+#        self.idx2med = {}
+#
+#    def add_meds(self, med_array):
+#        # make list of (unique) medication names
+#        self.medNames = list(set([med.name for med in med_array]))
+#
+#        # map medication names to display groups (for tracked display)
+#        for i,name in enumerate(self.medNames):
+#            self.idx2med[i]=name
+#            self.med2idx[name]=i
 
         # add each MedicationEvent from the input array to the MedicationHistory
-        for med in med_array:
-            if type(med) is MedicationEntry:
-                # set display group for current medication using the mapping generated above
-                med.display_group = self.med2idx[med.name]
+#        for med in med_array:
+#            if type(med) is MedicationEntry:
+#                # set display group for current medication using the mapping generated above
+#                med.display_group = self.med2idx[med.name]
 
                 # add MedicationEvent to history
-                self.meds.append(med.to_dict())
+#                self.meds.append(med.to_dict())
 
                 # update earliest time in history, if relevant
-                if med.start != "n/a" and med.start < self.minDate:
-                    self.minDate = med.start
+#                if med.start != "n/a" and med.start < self.minDate:
+#                    self.minDate = med.start
 
 
         # viewing buffer for time window
-        self.minDate = self.minDate - datetime.timedelta(days=30)
+#        self.minDate = self.minDate - datetime.timedelta(days=30)
                 
 def initialize_epic(data):
     try:
@@ -241,8 +243,6 @@ def addToTrack(entry, tracks):
         newTrack = MedicationTrack(entry.triple, entry.name, entry.dose, entry.doseUnits, entry.admMethod, entry.classification, entry.end, entry.start)
         tracks[name] = newTrack
     return
-
-
 
 def initialize_hapi(entry):
     try:
