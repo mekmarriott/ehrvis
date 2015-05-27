@@ -36,6 +36,8 @@ class MedicationEntry(object):
             self.classification = getClassification(self.name)
             # Display group
             self.display_group = 0
+            # Tuple containing the start date, end date, and dose of the MedicationEntry
+            self.triple = (start, end, dose)
         except: 
             print "Malformed data for MedicationEntry object initialization"
     '''Function: str 
@@ -62,18 +64,18 @@ class MedicationEntry(object):
 class MedicationTrack(object):
     ''' This is a container for MedicationEvents related to a single drug  '''
 
-    def __init__(self, entry, name, dose, doseUnits, admMethod, classification, end, start):
+    def __init__(self, triple, name, dose, doseUnits, admMethod, classification, end, start):
         try:
             self.name = name
             self.maxDose = dose
             self.doseUnits = doseUnits
-            self.admMethod = entry.admMethod
+            self.admMethod = admMethod
             self.classification = classification
             self.lastEnd = end
             self.lastStart = start
-            self.intervals = SortedListWithKey(key=lambda val:(val.end, val.start))
+            self.intervals = SortedListWithKey(key=lambda x:(x[1], x[0]))
             # Add the initializing MedicationEntry to the track's intervals
-            self.intervals.add(entry)
+            self.intervals.add(triple)
         except:
             print "Malformed data for MedicationTrack object initialization"
 
@@ -83,7 +85,7 @@ class MedicationTrack(object):
         result += "Drug Name: " + str(self.name) + "\n"
         result += "Intervals:" + "\n"
         for block in self.intervals:
-            result += "\t" + str(block.dose) + " " + str(block.start) + " to " + str(block.end) + "\n"
+            result += "\t" + str(block[2]) + " " + str(block[0]) + " to " + str(block[1]) + "\n"
         return result
 
     def __dict__(self):
@@ -93,25 +95,25 @@ class MedicationTrack(object):
             plotData.append([entry.start, entry.dose])
             plotData.append([entry.end, entry.dose])
             plotData.append(None) #spacer
-        return { 'plotData': plotData, 'drugName': self.name, 'maxDose': self.maxDose, 'doseUnits': doseUnits, 'admMethod': self.admMethod, 'classification': self.classification, 'trackStart': self.lastStart, 'trackEnd': self.lastEnd }  
+        return { 'plotData': plotData, 'drugName': self.name, 'maxDose': self.maxDose, 'doseUnits': doseUnits, 'admMethod': self.admMethod, 
+               'classification': self.classification, 'trackStart': self.lastStart, 'trackEnd': self.lastEnd }  
         
-
-    def addEvent(self, event):
+    def addEvent(self, triple):
         ''' This function adds a medication event to the medication track '''
-        pass
-        # Make sure that the medication is correct
-        if (event.name != self.name):
-            print "MedicationEvent does not match MedicationTrack"
-            raise NameError(event.name)
         # Add MedicationEntry to the track. It will be sorted by end date in ascending order, and then by start date in ascending order
-        self.intervals.add(event)
+        self.intervals.add(triple)
+        currStart = triple[0]
+        currEnd = triple[1]
+        currDose = triple[2]
         # Adjust lastStart and lastEnd if necessary
-        if(event.end > self.lastEnd):
-            self.lastEnd = event.end
-        if(event.start > self.lastStart):
-            self.lastStart = event.start
+        if(currEnd > self.lastEnd):
+            self.lastEnd = currEnd
+        if(currStart > self.lastStart):
+            self.lastStart = currStart
+        # Update maximum dose if the current event has a higher dose than the previous maximum
+        if(currDose > self.maxDose):
+            self.maxDose = currDose
         return
-    
 
 class MedicationHistory(object):
     '''This class looks at all medications a patient is on and keeps track of unique medication names and the minimum date among them.'''
@@ -169,16 +171,14 @@ def initialize_epic(data):
         print "Malformed data for object initialization"
         return None
 
-
-
 def addToTrack(entry, tracks):
     # Given a MedicationEntry object, this function adds it to a MedicationTrack, creating a new track if none exists for that drug.
     name = entry.name
     if name in tracks:
         currTrack = tracks.get(name)
-        currTrack.addEvent(entry)
+        currTrack.addEvent(entry.triple)
     else:
-        newTrack = MedicationTrack(entry, entry.name, entry.dose, entry.doseUnits, entry.admMethod, entry.classification, entry.end, entry.start)
+        newTrack = MedicationTrack(entry.triple, entry.name, entry.dose, entry.doseUnits, entry.admMethod, entry.classification, entry.end, entry.start)
         tracks[name] = newTrack
     return
 
