@@ -50,13 +50,11 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 		height_conversion(Note.plotData[i].data)
 	};
 
-	// ISSUE: HOVER OVER CSS STYLING
 	// TODO: BUTTON - go to today
 	// TODO: SEARCH/FILTER POINTS?
-	// TODO: CENTER MAIN PLOT ON POINT WHEN CLICKED IN NAV
-	// TODO: FORMAT DATE AND TIME IN PREVIEW
 	// TODO: SHOW SELECTION SPAN IN NAV BY DEFAULT ON LOAD
 	// TODO: HOSPITALIZATION PERIODS??
+	// TODO: CSS - WINDOW ADAPTATION
 
 	// set main plot window to [t_max-90days,t_max] by default
 	Note.plotOptions.xaxis.min = maxDate - 90*(24*60*60*1000);

@@ -52,7 +52,7 @@ input[type=checkbox] {
 }
 
 #content {
-  width: 880px;
+  width: 95%;
   margin: 0 auto;
   padding: 10px;
 }
@@ -67,7 +67,7 @@ input[type=checkbox] {
 
 .demo-container {
   box-sizing: border-box;
-  width: 850px;
+  width: 95%;
   height: 450px;
   padding: 20px 15px 15px 15px;
   margin: 15px auto 30px auto;

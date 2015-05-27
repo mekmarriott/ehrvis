@@ -56,6 +56,11 @@ def timeline():
 def flot():
     """Render prototype of timeline"""
     return render_template('flot.html')
+
+@app.route('/flotmeds/')
+def flotmeds():
+    """Render prototype of timeline"""
+    return render_template('flotmeds.html')   
 #=======================================================================
 
 #=======================================================================
@@ -80,6 +85,7 @@ def notes():
     """Return all note information."""
     # note_data = load_mimic_notes()
     note_data = load_epic_notes()
+
     return jsonify(previewData=note_data.previewsByService, plottingSeries=note_data.series.values(), 
                     hospitalizations=note_data.hospitalizations, minDate=date2utc(note_data.minDate), maxDate=date2utc(note_data.maxDate))
 
@@ -89,7 +95,6 @@ def note_fulltext(service_id,note_id):
     global note_data
     i=int(note_id)
     print "Fulltext requested"
-    print note_data.notes[t]
     try:
         return jsonify(fulltext=note_data.notesByService[service_id][i].fulltext)
     except:
@@ -100,15 +105,12 @@ def note_preview(sevice_id,note_id):
     global note_data
     i=int(note_id)
     print "Preview requested"
-    print note_data.notes[t]
     try:
         return jsonify(fulltext=note_data.notesByService[service_id][i].preview)
     except:
         return jsonify(fulltext="Unavailable")
 
-@app.route('/_nulltest/')
-def nulltest():
-    return jsonify(retval = [[1,3],[2,4],None,[3,3]])
+
 
 #=======================================================================
 
