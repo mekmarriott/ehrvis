@@ -1,3 +1,60 @@
+
+
+var Note = {};
+Note.base = 1;
+Note.step = 0.2;
+Note.curr_preview = "";
+Note.curr_type = "";
+Note.curr_service = "";
+Note.curr_timestamp = "";
+Note.curr_fulltext = "";
+Note.curr_noteID = 0;
+
+function plotNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
+
+	// for now...
+	return
+
+	// plot dataseries
+	// attach event listeners?
+
+	// create tooltip div 
+	$("<div id='note_tooltip'></div>").css({
+		position: "absolute",
+		display: "none",
+		border: "1px solid #fdd",
+		padding: "2px",
+		"background-color": "#fee",
+		opacity: 1.0
+	}).appendTo("body");
+
+
+    //Bind tooltip to plot
+    $("#note_placeholder").bind("plothover", function (event, pos, item) {
+      if (item) {
+        var t = item.datapoint[0],
+          h = item.datapoint[1];
+
+        // set tooltip contents
+        set_preview_data(t,h)
+
+        // $("#tooltip").html("<strong>Percentile:</strong> " + y + "<br><strong> Dose: </strong> " + x + " Gy")
+        $("#note_tooltip").html(Note.curr_timestamp + "<br><strong> Type: </strong> " + Note.curr_type + "<br><strong> Service: </strong> " + Note.curr_service + "<br><br><strong> Preview: </strong>" + Note.curr_preview)
+          .css({top: item.pageY+5, left: item.pageX+5})
+          .fadeIn(200);
+      } else {
+        $("#note_tooltip").hide();
+      }
+    });
+
+	//Hide tooltip div when mouse leaves note plot panel
+	$("#note-placeholder").mouseleave(function(){
+		$("#note_tooltip").hide();     
+	});
+
+
+}
+
 function createNoteTimeline(noteDataArray, minDate) {
 	console.log(minDate);
 	var items = new vis.DataSet(noteDataArray);
@@ -100,6 +157,57 @@ function getToast(note_index){
 		}
 	});
 }
+
+
+function count2height(count){
+	return Note.base + Note.step*(count-1);
+}
+
+function height2count(height){
+	return parseInt((height - Note.base)/Note.step) + 1;
+}
+
+function height2arrayidx(height){
+	return parseInt((height - Note.base)/Note.step);
+}
+
+function height_conversion(data_array){
+	// data array expected to be in form [ [ date_1, count_1] , [date_2,count_2] , ... ]
+	for (var i = data_array.length - 1; i >= 0; i--) {
+
+		// for ith [date,count] pair, get second value (index 1), convert count to height
+		data_array[i][1]=count2height(data_array[i][1]);
+	};
+}
+
+
+
+function set_preview_data(date,height){
+	idx = height2arrayidx(height);
+	Note.curr_preview = note_dictionary[date][idx]['preview'];
+	Note.curr_service = note_dictionary[date][idx]['service'];
+	Note.curr_type = note_dictionary[date][idx]['type'];
+	Note.curr_timestamp = note_dictionary[date][idx]['time'];
+	Note.curr_noteID = note_dictionary[date][idx]['id'];
+
+}
+
+function get_fulltext_byID(note_id){
+	var text;
+	$.getJSON( "/_note/" + note_id, function(result) {
+		console.log(result);
+		text= result.fulltext;
+	});
+	return text;
+}
+
+function get_fulltext(date,height){
+	idx = height2arrayidx(height);
+	return get_fulltext_byindex(note_dictionary[date][idx]['id']);
+}
+
+
+
 
 /**
  * Move the timeline a given percentage to left or right
