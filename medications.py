@@ -38,9 +38,10 @@ class MedicationEntry(object):
             self.triple = (start, end, dose)
         except: 
             print "Malformed data for MedicationEntry object initialization"
-    '''Function: str 
-        Prints out the string representation of the drug (for debugging/information purposes)'''
+ 
     def __str__(self):
+        '''Function: str 
+        Prints out the string representation of the drug (for debugging/information purposes)'''
         result = ""
         result += "Name: " + self.name + "\n"
         result += "Start Date:" + str(self.start) + "\n"
@@ -60,7 +61,7 @@ class MedicationEntry(object):
         return {'name': self.name, 'start': self.start, 'status': self.status, 'dose': self.dose, 'doseUnits': self.doseUnits, 'administrationMethod': self.admMethod, 'end': self.end, 'classification': self.classification, 'display_group': self.display_group}
 
 class MedicationTrack(object):
-    ''' This is a container for MedicationEvents related to a single drug  '''
+    ''' This is a container for MedicationEvents related to a single drug. Intervals in self.intervals are not sorted, but are sorted in self.mergedIntervals'''
 
     def __init__(self, triple, name, dose, doseUnits, admMethod, classification, end, start):
         try:
