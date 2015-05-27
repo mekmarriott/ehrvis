@@ -14,15 +14,16 @@ Note.curr_noteID = 0;
 // data format: [ { data: ---, label: ---}, {data: ----, label: ---}, ... ]
 Note.plotData = [];
 
+unix_month = 904400
 
 // plotting options for main timeline
 Note.plot_min = 0;
 Note.plot_max = 1;
 Note.plotOptions = {};
 Note.plotOptions.series = { lines: {show: false}, points: {show: true }};
-Note.plotOptions.grid = { hoverable: true, clickable: true, markings: [] };
+Note.plotOptions.grid = { hoverable: true, markings: [] };
 Note.plotOptions.yaxis = { min: 1-0.1, autoscaleMargin: 0.1, zoomRange: false, ticks: [], panRange: false }; 
-Note.plotOptions.xaxis = { min: 0, max: 1, mode: "time", zoomRange: false, panRange: false };
+Note.plotOptions.xaxis = { min: 0, max: 1, mode: "time", zoomRange: [1,null], panRange: [0,1] };
 Note.plotOptions.zoom = { interactive: true };
 Note.plotOptions.pan = { interactive: true }; 
 
@@ -31,9 +32,9 @@ Note.plotOptions.pan = { interactive: true };
 
 Note.navOptions = {};
 Note.navOptions.series = { lines: {show: false}, points: {show: true }};
-Note.navOptions.grid = { hoverable: true, clickable: true, markings: [] };
-Note.navOptions.yaxis = { min: 0, autoscaleMargin: 0.5, ticks: [], panRange: false }; 
-Note.navOptions.xaxis = { min: 0, max: 1, mode: "time", ticks: [], panRange: false };
+Note.navOptions.grid = { hoverable: true, markings: [] };
+Note.navOptions.yaxis = { min: 1-0.1, autoscaleMargin: 0.1, ticks: [], panRange: false }; 
+Note.navOptions.xaxis = { min: 0, max: 1, mode: "time", ticks: [], panRange: [0,1] };
 Note.navOptions.shift = { interactive: true };
 
 
@@ -48,19 +49,21 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 		height_conversion(Note.plotData[i].data)
 	};
 
-	// ISSUE: X-AXIS LABELS ARE WRONG (MAIN PLOT)
-	// ISSUE: NAV PLOT SHOWS NOTHING
-	// ISSUE: MAIN PLOT SHOWS ALL POINTS INSTEAD OF 3-MONTH WINDOW
-	// ISSUE: CONTROLS DON'T SEEM TO WORK
+	// TODO:  GET RID OF NAV PLOT LEGEND 
+	// ISSUE: AXIS IS WEIRD
+	// ISSUE: HOVER OVER PREVIEW?
+	// ISSUE: HOVER OVER CSS STYLING
 
 	// set main plot window to [t_max-90days,t_max] by default
-	Note.plotOptions.xaxis.min = maxDate - 90 * (24 * 60 * 60 * 1000);
-	Note.plotOptions.xaxis.max = maxDate;
-	Note.plotOptions.xaxis.panRange = [maxDate - 90 * (24 * 60 * 60 * 1000), maxDate];
-
-	// set nav plot window to [t_min, t_max] permanently
 	Note.plotOptions.xaxis.min = minDate;
 	Note.plotOptions.xaxis.max = maxDate;
+	Note.plotOptions.xaxis.panRange = [minDate, maxDate];
+	Note.plotOptions.xaxis.zoomRange = [50000, maxDate - minDate]
+
+	// set nav plot window to [t_min, t_max] permanently
+	Note.navOptions.xaxis.min = minDate;
+	Note.navOptions.xaxis.max = maxDate;
+	Note.navOptions.xaxis.panRange = [minDate, maxDate];
 
 	// mark hospital stays
 	for (var i = hospitalStays.length - 1; i >= 0; i--) {
@@ -69,8 +72,9 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 
 	// plot dataseries
 	 var note_plot = $.plot("#note_plot_target", Note.plotData, Note.plotOptions);
+	 console.log("note plot is " + Note.plotOptions.xaxis.panRange);
 	 var note_nav = $.plot("#note_nav_target", Note.plotData, Note.navOptions);
-
+	 console.log("note plot is " + Note.navOptions.xaxis.panRange);
 
 	// create tooltip div 
 	$("<div id='note_tooltip'></div>").css({
