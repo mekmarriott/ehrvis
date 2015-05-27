@@ -19,6 +19,7 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from medications import load_patient1_meds
 from notes import load_epic_notes
+from time import mktime
 import json
 
 global medication_data
@@ -79,20 +80,36 @@ def notes():
     """Return all note information."""
     # note_data = load_mimic_notes()
     note_data = load_epic_notes()
-    # print note_data
-    return jsonify(note_data=note_data.notesByDate, plotting_series=note_data.series, 
-                    hospitalizations=note_data.hospitalizations, minDate=str(note_data.minDate), maxDate=str(note_data.maxDate))
+    return jsonify(previewData=note_data.previewsByService, plottingSeries=note_data.series.values(), 
+                    hospitalizations=note_data.hospitalizations, minDate=mktime(note_data.minDate.timetuple()), maxDate=mktime(note_data.maxDate.timetuple()))
 
-@app.route('/_note/<note_id>/')
-def note_fulltext(note_id):
+
+@app.route('/_note/<service_id>/<note_id>/fulltext/')
+def note_fulltext(service_id,note_id):
     global note_data
     i=int(note_id)
-    print "Called from toast"
+    print "Fulltext requested"
     print note_data.notes[t]
     try:
-        return jsonify(fulltext=note_data.notesByID[i].fulltext)
+        return jsonify(fulltext=note_data.notesByService[service_id][i].fulltext)
     except:
         return jsonify(fulltext="Unavailable")
+
+@app.route('/_note/<series_id>/<note_id>/preview/')
+def note_preview(sevice_id,note_id):
+    global note_data
+    i=int(note_id)
+    print "Preview requested"
+    print note_data.notes[t]
+    try:
+        return jsonify(fulltext=note_data.notesByService[service_id][i].preview)
+    except:
+        return jsonify(fulltext="Unavailable")
+
+@app.route('/_nulltest/')
+def nulltest():
+    return jsonify(retval = [[1,3],[2,4],None,[3,3]])
+
 #=======================================================================
 
 

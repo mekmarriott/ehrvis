@@ -5,7 +5,7 @@ from flask import Flask, request, json
 from dateutil import parser
 import datetime 
 from pprint import pprint
-
+from time import mktime
 
 
 class NoteEntry(object):
@@ -47,7 +47,8 @@ class NoteHistory(object):
     def __init__(self):
         self.notes = {}
         self.notesByDate = {}
-        self.notesByID = {}
+        self.notesByService = {}
+        self.previewsByService = {}
         self.minDate = datetime.datetime.now().date()      # as late as any possible dates
         self.maxDate = datetime.datetime(1900,1,1).date()  # earlier than all reasonable dates
         self.series = {}
@@ -138,39 +139,41 @@ class NoteHistory(object):
             for note in note_array:
                 if type(note) is NoteEntry:
 
+
+
                     # maintain a dictionary of notes: key = timestamp, value = note
                     # -------------------------------------------------------------
                     self.notes[str(note.time)]=note
 
-                    # maintain a dictionary of notes: key = ID, value = note
-                    # ------------------------------------------------------
-                    self.notesByID[note._id]=note
 
-                    # maintain an array of notes for each active calendar day
-                    # -------------------------------------------------------
+                    # maintain a earliest and latest dates in note history
+                    # ----------------------------------------------------
 
                     # 1. get note date
                     t = note.time.date()
 
-                    # 2. make dict entry for date if doesn't exist yet, key = date, value = array of notes 
-                    if str(t) not in self.notesByDate:
-                        self.notesByDate[str(t)]=[]
-
-                    # 3. associate note count (by day) information with note
-                    # this is the ith (i=current array length) note of the day; we will plot note at height proportional to i
-                    note.heightcount = len(self.notesByDate[str(t)])+1
-
-                    # 4. add note to corresponding calendar day
-                    self.notesByDate[str(t)].append(note.to_dict())
-
-
-
-                    # 5. compare to latest and earliest dates, modify either if superseded
+                    # 2. compare to latest and earliest dates, modify either if superseded
                     if t != "n/a":
                         if t < self.minDate:
                             self.minDate = t
                         if t > self.maxDate:
-                            self.maxDate = t
+                            self.maxDate = t                    
+
+                    # maintain a dictionary of events on each day: key = active calendar day, value = count
+                    # -------------------------------------------------------------------------------------
+
+                    # 1. make dict entry for date if doesn't exist yet, key = date, initial value = 0
+                    if str(t) not in self.notesByDate:
+                        self.notesByDate[str(t)]=0
+
+                    # 2. increment count 
+                    self.notesByDate[str(t)]+=1
+
+                    # 3. associate note count (by day) information with note
+                    # this is the ith (i=current array length) note of the day; we will plot note at height proportional to i
+                    note.heightcount = self.notesByDate[str(t)]
+
+     
 
 
                     # add to [time,height] pair to corresponding dataseries (by service)
@@ -181,11 +184,30 @@ class NoteHistory(object):
 
                     # 2. make dict entry for service if doesn't exist, key = service, value = plot data and color
                     if s not in self.series:
-                        self.series[s]={'color':self.serv2color[s],'data':[]}
+                        self.series[s]={'label':s,'color':self.serv2color[s],'data':[]}
 
                     # 3. append [time,height] pair to relevant data series
-                    self.series[s]['data'].append([str(t),note.heightcount])
+                    self.series[s]['data'].append([mktime(t.timetuple()),note.heightcount])
 
+                    # 4. assign note ID by its position within the note series (use 0-based indexing)
+                    _id = len(self.series[s]['data'])-1
+
+                    note._id = _id   
+
+
+                    # maintain dictionaries of notes and note previews by service
+                    # ---------------------------------------
+
+                    # 1. make dict entry for service if doesn't exist, key = service, value = note dict by ID
+                    if s not in self.notesByService:
+                        self.notesByService[s]={}
+                        self.previewsByService[s]={}
+
+                    # 2. add current note to corresponding dictionary position
+                    self.notesByService[s][_id]=note
+                    
+                    # 3. add preview of current note to corresponding dictionary position
+                    self.previewsByService[s][_id]=note.preview
 
             # add viewing buffer to latest and earliest times
             self.minDate = self.minDate - datetime.timedelta(days=1)
