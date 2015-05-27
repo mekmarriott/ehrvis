@@ -148,7 +148,11 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 }
 
 
-
+function displayToast(content){
+	var noteToast = document.getElementById('note_detail');
+	noteToast.toggle();
+	noteToast.innerHTML = content;
+}
 
 
 function count2height(count){
@@ -190,10 +194,3 @@ function get_fulltext(service,idx){
 	});
 	return text;
 }
-
-
-
-
-
-
-
