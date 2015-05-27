@@ -53,8 +53,9 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 	// TODO: SEARCH/FILTER POINTS?
 	// TODO: CSS - PLOT CONTAINER/WINDOW ADAPTATION
 
+
 	// set main plot window to [t_max-90days,t_max] by default
-	Note.plotOptions.xaxis.min = minDate;//maxDate - 90*(24*60*60*1000);
+	Note.plotOptions.xaxis.min = minDate;
 	Note.plotOptions.xaxis.max = maxDate;
 	Note.plotOptions.xaxis.panRange = [minDate, maxDate];
 
