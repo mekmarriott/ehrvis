@@ -1,0 +1,250 @@
+{
+  "resourceType": "Bundle",
+  "title": "Search results for MedicationPrescription",
+  "id": "https://open-ic.epic.com/FHIR-2015/api/FHIR/MedicationPrescription?patient=RVBUOyAgICAgWjUxNDY7Ozs7dGVybWluYXRl&status=active",
+  "updated": "2015-05-07T10:54:31",
+  "totalResults": "3",
+  "entry": [
+    {
+      "title": "Entry for MedicationPrescription T1JEOzg5NTUyMDs7Ozt0ZXJtaW5hdGU",
+      "id": "https://open-ic.epic.com/FHIR-2015/api/FHIR/MedicationPrescription/T1JEOzg5NTUyMDs7Ozt0ZXJtaW5hdGU",
+      "updated": "2015-05-07T10:54:31",
+      "published": "2015-05-07T10:54:31",
+      "content": {
+        "resourceType": "MedicationPrescription",
+        "dateWritten": "2013-10-31T00:00:00Z",
+        "status": "active",
+        "identifier": [
+          {
+            "value": "895520",
+            "system": "urn:oid:1.2.840.114350.1.13.327.1.7.2.798268",
+            "use": "usual"
+          },
+          {
+            "value": "895520OID327",
+            "system": "urn:oid:1.2.840.114350.1.13.327.1.7.3.798268.801",
+            "use": "usual"
+          }
+        ],
+        "patient": {
+          "reference": "https://open-ic.epic.com/FHIR-Experimental/api/FHIR/Patient/RVBUOyAgICAgWjUxNDY7Ozs7dGVybWluYXRl",
+          "display": "Stenton Carver"
+        },
+        "prescriber": {
+          "reference": "https://open-ic.epic.com/FHIR-Experimental/api/FHIR/Practitioner/U0VSOyAgIEUxMDEyOzs7O3Rlcm1pbmF0ZQ"
+        },
+        "medication": {
+          "reference": "https://open-ic.epic.com/FHIR-Experimental/api/FHIR/Medication/RVJYOzI5Mjc0Ozs7O3Rlcm1pbmF0ZQ",
+          "display": "DILTIAZEM 240 MG ER capsule"
+        },
+        "dosageInstruction": [
+          {
+            "text": "Take 240 mg by mouth daily.",
+            "route": {
+              "text": "Oral",
+              "coding": [
+                {
+                  "system": "urn:oid:1.2.840.114350.1.13.327.1.7.4.698288.330",
+                  "code": "15",
+                  "display": "Oral",
+                  "primary": false
+                }
+              ]
+            },
+            "doseQuantity": {
+              "value": "240",
+              "system": "urn:oid:1.2.840.114350.1.13.327.1.7.4.696784.9010",
+              "code": "3"
+            },
+            "timingSchedule": {
+              "repeat": {
+                "frequency": 1,
+                "duration": "1",
+                "units": "d",
+                "end": "0001-01-01T00:00:00",
+                "count": 0
+              },
+              "event": [
+                {
+                  "start": "2013-01-25T00:00:00Z"
+                }
+              ]
+            }
+          }
+        ],
+        "dispense": {
+          "numberOfRepeatsAllowed": 0,
+          "quantity": {
+            "value": "90",
+            "system": "urn:oid:1.2.840.114350.1.13.327.1.7.4.696784.9010",
+            "code": "5002"
+          }
+        }
+      }
+    },
+    {
+      "title": "Entry for MedicationPrescription T1JEOzg5NTUyMjs7Ozt0ZXJtaW5hdGU",
+      "id": "https://open-ic.epic.com/FHIR-2015/api/FHIR/MedicationPrescription/T1JEOzg5NTUyMjs7Ozt0ZXJtaW5hdGU",
+      "updated": "2015-05-07T10:54:31",
+      "published": "2015-05-07T10:54:31",
+      "content": {
+        "resourceType": "MedicationPrescription",
+        "dateWritten": "2013-10-31T00:00:00Z",
+        "status": "active",
+        "identifier": [
+          {
+            "value": "895522",
+            "system": "urn:oid:1.2.840.114350.1.13.327.1.7.2.798268",
+            "use": "usual"
+          },
+          {
+            "value": "895522OID327",
+            "system": "urn:oid:1.2.840.114350.1.13.327.1.7.3.798268.801",
+            "use": "usual"
+          }
+        ],
+        "patient": {
+          "reference": "https://open-ic.epic.com/FHIR-Experimental/api/FHIR/Patient/RVBUOyAgICAgWjUxNDY7Ozs7dGVybWluYXRl",
+          "display": "Stenton Carver"
+        },
+        "prescriber": {
+          "reference": "https://open-ic.epic.com/FHIR-Experimental/api/FHIR/Practitioner/U0VSOyAgIEUxMDEyOzs7O3Rlcm1pbmF0ZQ"
+        },
+        "medication": {
+          "reference": "https://open-ic.epic.com/FHIR-Experimental/api/FHIR/Medication/RVJYOzQ0MjM7Ozs7dGVybWluYXRl",
+          "display": "DILTIAZEM 240 MG ER capsule"
+        },
+        "dosageInstruction": [
+          {
+            "text": "Take 240 mg by mouth daily.",
+            "route": {
+              "text": "Oral",
+              "coding": [
+                {
+                  "system": "urn:oid:1.2.840.114350.1.13.327.1.7.4.698288.330",
+                  "code": "15",
+                  "display": "Oral",
+                  "primary": false
+                }
+              ]
+            },
+            "doseQuantity": {
+              "value": "240",
+              "system": "urn:oid:1.2.840.114350.1.13.327.1.7.4.696784.9010",
+              "code": "8"
+            },
+            "timingSchedule": {
+              "repeat": {
+                "frequency": 2,
+                "duration": "1",
+                "units": "d",
+                "end": "0001-01-01T00:00:00",
+                "count": 0
+              },
+              "event": [
+                {
+                  "start": "2013-08-23T00:00:00Z"
+                }
+              ]
+            }
+          }
+        ],
+        "dispense": {
+          "numberOfRepeatsAllowed": 0,
+          "expectedSupplyDuration": {
+            "value": "100",
+            "system": "urn:oid:2.16.840.1.113883.6.8",
+            "code": "d"
+          },
+          "quantity": {
+            "value": "100",
+            "system": "urn:oid:1.2.840.114350.1.13.327.1.7.4.696784.9010",
+            "code": "5002"
+          }
+        }
+      }
+    },
+    {
+      "title": "Entry for MedicationPrescription T1JEOzg5NTUyMTs7Ozt0ZXJtaW5hdGU",
+      "id": "https://open-ic.epic.com/FHIR-2015/api/FHIR/MedicationPrescription/T1JEOzg5NTUyMTs7Ozt0ZXJtaW5hdGU",
+      "updated": "2015-05-07T10:54:31",
+      "published": "2015-05-07T10:54:31",
+      "content": {
+        "resourceType": "MedicationPrescription",
+        "dateWritten": "2013-10-31T00:00:00Z",
+        "status": "active",
+        "identifier": [
+          {
+            "value": "895521",
+            "system": "urn:oid:1.2.840.114350.1.13.327.1.7.2.798268",
+            "use": "usual"
+          },
+          {
+            "value": "895521OID327",
+            "system": "urn:oid:1.2.840.114350.1.13.327.1.7.3.798268.801",
+            "use": "usual"
+          }
+        ],
+        "patient": {
+          "reference": "https://open-ic.epic.com/FHIR-Experimental/api/FHIR/Patient/RVBUOyAgICAgWjUxNDY7Ozs7dGVybWluYXRl",
+          "display": "Stenton Carver"
+        },
+        "prescriber": {
+          "reference": "https://open-ic.epic.com/FHIR-Experimental/api/FHIR/Practitioner/U0VSOyAgIEUxMDEyOzs7O3Rlcm1pbmF0ZQ"
+        },
+        "medication": {
+          "reference": "https://open-ic.epic.com/FHIR-Experimental/api/FHIR/Medication/RVJYOzExMzY2Ozs7O3Rlcm1pbmF0ZQ",
+          "display": "DILTIAZEM 240 MG ER capsule"
+        },
+        "dosageInstruction": [
+          {
+            "text": "Take 40 mg by mouth nightly.",
+            "route": {
+              "text": "Oral",
+              "coding": [
+                {
+                  "system": "urn:oid:1.2.840.114350.1.13.327.1.7.4.698288.330",
+                  "code": "15",
+                  "display": "Oral",
+                  "primary": false
+                }
+              ]
+            },
+            "doseQuantity": {
+              "value": "240",
+              "system": "urn:oid:1.2.840.114350.1.13.327.1.7.4.696784.9010",
+              "code": "3"
+            },
+            "timingSchedule": {
+              "repeat": {
+                "frequency": 2,
+                "duration": "1",
+                "units": "d",
+                "end": "0001-01-01T00:00:00",
+                "count": 0
+              },
+              "event": [
+                {
+                  "start": "2012-10-23T00:00:00Z"
+                }
+              ]
+            }
+          }
+        ],
+        "dispense": {
+          "numberOfRepeatsAllowed": 0,
+          "expectedSupplyDuration": {
+            "value": "30",
+            "system": "urn:oid:2.16.840.1.113883.6.8",
+            "code": "d"
+          },
+          "quantity": {
+            "value": "30",
+            "system": "urn:oid:1.2.840.114350.1.13.327.1.7.4.696784.9010",
+            "code": "5002"
+          }
+        }
+      }
+    }
+  ]
+}
