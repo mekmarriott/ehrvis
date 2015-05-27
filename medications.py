@@ -186,9 +186,9 @@ def addToTrack(entry, tracks):
 def consolidateTrack(track):
     '''This function takes in a series of start-end-dose tuples from a MedicationTrack and merges overlapping ranges. If the doses of conflicting ranges are different, the higher dose is prioritized.'''
     finalTrack = []
-    #sortedTrack = sorted(track.intervals, key=lambda x: x[1], x[0])
-    #currStart = -1
-    #currEnd = -1
+    sortedTrack = sorted(track.intervals, key=lambda x:(x[1], x[0]))
+    currStart = -1
+    currEnd = -1
 
     #for start, end, dose in sortedTrack:
     #    print dose
