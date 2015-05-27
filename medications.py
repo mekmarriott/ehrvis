@@ -245,6 +245,7 @@ def addToTrack(entry, tracks):
     return
 
 def initialize_hapi(entry):
+    '''For use with HAPI medication data. Creates a medicationEntry object by parsing data from the provided JSON entry'''
     try:
         start = parse(entry["resource"]["dateWritten"]).date()
         name = entry["resource"]["medication"]["display"].strip()
@@ -279,13 +280,10 @@ def load_patient1_meds():
         d = track.getDict()
         outputTracks.append(d)
     output = sorted(outputTracks, key=lambda x:(x.get('lastEnd'), x.get('lastStart')), reverse = True)
-    for t in output:
-        print str(t.get('lastStart')) + " " + str(t.get('lastEnd'))
     return output
 
 def getClassification(name):
     # Get ATC classification of a drug using the RxNorm API.
-    #drug = name.split(' ')[0]
     drug = name.replace (" ", "+")
     classURL = 'http://rxnav.nlm.nih.gov/REST/rxclass/class/byDrugName.json?drugName=' + drug + '&relaSource=ATC'
     classReq = urllib2.urlopen(classURL)
@@ -296,4 +294,4 @@ def getClassification(name):
     except:
         return None
 
-load_patient1_meds()
+#load_patient1_meds()
