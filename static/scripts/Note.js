@@ -33,7 +33,7 @@ Note.plotOptions.pan = { interactive: true };
 
 Note.navOptions = {};
 Note.navOptions.series = { lines: {show: false}, points: {show: true }};
-Note.navOptions.grid = { hoverable: true, markings: [] };
+Note.navOptions.grid = { hoverable: true, clickable: true, markings: [] };
 Note.navOptions.yaxis = { min: 1-Note.padding/2, autoscaleMargin: Note.padding/2, ticks: [], panRange: false }; 
 Note.navOptions.xaxis = { mode: "time", panRange: [0,1] , tickSize: [3, "month"] };
 Note.navOptions.shift = { interactive: true };
@@ -97,14 +97,23 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 
     //Bind "fulltext on click" to plot
     $("#note_plot_target").bind("plotclick", function (event, pos, item) {
+    	note_plot.unhighlight()
       if (item) {
-
-        // set tooltip contents
-        // set_preview_data(item.series.label,item.dataIndex);
-        console.log("ONCLICK");
         set_fulltext(item.series.label,item.dataIndex);
-  
       } 
+    });
+
+    $("#note_nav_target").bind("plotclick", function (event, pos, item) {
+    	note_plot.unhighlight()
+      if (item) {
+      	var centerPoint = item.datapoint[0];
+      	var axes = note_plot.getAxes();
+		var diff = axes.xaxis.max - axes.xaxis.min;
+		var ranges = { xaxis: { from: centerPoint - diff*0.5, to: centerPoint + diff*0.5 }, yaxis: { from: axes.yaxis.min, to: axes.yaxis.max } }
+        note_nav.setSelection(ranges, true);
+		replot(ranges);
+		note_plot.highlight(item.series, item.dataIndex);
+      }
     });
 
     //Bind tooltip to plot
