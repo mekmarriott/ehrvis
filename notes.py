@@ -7,6 +7,8 @@ from pprint import pprint
 from time import mktime
 from datetime import datetime, timedelta
 
+def date2utc(timestamp):
+    return 1000*mktime(timestamp.date().timetuple())
 
 class NoteEntry(object):
 
@@ -41,7 +43,7 @@ class NoteEntry(object):
 class NoteHistory(object):
 
     services = ["Medicine", "Emergency Medicine", "Critical Care", "Other"]
-    serv2color = {services[0]:'#2222dd',services[1]:'#ee2222',services[2]:'#ee22cc',services[-1]:'#222222'}
+    serv2color = {services[0]:'#2244dd',services[1]:'#dd2222',services[2]:'#dd9933',services[-1]:'#222222'}
 
 
     def __init__(self):
@@ -49,8 +51,8 @@ class NoteHistory(object):
         self.notesByDate = {}
         self.notesByService = {}
         self.previewsByService = {}
-        self.minDate = datetime.now().date()      # as late as any possible dates
-        self.maxDate = datetime(1900,1,1).date()  # earlier than all reasonable dates
+        self.minDate = datetime.now()      # as late as any possible dates
+        self.maxDate = datetime(1900,1,1)  # earlier than all reasonable dates
         self.series = {}
         self.hospitalizations = []
 
@@ -76,8 +78,7 @@ class NoteHistory(object):
         else:
             return self.services[-1]
 
-    def date2utc(self,timestamp):
-        return 1000*mktime(timestamp.date().timetuple())
+
 
     def compile_hospitalizations(self):
         try:
@@ -101,14 +102,14 @@ class NoteHistory(object):
 
                 # look for next inpatient note. this defines the start date of the hospitalization
                 if self.notes[ks[idx]].inpatient:
-                    hosp.append(self.date2utc(self.notes[ks[idx]].time.date()))
+                    hosp.append(date2utc(self.notes[ks[idx]].time.date()))
 
                     while idx < max_:
                         # look for next outpatient note. this defines the end date of the hospitalization
                         idx += 1 
                         if idx == max_:
                             # if reach end of notes without reverting to outpatient, put today's date as end date
-                            hosp.append(self.date2utc(datetime.now()))
+                            hosp.append(ate2utc(datetime.now()))
 
                             # append current hospitalization to hospitalization list
                             self.hospitalizations.append(hosp)
@@ -119,7 +120,7 @@ class NoteHistory(object):
 
                         if not self.notes[ks[idx]].inpatient:
                             # append time from PREVIOUS note to "hosp" as end date
-                            hosp.append(self.date2utc(self.notes[ks[idx-1]].time.date()))
+                            hosp.append(date2utc(self.notes[ks[idx-1]].time.date()))
 
                             # append current hospitalization to hospitalization list
                             self.hospitalizations.append(hosp)
@@ -151,8 +152,8 @@ class NoteHistory(object):
                     # maintain a earliest and latest dates in note history
                     # ----------------------------------------------------
 
-                    # 1. get note date
-                    t = note.time.date()
+                    # 1. get note timestamp
+                    t = note.time
 
                     # 2. compare to latest and earliest dates, modify either if superseded
                     if t != "n/a":
@@ -164,16 +165,17 @@ class NoteHistory(object):
                     # maintain a dictionary of events on each day: key = active calendar day, value = count
                     # -------------------------------------------------------------------------------------
 
+
                     # 1. make dict entry for date if doesn't exist yet, key = date, initial value = 0
-                    if str(t) not in self.notesByDate:
-                        self.notesByDate[str(t)]=0
+                    if str(t.date()) not in self.notesByDate:
+                        self.notesByDate[str(t.date())]=0
 
                     # 2. increment count 
-                    self.notesByDate[str(t)]+=1
+                    self.notesByDate[str(t.date())]+=1
 
                     # 3. associate note count (by day) information with note
                     # this is the ith (i=current array length) note of the day; we will plot note at height proportional to i
-                    note.heightcount = self.notesByDate[str(t)]
+                    note.heightcount = self.notesByDate[str(t.date())]
 
      
 
@@ -189,7 +191,7 @@ class NoteHistory(object):
                         self.series[s]={'label':s,'color':self.serv2color[s],'data':[]}
 
                     # 3. append [time,height] pair to relevant data series
-                    self.series[s]['data'].append([mktime(t.timetuple()),note.heightcount])
+                    self.series[s]['data'].append([date2utc(t),note.heightcount])
 
                     # 4. assign note ID by its position within the note series (use 0-based indexing)
                     _id = len(self.series[s]['data'])-1
