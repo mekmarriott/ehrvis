@@ -22,7 +22,7 @@ Note.plot_min = 0;
 Note.plot_max = 1;
 Note.plotOptions = {};
 Note.plotOptions.series = { lines: {show: false}, points: {show: true, radius: 4.5 }};
-Note.plotOptions.grid = { hoverable: true, markings: [] };
+Note.plotOptions.grid = { hoverable: true, clickable: true, markings: [] };
 Note.plotOptions.yaxis = { min: 1-Note.padding, autoscaleMargin: Note.padding, zoomRange: false, ticks: [], panRange: false }; 
 Note.plotOptions.xaxis = { mode: "time", zoomRange: [21*Note.day,365*Note.day], panRange: [0,1] };
 Note.plotOptions.zoom = { interactive: true };
@@ -33,7 +33,7 @@ Note.plotOptions.pan = { interactive: true };
 
 Note.navOptions = {};
 Note.navOptions.series = { lines: {show: false}, points: {show: true }};
-Note.navOptions.grid = { hoverable: true, markings: [] };
+Note.navOptions.grid = { hoverable: true, clickable: true, markings: [] };
 Note.navOptions.yaxis = { min: 1-Note.padding/2, autoscaleMargin: Note.padding/2, ticks: [], panRange: false }; 
 Note.navOptions.xaxis = { mode: "time", panRange: [0,1] , tickSize: [3, "month"] };
 Note.navOptions.shift = { interactive: true };
@@ -57,7 +57,7 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 	// TODO: CSS - WINDOW ADAPTATION
 
 	// set main plot window to [t_max-90days,t_max] by default
-	Note.plotOptions.xaxis.min = maxDate - 90*(24*60*60*1000);
+	Note.plotOptions.xaxis.min = minDate;//maxDate - 90*(24*60*60*1000);
 	Note.plotOptions.xaxis.max = maxDate;
 	Note.plotOptions.xaxis.panRange = [minDate, maxDate];
 
@@ -77,6 +77,11 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 
 	$("#note_plot_target div.legend table").css({ "font-size": "1.8rem", "background-color":"#d5d5d5", color:"#222", "opacity":0.85, padding:"0.5rem", border:"1rem" });
 
+	// set initial range
+	var axes = note_plot.getAxes();
+	var initRange = { xaxis: { from: maxDate - 90*(24*60*60*1000), to: maxDate }, yaxis: { from: axes.yaxis.min, to: axes.yaxis.max } }
+	note_nav.setSelection(initRange, true);
+	replot(initRange);
 
 	// create tooltip div 
 	$("<div id='note_tooltip'></div>").css({
@@ -92,19 +97,25 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 	}).appendTo("body");
 
 
-
     //Bind "fulltext on click" to plot
     $("#note_plot_target").bind("plotclick", function (event, pos, item) {
+    	note_plot.unhighlight()
       if (item) {
-
-        // set tooltip contents
-        set_preview_data(item.series.label,item.dataIndex);
         set_fulltext(item.series.label,item.dataIndex);
-
-        // call dropdown
-        displayFulltext();
-  
       } 
+    });
+
+    $("#note_nav_target").bind("plotclick", function (event, pos, item) {
+    	note_plot.unhighlight()
+      if (item) {
+      	var centerPoint = item.datapoint[0];
+      	var axes = note_plot.getAxes();
+		var diff = axes.xaxis.max - axes.xaxis.min;
+		var ranges = { xaxis: { from: centerPoint - diff*0.5, to: centerPoint + diff*0.5 }, yaxis: { from: axes.yaxis.min, to: axes.yaxis.max } }
+        note_nav.setSelection(ranges, true);
+		replot(ranges);
+		note_plot.highlight(item.series, item.dataIndex);
+      }
     });
 
     //Bind tooltip to plot
@@ -170,7 +181,12 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 }
 
 
-
+function displayFulltext(){
+	var noteToast = document.getElementById('note_detail');
+	noteToast.toggle();
+	console.log(Note.curr_fulltext);
+	noteToast.innerHTML = Note.curr_fulltext;
+}
 
 
 function count2height(count){
@@ -205,15 +221,8 @@ function set_preview_data(service,idx){
 }
 
 function set_fulltext(service,idx){
-	$.getJSON( "/_note/" + service + "/" + idx + "/" , function(result) {
-		console.log(result);
+	$.getJSON( "/_note/" + service + "/" + idx + "/fulltext" , function(result) {
 		Note.curr_fulltext= result.fulltext;
+		displayFulltext();
 	});
 }
-
-
-
-
-
-
-

@@ -9,11 +9,13 @@
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.selection.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.shift.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/scripts/Note.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/bower_components/webcomponentsjs/webcomponents.js"></script>
+	<link href="/static/bower_components/paper-dialog/paper-dialog.html" rel="import">
 
 <!-- <body> -->
 
 	<div id="header">
-		<h2>Title Here</h2>
+		<h2>Notes</h2>
 	</div>
 
 	<div id="content">
@@ -28,6 +30,9 @@
 
 	</div>
 
+	<paper-dialog id="note_detail" heading="Title" class="scrolling" backdrop layered="false">
+		<p>blahblahblah I'm cool.</p>
+    </paper-dialog>
 
 	<script>
 		var med_timeline;
@@ -37,9 +42,7 @@
 		var med_display_names;
 		var noteSeries, notePreviews;
 
-		window.onload = function(){
-			console.log("Loading");
-
+		window.onload = function(){			
 			// ----------------------------------
 			// load note data and create timeline
 			// ----------------------------------
