@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 # The classes and methods in this file are used to parse and organize medication information from the Ajax queries made in app.py
-# TODO: Dose units
 # TODO: In MedicationTrack, may want to merge entries that are adjacent if they have the same dosage
-# TODO: Add to MedTrack method that figures out which MedicationTrack a drug should be added to (or makes a new one if none exist)
 # TODO: Add data structure that will store all MedicationTracks- perhaps a sorted Dict?
-# TODO: MedicationTrack: Figure out the desired complexity of objects stored in interval list
+# TODO: MedicationTrack: Write a function that creates the front end dict. 
 
 from flask import Flask, request, json
 from dateutil import parser
@@ -39,7 +37,7 @@ class MedicationEntry(object):
             # Display group
             self.display_group = 0
         except: 
-            print "Malformed data for object initialization"
+            print "Malformed data for MedicationEntry object initialization"
     '''Function: str 
         Prints out the string representation of the drug (for debugging/information purposes)'''
     def __str__(self):
@@ -51,7 +49,10 @@ class MedicationEntry(object):
         result += "Dose Units: " + str(self.doseUnits) + "\n"
         result += "Admin Method: " + self.admMethod + "\n"
         result += "End Date: " + str(self.end) + "\n"
-        result += "Classification: " + str(self.classification) + "\n"
+        if (self.classification is None):
+            result += "Classification: " + "n/a" + "\n"
+        else: 
+            result += "Classification: " + str(self.classification) + "\n"
         result += "Display Group:" + str(self.display_group) + "\n" 
         return result
 
@@ -61,22 +62,23 @@ class MedicationEntry(object):
 class MedicationTrack(object):
     ''' This is a container for MedicationEvents related to a single drug  '''
 
-    def __init__(self, entry):
+    def __init__(self, entry, name, dose, doseUnits, admMethod, classification, end, start):
         try:
-            self.name = entry.name
-            self.typicalDose = None
-            self.doseUnits = entry.doseUnits
+            self.name = name
+            self.maxDose = dose
+            self.doseUnits = doseUnits
             self.admMethod = entry.admMethod
-            self.classification = entry.classification
+            self.classification = classification
+            self.lastEnd = end
+            self.lastStart = start
             self.intervals = SortedListWithKey(key=lambda val:(val.end, val.start))
-            self.lastEnd = entry.start
-            self.lastStart = entry.end
             # Add the initializing MedicationEntry to the track's intervals
-            self.addEvent(entry)
+            self.intervals.add(entry)
         except:
-            print "Malformed data for object initialization"
+            print "Malformed data for MedicationTrack object initialization"
 
     def __str__(self):
+        '''For debugging'''
         result = ""
         result += "Drug Name: " + str(self.name) + "\n"
         result += "Intervals:" + "\n"
@@ -84,26 +86,38 @@ class MedicationTrack(object):
             result += "\t" + str(block.dose) + " " + str(block.start) + " to " + str(block.end) + "\n"
         return result
 
+    def __dict__(self):
+        ''' This function packages the MedicationTrack as a dict, which is processed by the app front end to display the medication track.'''
+        plotData = []
+        for entry in self.intervals:
+            plotData.append([entry.start, entry.dose])
+            plotData.append([entry.end, entry.dose])
+            plotData.append(None) #spacer
+        return { 'plotData': plotData, 'drugName': self.name, 'maxDose': self.maxDose, 'doseUnits': doseUnits, 'admMethod': self.admMethod, 'classification': self.classification, 'trackStart': self.lastStart, 'trackEnd': self.lastEnd }  
+        
+
     def addEvent(self, event):
         ''' This function adds a medication event to the medication track '''
+        pass
         # Make sure that the medication is correct
         if (event.name != self.name):
             print "MedicationEvent does not match MedicationTrack"
             raise NameError(event.name)
         # Add MedicationEntry to the track. It will be sorted by end date in ascending order, and then by start date in ascending order
         self.intervals.add(event)
+        # Adjust lastStart and lastEnd if necessary
+        if(event.end > self.lastEnd):
+            self.lastEnd = event.end
+        if(event.start > self.lastStart):
+            self.lastStart = event.start
         return
-
-def addAllMedsToTracks(entryList, trackMap):
-    # Given a list of MedicationEntry objects, this function adds them to MedicationTracks, creating new tracks where appropriate
-    pass    
-
+    
 
 class MedicationHistory(object):
     '''This class looks at all medications a patient is on and keeps track of unique medication names and the minimum date among them.'''
     def __init__(self):
         self.meds = []
-        self.minDate = datetime.datetime.now()
+        self.minDate = date.today()
         self.medNames = []
         self.med2idx = {}
         self.idx2med = {}
@@ -136,9 +150,9 @@ class MedicationHistory(object):
                 
 def initialize_epic(data):
     try:
-        defaultEnd = datetime.datetime.now()
+        defaultEnd = date.today()
         name =  data["content"]["medication"]["display"]
-        start = parse("12:50:18.297550")# parse(data["content"]["dosageInstruction"][0]["timingSchedule"]["event"][0]["start"])
+        start = parse(data["content"]["dosageInstruction"][0]["timingSchedule"]["event"][0]["start"])
         status = data["content"]["status"]
         dose = int(data["content"]["dosageInstruction"][0]["doseQuantity"]["value"]) 
         doseUnits = None
@@ -155,11 +169,24 @@ def initialize_epic(data):
         print "Malformed data for object initialization"
         return None
 
-def intialize_hapi(entry):
+
+
+def addToTrack(entry, tracks):
+    # Given a MedicationEntry object, this function adds it to a MedicationTrack, creating a new track if none exists for that drug.
+    name = entry.name
+    if name in tracks:
+        currTrack = tracks.get(name)
+        currTrack.addEvent(entry)
+    else:
+        newTrack = MedicationTrack(entry, entry.name, entry.dose, entry.doseUnits, entry.admMethod, entry.classification, entry.end, entry.start)
+        tracks[name] = newTrack
+    return
+
+
+def initialize_hapi(entry):
     try:
-        start = entry["resource"]["dateWritten"]
-        start = parser.parse(start)
-        name = entry["resource"]["medication"]["display"]
+        start = parse(entry["resource"]["dateWritten"]).date()
+        name = entry["resource"]["medication"]["display"].strip()
         duration = datetime.timedelta(days=1)
         timeUnit = entry["resource"]["dispense"]["expectedSupplyDuration"]["units"]
         if timeUnit == "months":
@@ -181,11 +208,15 @@ def intialize_hapi(entry):
 def load_patient1_meds():
     entryList = json.load(open('static/FHIR_Sandbox/patient1_medications.json'))
     returnList = []
+    tracks = {}
     for entry in entryList:
-        returnList.append(intialize_hapi(entry))
-    history = MedicationHistory();
-    history.add_meds(returnList)
-    return history
+        medEntry = initialize_hapi(entry)
+        addToTrack(medEntry, tracks)
+        #returnList.append(initialize_hapi(entry))
+    #history = MedicationHistory();
+    #history.add_meds(returnList)
+    print tracks.get("Oxygen")
+    #return history
 
 def getClassification(name):
     # Get ATC classification of a drug using the RxNorm API.
@@ -200,23 +231,24 @@ def getClassification(name):
         return None
 
 # -----------------For Testing Only- remove later-------------------
-with open('static/FHIR_Sandbox/test_meds.json') as data_file:
-    data = json.load(data_file)
+load_patient1_meds()
+#with open('static/FHIR_Sandbox/test_meds.json') as data_file:
+#    data = json.load(data_file)
 #     #pprint(data)
 #     #need to split the query results into individual entries
-    entryList = data["entry"]
-    medEvents = []
-    dates = SortedList()
-    for entry in entryList:
-        drug = initialize_epic(entry)
-        medEvents.append(drug)
-        dates.add(drug.end)
-    drug1 = (medEvents[0]).name
-    medTrack = MedicationTrack(medEvents[0])
-    #medTrack.addEvent(medEvents[0])
-    medTrack.addEvent(medEvents[1])
-    medTrack.addEvent(medEvents[2])
-    #print dates
-    print str(medTrack) 
+#    entryList = data["entry"]
+#    medEvents = []
+#    dates = SortedList()
+#    for entry in entryList:
+#        drug = initialize_epic(entry)
+#        medEvents.append(drug)
+#        dates.add(drug.end)
+#    drug1 = (medEvents[0]).name
+#    medTrack = MedicationTrack(medEvents[0])
+#    #medTrack.addEvent(medEvents[0])
+#    medTrack.addEvent(medEvents[1])
+#    medTrack.addEvent(medEvents[2])
+#    #print dates
+#    print str(medTrack) 
 #         print "-------------------------------------------------------------------------------------------"
 
