@@ -18,7 +18,7 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from medications import load_patient1_meds
-from notes import load_epic_notes
+from notes import load_epic_notes, date2utc
 from time import mktime
 import json
 
@@ -81,7 +81,7 @@ def notes():
     # note_data = load_mimic_notes()
     note_data = load_epic_notes()
     return jsonify(previewData=note_data.previewsByService, plottingSeries=note_data.series.values(), 
-                    hospitalizations=note_data.hospitalizations, minDate=mktime(note_data.minDate.timetuple()), maxDate=mktime(note_data.maxDate.timetuple()))
+                    hospitalizations=note_data.hospitalizations, minDate=date2utc(note_data.minDate), maxDate=date2utc(note_data.maxDate))
 
 
 @app.route('/_note/<service_id>/<note_id>/fulltext/')

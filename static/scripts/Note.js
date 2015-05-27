@@ -1,8 +1,10 @@
 
 
 var Note = {};
+Note.day = 24*60*60*1000;
 Note.base = 1;
 Note.step = 0.2;
+Note.padding = 0.3;
 Note.curr_preview = "";
 Note.curr_type = "";
 Note.curr_service = "";
@@ -14,16 +16,15 @@ Note.curr_noteID = 0;
 // data format: [ { data: ---, label: ---}, {data: ----, label: ---}, ... ]
 Note.plotData = [];
 
-unix_month = 904400
 
 // plotting options for main timeline
 Note.plot_min = 0;
 Note.plot_max = 1;
 Note.plotOptions = {};
-Note.plotOptions.series = { lines: {show: false}, points: {show: true }};
+Note.plotOptions.series = { lines: {show: false}, points: {show: true, radius: 4.5 }};
 Note.plotOptions.grid = { hoverable: true, markings: [] };
-Note.plotOptions.yaxis = { min: 1-0.1, autoscaleMargin: 0.1, zoomRange: false, ticks: [], panRange: false }; 
-Note.plotOptions.xaxis = { min: 0, max: 1, mode: "time", zoomRange: [1,null], panRange: [0,1] };
+Note.plotOptions.yaxis = { min: 1-Note.padding, autoscaleMargin: Note.padding, zoomRange: false, ticks: [], panRange: false }; 
+Note.plotOptions.xaxis = { mode: "time", zoomRange: [21*Note.day,365*Note.day], panRange: [0,1] };
 Note.plotOptions.zoom = { interactive: true };
 Note.plotOptions.pan = { interactive: true }; 
 
@@ -33,10 +34,10 @@ Note.plotOptions.pan = { interactive: true };
 Note.navOptions = {};
 Note.navOptions.series = { lines: {show: false}, points: {show: true }};
 Note.navOptions.grid = { hoverable: true, markings: [] };
-Note.navOptions.yaxis = { min: 1-0.1, autoscaleMargin: 0.1, ticks: [], panRange: false }; 
-Note.navOptions.xaxis = { min: 0, max: 1, mode: "time", ticks: [], panRange: [0,1] };
+Note.navOptions.yaxis = { min: 1-Note.padding/2, autoscaleMargin: Note.padding/2, ticks: [], panRange: false }; 
+Note.navOptions.xaxis = { mode: "time", panRange: [0,1] , tickSize: [3, "month"] };
 Note.navOptions.shift = { interactive: true };
-
+Note.navOptions.legend = { show: false };
 
 
 function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
@@ -49,16 +50,18 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 		height_conversion(Note.plotData[i].data)
 	};
 
-	// TODO:  GET RID OF NAV PLOT LEGEND 
-	// ISSUE: AXIS IS WEIRD
-	// ISSUE: HOVER OVER PREVIEW?
 	// ISSUE: HOVER OVER CSS STYLING
+	// TODO: BUTTON - go to today
+	// TODO: SEARCH/FILTER POINTS?
+	// TODO: CENTER MAIN PLOT ON POINT WHEN CLICKED IN NAV
+	// TODO: FORMAT DATE AND TIME IN PREVIEW
+	// TODO: SHOW SELECTION SPAN IN NAV BY DEFAULT ON LOAD
+	// TODO: HOSPITALIZATION PERIODS??
 
 	// set main plot window to [t_max-90days,t_max] by default
-	Note.plotOptions.xaxis.min = minDate;
+	Note.plotOptions.xaxis.min = maxDate - 90*(24*60*60*1000);
 	Note.plotOptions.xaxis.max = maxDate;
 	Note.plotOptions.xaxis.panRange = [minDate, maxDate];
-	Note.plotOptions.xaxis.zoomRange = [50000, maxDate - minDate]
 
 	// set nav plot window to [t_min, t_max] permanently
 	Note.navOptions.xaxis.min = minDate;
@@ -71,21 +74,40 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 	}
 
 	// plot dataseries
-	 var note_plot = $.plot("#note_plot_target", Note.plotData, Note.plotOptions);
-	 console.log("note plot is " + Note.plotOptions.xaxis.panRange);
-	 var note_nav = $.plot("#note_nav_target", Note.plotData, Note.navOptions);
-	 console.log("note plot is " + Note.navOptions.xaxis.panRange);
+	var note_plot = $.plot("#note_plot_target", Note.plotData, Note.plotOptions);
+	var note_nav = $.plot("#note_nav_target", Note.plotData, Note.navOptions);
+
+	$("#note_plot_target div.legend table").css({ "font-size": "1.8rem", "background-color":"#d5d5d5", color:"#222", "opacity":0.85, padding:"0.5rem", border:"1rem" });
+
 
 	// create tooltip div 
 	$("<div id='note_tooltip'></div>").css({
 		position: "absolute",
 		display: "none",
 		border: "1px solid #fdd",
-		padding: "2px",
-		"background-color": "#fee",
-		opacity: 1.0
+		padding: "5px",
+		"background-color": "#f00",
+		color: "#ddd",
+		opacity: 0.9,
+		"border-radius": "5px",
+		"font-size": "1.5rem"
 	}).appendTo("body");
 
+
+
+    //Bind "fulltext on click" to plot
+    $("#note_plot_target").bind("plotclick", function (event, pos, item) {
+      if (item) {
+
+        // set tooltip contents
+        set_preview_data(item.series.label,item.dataIndex);
+        set_fulltext(item.series.label,item.dataIndex);
+
+        // call dropdown
+        displayFulltext();
+  
+      } 
+    });
 
     //Bind tooltip to plot
     $("#note_plot_target").bind("plothover", function (event, pos, item) {
@@ -94,15 +116,17 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
         // set tooltip contents
         set_preview_data(item.series.label,item.dataIndex)
 
+   
         // $("#tooltip").html("<strong>Percentile:</strong> " + y + "<br><strong> Dose: </strong> " + x + " Gy")
         $("#note_tooltip").html(Note.curr_timestamp + "<br><strong> Type: </strong> " + Note.curr_type + "<br><strong> \
         	Service: </strong> " + Note.curr_service + "<br><strong> Preview: </strong>" + Note.curr_preview)
-          .css({top: item.pageY+5, left: item.pageX+5})
+          .css({top: item.pageY+5, left: item.pageX+5, 'background-color':item.series.color})
           .fadeIn(200);
       } else {
         $("#note_tooltip").hide();
       }
     });
+
 
 	//Hide tooltip div when mouse leaves note plot panel
 	$("#note_plot_target").mouseleave(function(){
@@ -186,11 +210,9 @@ function set_preview_data(service,idx){
 	Note.curr_noteID = notePreviews[service][idx]['id'];
 }
 
-function get_fulltext(service,idx){
-	var text;
+function set_fulltext(service,idx){
 	$.getJSON( "/_note/" + service + "/" + idx + "/" , function(result) {
 		console.log(result);
-		text= result.fulltext;
+		Note.curr_fulltext= result.fulltext;
 	});
-	return text;
 }
