@@ -59,7 +59,7 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 	// TODO: HOSPITALIZATION PERIODS??
 
 	// set main plot window to [t_max-90days,t_max] by default
-	Note.plotOptions.xaxis.min = maxDate - 90*(24*60*60*1000);
+	Note.plotOptions.xaxis.min = minDate;//maxDate - 90*(24*60*60*1000);
 	Note.plotOptions.xaxis.max = maxDate;
 	Note.plotOptions.xaxis.panRange = [minDate, maxDate];
 
@@ -79,6 +79,11 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 
 	$("#note_plot_target div.legend table").css({ "font-size": "1.8rem", "background-color":"#d5d5d5", color:"#222", "opacity":0.85, padding:"0.5rem", border:"1rem" });
 
+	// set initial range
+	var axes = note_plot.getAxes();
+	var initRange = { xaxis: { from: maxDate - 90*(24*60*60*1000), to: maxDate }, yaxis: { from: axes.yaxis.min, to: axes.yaxis.max } }
+	note_nav.setSelection(initRange, true);
+	replot(initRange);
 
 	// create tooltip div 
 	$("<div id='note_tooltip'></div>").css({
@@ -92,7 +97,6 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 		"border-radius": "5px",
 		"font-size": "1.5rem"
 	}).appendTo("body");
-
 
 
     //Bind "fulltext on click" to plot
