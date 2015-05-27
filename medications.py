@@ -73,9 +73,9 @@ class MedicationTrack(object):
             self.classification = classification
             self.lastEnd = end
             self.lastStart = start
-            self.intervals = SortedListWithKey(key=lambda x:(x[1], x[0]))
+            self.intervals = []
             # Add the initializing MedicationEntry to the track's intervals
-            self.intervals.add(triple)
+            self.intervals.append(triple)
         except:
             print "Malformed data for MedicationTrack object initialization"
 
@@ -101,7 +101,8 @@ class MedicationTrack(object):
     def addEvent(self, triple):
         ''' This function adds a medication event to the medication track '''
         # Add MedicationEntry to the track. It will be sorted by end date in ascending order, and then by start date in ascending order
-        self.intervals.add(triple)
+        self.intervals.append(triple)
+
         currStart = triple[0]
         currEnd = triple[1]
         currDose = triple[2]
@@ -172,7 +173,7 @@ def initialize_epic(data):
         return None
 
 def addToTrack(entry, tracks):
-    # Given a MedicationEntry object, this function adds it to a MedicationTrack, creating a new track if none exists for that drug.
+    ''' Given a MedicationEntry object, this function adds it to a MedicationTrack, creating a new track if none exists for that drug.'''
     name = entry.name
     if name in tracks:
         currTrack = tracks.get(name)
@@ -182,6 +183,15 @@ def addToTrack(entry, tracks):
         tracks[name] = newTrack
     return
 
+def consolidateTrack(track):
+    '''This function takes in a series of start-end-dose tuples from a MedicationTrack and merges overlapping ranges. If the doses of conflicting ranges are different, the higher dose is prioritized.'''
+    finalTrack = []
+    #sortedTrack = sorted(track.intervals, key=lambda x: x[1], x[0])
+    #currStart = -1
+    #currEnd = -1
+
+    #for start, end, dose in sortedTrack:
+    #    print dose
 
 def initialize_hapi(entry):
     try:
@@ -215,7 +225,9 @@ def load_patient1_meds():
         #returnList.append(initialize_hapi(entry))
     #history = MedicationHistory();
     #history.add_meds(returnList)
-    print tracks.get("Oxygen")
+    x = tracks.get("Oxygen")
+    print x
+    consolidateTrack(x)
     #return history
 
 def getClassification(name):
