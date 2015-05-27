@@ -22,7 +22,7 @@ Note.plot_min = 0;
 Note.plot_max = 1;
 Note.plotOptions = {};
 Note.plotOptions.series = { lines: {show: false}, points: {show: true, radius: 4.5 }};
-Note.plotOptions.grid = { hoverable: true, markings: [] };
+Note.plotOptions.grid = { hoverable: true, clickable: true, markings: [] };
 Note.plotOptions.yaxis = { min: 1-Note.padding, autoscaleMargin: Note.padding, zoomRange: false, ticks: [], panRange: false }; 
 Note.plotOptions.xaxis = { mode: "time", zoomRange: [21*Note.day,365*Note.day], panRange: [0,1] };
 Note.plotOptions.zoom = { interactive: true };
@@ -100,11 +100,9 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
       if (item) {
 
         // set tooltip contents
-        set_preview_data(item.series.label,item.dataIndex);
+        // set_preview_data(item.series.label,item.dataIndex);
+        console.log("ONCLICK");
         set_fulltext(item.series.label,item.dataIndex);
-
-        // call dropdown
-        displayFulltext();
   
       } 
     });
@@ -172,10 +170,11 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 }
 
 
-function displayToast(content){
+function displayFulltext(){
 	var noteToast = document.getElementById('note_detail');
 	noteToast.toggle();
-	noteToast.innerHTML = content;
+	console.log(Note.curr_fulltext);
+	noteToast.innerHTML = Note.curr_fulltext;
 }
 
 
@@ -211,8 +210,8 @@ function set_preview_data(service,idx){
 }
 
 function set_fulltext(service,idx){
-	$.getJSON( "/_note/" + service + "/" + idx + "/" , function(result) {
-		console.log(result);
+	$.getJSON( "/_note/" + service + "/" + idx + "/fulltext" , function(result) {
 		Note.curr_fulltext= result.fulltext;
+		displayFulltext();
 	});
 }

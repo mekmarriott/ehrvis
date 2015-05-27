@@ -89,7 +89,7 @@ def note_fulltext(service_id,note_id):
     global note_data
     i=int(note_id)
     print "Fulltext requested"
-    print note_data.notes[t]
+    # print note_data.notes[t]
     try:
         return jsonify(fulltext=note_data.notesByService[service_id][i].fulltext)
     except:
@@ -100,7 +100,7 @@ def note_preview(sevice_id,note_id):
     global note_data
     i=int(note_id)
     print "Preview requested"
-    print note_data.notes[t]
+    # print note_data.notes[t]
     try:
         return jsonify(fulltext=note_data.notesByService[service_id][i].preview)
     except:
