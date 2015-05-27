@@ -24,8 +24,8 @@ class MedicationEntry(object):
             self.start = start
             # Status:
             self.status = status
-            # Dose: Another way to get this could be parsing the name field. Talk to group about this option. Also, may need variable for dose units.
-            self.dose = dose
+            # Dose: 
+            self.dose = float(dose)
             # Dose units
             self.doseUnits = doseUnits
             # AdministrationMethod: 
@@ -185,13 +185,33 @@ def addToTrack(entry, tracks):
 
 def consolidateTrack(track):
     '''This function takes in a series of start-end-dose tuples from a MedicationTrack and merges overlapping ranges. If the doses of conflicting ranges are different, the higher dose is prioritized.'''
-    finalTrack = []
+    result = []
     sortedTrack = sorted(track.intervals, key=lambda x:(x[1], x[0]))
-    currStart = -1
-    currEnd = -1
+    initInterval = sortedTrack[0]
 
-    #for start, end, dose in sortedTrack:
-    #    print dose
+    result.append(initInterval)
+    currStart = initInterval[0]
+    currEnd =  initInterval[1]
+    currDose =  initInterval[2]
+
+    for start, end, dose in sortedTrack[1:]:
+        if start > currEnd:
+            # This interval starts after its predecessor stops, so just add it to results
+            result.append((start, end, dose))
+            currStart, currEnd, currDose = start, end, dose
+        else: 
+            # There is overlap, so we need to merge
+            if currDose == dose:
+                # Since the dose is the same, we can consolidate these into one big interval
+                result[-1] = (currStart, end, dose)
+            else:
+                result[-1] = (currStart, start, currDose)
+                result.append((start, max(currEnd, end), dose))
+                currStart = start
+                currDose = dose
+            currEnd = max(currEnd, end)
+    return result
+
 
 def initialize_hapi(entry):
     try:
@@ -222,12 +242,11 @@ def load_patient1_meds():
     for entry in entryList:
         medEntry = initialize_hapi(entry)
         addToTrack(medEntry, tracks)
-        #returnList.append(initialize_hapi(entry))
-    #history = MedicationHistory();
-    #history.add_meds(returnList)
-    x = tracks.get("Oxygen")
-    print x
-    consolidateTrack(x)
+    y = tracks.get("Oxygen")
+    y = consolidateTrack(y)
+    for i in y:
+        print str(i[0]) + " " + str(i[1]) + " " + str(i[2]) + "\n"
+   # consolidateTrack(y)
     #return history
 
 def getClassification(name):
