@@ -14,6 +14,7 @@
 
 <!-- <body> -->
 
+
 	<div id="header">
 		<h2>Notes</h2>
 	</div>
@@ -33,6 +34,15 @@
 	<paper-dialog id="note_detail" heading="Title" class="scrolling" backdrop layered="false">
 		<p>blahblahblah I'm cool.</p>
     </paper-dialog>
+
+    <style>
+    
+    html /deep/ #note_detail::shadow #scroller {
+      width: 1200px;
+      height: 600px;
+    }
+
+    </style>
 
 	<script>
 		var med_timeline;
