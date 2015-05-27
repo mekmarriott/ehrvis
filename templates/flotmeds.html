@@ -1,0 +1,59 @@
+
+{% extends "base.html" %}
+
+{% block main %}
+	<link rel="stylesheet" href="/static/css/style.css">
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.time.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.navigate.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.selection.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.shift.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/scripts/Note.js"></script>
+
+<!-- <body> -->
+
+	<div id="header">
+		<h2>Medications	</h2>
+	</div>
+
+	<div id="content">
+
+		<div class="demo-container">
+			<div id="note_plot_target" class="demo-placeholder"></div>
+		</div>
+
+		<div class="demo-container" style="height:150px;">
+			<div id="note_nav_target" class="demo-placeholder"></div>
+		</div>
+
+	</div>
+
+
+	<script>
+		var noteSeries, notePreviews;
+
+		window.onload = function(){
+			console.log("Loading");
+
+			// ----------------------------------
+			// load note data and create timeline
+			// ----------------------------------
+
+			$.getJSON( "/_notes/", function(result) {
+				notePreviews = result['previewData']
+				noteSeries = result['plottingSeries']
+				minDate = result['minDate']
+				maxDate = result['maxDate']
+				hospitalStays = result['hospitalizations']
+				console.log(hospitalStays)
+				createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate);
+			});
+
+		}
+
+		
+	</script>
+
+{% endblock %}
+<!-- </body>
+</html> -->

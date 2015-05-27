@@ -37,7 +37,7 @@ class NoteEntry(object):
 
     def to_dict(self):
         # omit "fulltext" for faster loading
-        return {'service':self.service, 'preview':self.preview,'time':str(self.time),         
+        return {'service':self.service, 'preview':self.preview,'time':self.time.strftime('%A %d %B %Y, %-I:%M %p'),         
                 'type':self._type, 'inpatient': self.inpatient, 'id':self._id, 'heightcount':self.heightcount}
 
 class NoteHistory(object):
@@ -58,8 +58,8 @@ class NoteHistory(object):
 
     def __str__(self):
         result = ""
-        for i,note in enumerate(self.notes):
-            result += "Note " + str(i) + " preview:" + note["preview"] + "\n"
+        for i,k in enumerate(self.notes):
+            result += "Note " + str(i) + " preview:" + self.notes[k].preview + "\n"
         return result
 
     def standard_service(self,service):
@@ -89,41 +89,51 @@ class NoteHistory(object):
             ks = self.notes.keys()
             ks.sort()
 
+
             # current key index
             idx = -1
             
             # number of keys
             max_ = len(ks)
 
+            hosp = []
+
             while idx < max_-1:
                 idx+=1
 
-
-
                 # look for next inpatient note. this defines the start date of the hospitalization
                 if self.notes[ks[idx]].inpatient:
-                    hosp.append(date2utc(self.notes[ks[idx]].time.date()))
+                    hosp.append(date2utc(self.notes[ks[idx]].time))
+                    print hosp
 
                     while idx < max_:
                         # look for next outpatient note. this defines the end date of the hospitalization
                         idx += 1 
                         if idx == max_:
                             # if reach end of notes without reverting to outpatient, put today's date as end date
-                            hosp.append(ate2utc(datetime.now()))
+                            hosp.append(date2utc(self.maxDate))
+                            print hosp
 
                             # append current hospitalization to hospitalization list
                             self.hospitalizations.append(hosp)
+
+                            hosp = []
 
                             # exit while loop 
                             break  
 
 
                         if not self.notes[ks[idx]].inpatient:
+
                             # append time from PREVIOUS note to "hosp" as end date
-                            hosp.append(date2utc(self.notes[ks[idx-1]].time.date()))
+                            hosp.append(date2utc(self.notes[ks[idx-1]].time))
+
+                            print hosp
 
                             # append current hospitalization to hospitalization list
                             self.hospitalizations.append(hosp)
+
+                            hosp = []
 
                             # exit while loop 
                             break

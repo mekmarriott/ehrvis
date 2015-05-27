@@ -1,5 +1,5 @@
 
-
+var note_plot, note_nav;
 var Note = {};
 Note.day = 24*60*60*1000;
 Note.base = 1;
@@ -38,7 +38,7 @@ Note.navOptions.yaxis = { min: 1-Note.padding/2, autoscaleMargin: Note.padding/2
 Note.navOptions.xaxis = { mode: "time", panRange: [0,1] , tickSize: [3, "month"] };
 Note.navOptions.shift = { interactive: true };
 Note.navOptions.legend = { show: false };
-
+Note.navOptions.selection =  { mode: null, color: "#88baee" }
 
 function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 
@@ -50,13 +50,9 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 		height_conversion(Note.plotData[i].data)
 	};
 
-	// ISSUE: HOVER OVER CSS STYLING
-	// TODO: BUTTON - go to today
 	// TODO: SEARCH/FILTER POINTS?
-	// TODO: CENTER MAIN PLOT ON POINT WHEN CLICKED IN NAV ---- DONE (?)
-	// TODO: FORMAT DATE AND TIME IN PREVIEW
-	// TODO: SHOW SELECTION SPAN IN NAV BY DEFAULT ON LOAD ---- DONE
-	// TODO: HOSPITALIZATION PERIODS??
+	// TODO: CSS - PLOT CONTAINER/WINDOW ADAPTATION
+
 
 	// set main plot window to [t_max-90days,t_max] by default
 	Note.plotOptions.xaxis.min = minDate;
@@ -70,7 +66,8 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 
 	// mark hospital stays
 	for (var i = hospitalStays.length - 1; i >= 0; i--) {
-		Note.plotOptions.grid.markings.push({ xaxis: { from: hospitalStays[i][0], to: hospitalStays[i][1]} });
+		Note.plotOptions.grid.markings.push({ xaxis: { from: hospitalStays[i][0], to: hospitalStays[i][1]}, color: "#e5e7e5" });
+		Note.navOptions.grid.markings.push({ xaxis: { from: hospitalStays[i][0], to: hospitalStays[i][1]}, color: "#e5e7e5" });
 	}
 
 	// plot dataseries
