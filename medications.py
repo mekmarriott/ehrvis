@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # The classes and methods in this file are used to parse and organize medication information from the Ajax queries made in app.py
-# TODO: In MedicationTrack, may want to merge entries that are adjacent if they have the same dosage
 # TODO: Add data structure that will store all MedicationTracks- perhaps a sorted Dict?
-# TODO: MedicationTrack: Write a function that creates the front end dict. 
 
 from flask import Flask, request, json
 from dateutil import parser
@@ -90,14 +88,14 @@ class MedicationTrack(object):
             result += "\t" + str(block[2]) + " " + str(block[0]) + " to " + str(block[1]) + "\n"
         return result
 
-    def __dict__(self):
+    def getDict(self):
         ''' This function packages the MedicationTrack as a dict, which is processed by the app front end to display the medication track.'''
         plotData = []
         for entry in self.mergedIntervals:
             plotData.append([entry[0], entry[2]])
             plotData.append([entry[1], entry[2]])
             plotData.append(None) #spacer
-        return { 'plotData': plotData, 'drugName': self.name, 'maxDose': self.maxDose, 'doseUnits': doseUnits, 'admMethod': self.admMethod, 
+        return { 'plotData': plotData, 'drugName': self.name, 'maxDose': self.maxDose, 'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 
                'classification': self.classification, 'trackStart': self.lastStart, 'trackEnd': self.lastEnd }  
         
     def addEvent(self, triple):
@@ -149,9 +147,6 @@ class MedicationTrack(object):
                     currDose = dose
                 currEnd = max(currEnd, end)
         self.mergedIntervals = result
-        for i in result:
-            print str(i[0]) + " " + str(i[1]) + " " + str(i[2]) + "\n"
-
         return
 
 
@@ -255,7 +250,7 @@ def load_patient1_meds():
         addToTrack(medEntry, tracks)
     y = tracks.get("Oxygen")
     y.consolidateTrack()
-      # consolidateTrack(y)
+    print y.getDict()
     #return history
 
 def getClassification(name):
