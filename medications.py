@@ -114,14 +114,12 @@ class MedicationTrack(object):
         '''
         plotData = []
         if self.mergedIntervals is None:
-            print self.name
             return None
         for entry in self.mergedIntervals:
             plotData.append([entry[0], entry[2]])
             plotData.append([entry[1], entry[2]])
             plotData.append(None) #spacer
-        return { 'plotData': plotData, 'lastEnd': self.lastEnd, 'lastStart': self.lastStart, 'drugName': self.name, 'maxDose': self.maxDose, 'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 
-               'classification': self.classification}  
+        return { 'plotData': plotData, 'lastEnd': self.lastEnd, 'lastStart': self.lastStart, 'drugName': self.name, 'maxDose': self.maxDose, 'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 'classification': self.classification}  
         
     def addEvent(self, triple):
         ''' This function adds a medication event to the medication track '''
@@ -150,7 +148,8 @@ class MedicationTrack(object):
 
         if len(sortedTrack) == 1:
             entry = list(sortedTrack[0])
-            return [entry]
+            self.mergedIntervals = [entry]
+            return
 
         initInterval = sortedTrack[0]
         currStart = initInterval[0]
@@ -279,7 +278,6 @@ def load_patient1_meds():
     for key, track in tracks.items():
         track.consolidateTrack()
         d = track.getDict()
-        
         outputTracks.append(d)
     output = sorted(outputTracks, key=lambda x:(x.get('lastEnd'), x.get('lastStart')), reverse = True)
     return output
