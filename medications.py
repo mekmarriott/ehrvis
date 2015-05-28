@@ -31,7 +31,7 @@ class MedicationEntry(object):
             # End Date: 
             self.end = end
             # Class: ATC drug classification obtained using the RxNorm API. For now, if a medication belongs to multiple subgroups, we will use the first one.
-            self.classification = getClassification(self.name)
+            self.classification = ""#getClassification(self.name)
             # Display group
             self.display_group = 0
             # Tuple containing the start date, end date, and dose of the MedicationEntry
@@ -149,13 +149,14 @@ class MedicationTrack(object):
         sortedTrack = sorted(self.intervals, key=lambda x:(x[1], x[0]))
 
         if len(sortedTrack) == 1:
-            return sortedTrack
+            entry = list(sortedTrack[0])
+            return [entry]
 
         initInterval = sortedTrack[0]
-        result.append(initInterval)
         currStart = initInterval[0]
         currEnd =  initInterval[1]
         currDose =  initInterval[2]
+        result.append(list(initInterval))
 
         for start, end, dose in sortedTrack[1:]:
             if start > currEnd:
@@ -278,6 +279,7 @@ def load_patient1_meds():
     for key, track in tracks.items():
         track.consolidateTrack()
         d = track.getDict()
+        
         outputTracks.append(d)
     output = sorted(outputTracks, key=lambda x:(x.get('lastEnd'), x.get('lastStart')), reverse = True)
     return output
