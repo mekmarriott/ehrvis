@@ -32,8 +32,12 @@ class MedicationEntry(object):
             # End Date: 
             self.end = end
             # Class: ATC drug classification obtained using the RxNorm API. For now, if a medication belongs to multiple subgroups, we will use the first one.
+<<<<<<< HEAD
             # self.classification = getClassification(self.name)
             self.classification = ""
+=======
+            self.classification = ""#getClassification(self.name)
+>>>>>>> master
             # Display group
             self.display_group = 0
             # Tuple containing the start date, end date, and dose of the MedicationEntry
@@ -114,7 +118,6 @@ class MedicationTrack(object):
         '''
         plotData = []
         if self.mergedIntervals is None:
-            print self.name
             return None
         for entry in self.mergedIntervals:
             plotData.append([date2utc(entry[0]), entry[2]])
@@ -122,6 +125,7 @@ class MedicationTrack(object):
             plotData.append(None) #spacer
         return { 'plotData': plotData, 'lastEnd': date2utc(self.lastEnd), 'lastStart': date2utc(self.lastStart), 'drugName': self.name, 'maxDose': self.maxDose, 
                     'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 'classification': self.classification}  
+
         
     def addEvent(self, triple):
         ''' This function adds a medication event to the medication track '''
@@ -149,13 +153,15 @@ class MedicationTrack(object):
         sortedTrack = sorted(self.intervals, key=lambda x:(x[1], x[0]))
 
         if len(sortedTrack) == 1:
-            return sortedTrack
+            entry = list(sortedTrack[0])
+            self.mergedIntervals = [entry]
+            return
 
         initInterval = sortedTrack[0]
-        result.append(initInterval)
         currStart = initInterval[0]
         currEnd =  initInterval[1]
         currDose =  initInterval[2]
+        result.append(list(initInterval))
 
         for start, end, dose in sortedTrack[1:]:
             if start > currEnd:
