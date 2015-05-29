@@ -32,12 +32,7 @@ class MedicationEntry(object):
             # End Date: 
             self.end = end
             # Class: ATC drug classification obtained using the RxNorm API. For now, if a medication belongs to multiple subgroups, we will use the first one.
-<<<<<<< HEAD
-            # self.classification = getClassification(self.name)
-            self.classification = ""
-=======
             self.classification = ""#getClassification(self.name)
->>>>>>> master
             # Display group
             self.display_group = 0
             # Tuple containing the start date, end date, and dose of the MedicationEntry
