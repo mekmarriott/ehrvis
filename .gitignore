@@ -32,3 +32,6 @@ pip-log.txt
 *.[oa]
 *.py[co]
 *.rbc
+
+# IPython files
+*.ipynb*

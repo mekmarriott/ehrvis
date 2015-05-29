@@ -9,6 +9,7 @@ import urllib2
 from sortedcontainers import SortedListWithKey, SortedList
 from dateutil.parser import *
 from operator import itemgetter
+from ehrvisutil import date2utc
 
 class MedicationEntry(object):
     '''This class represents a single medication entry in a patient's record. Its attributes consist of basic information about the drug originally
@@ -31,7 +32,8 @@ class MedicationEntry(object):
             # End Date: 
             self.end = end
             # Class: ATC drug classification obtained using the RxNorm API. For now, if a medication belongs to multiple subgroups, we will use the first one.
-            self.classification = getClassification(self.name)
+            # self.classification = getClassification(self.name)
+            self.classification = ""
             # Display group
             self.display_group = 0
             # Tuple containing the start date, end date, and dose of the MedicationEntry
@@ -57,8 +59,6 @@ class MedicationEntry(object):
         result += "Display Group:" + str(self.display_group) + "\n" 
         return result
 
-    def to_dict(self):
-        return {'name': self.name, 'start': self.start, 'status': self.status, 'dose': self.dose, 'doseUnits': self.doseUnits, 'administrationMethod': self.admMethod, 'end': self.end, 'classification': self.classification, 'display_group': self.display_group}
 
 class MedicationTrack(object):
     ''' This is a container for MedicationEvents related to a single drug. Intervals in self.intervals are not sorted, but are sorted in self.mergedIntervals'''
@@ -117,11 +117,11 @@ class MedicationTrack(object):
             print self.name
             return None
         for entry in self.mergedIntervals:
-            plotData.append([entry[0], entry[2]])
-            plotData.append([entry[1], entry[2]])
+            plotData.append([date2utc(entry[0]), entry[2]])
+            plotData.append([date2utc(entry[1]), entry[2]])
             plotData.append(None) #spacer
-        return { 'plotData': plotData, 'lastEnd': self.lastEnd, 'lastStart': self.lastStart, 'drugName': self.name, 'maxDose': self.maxDose, 'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 
-               'classification': self.classification}  
+        return { 'plotData': plotData, 'lastEnd': date2utc(self.lastEnd), 'lastStart': date2utc(self.lastStart), 'drugName': self.name, 'maxDose': self.maxDose, 
+                    'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 'classification': self.classification}  
         
     def addEvent(self, triple):
         ''' This function adds a medication event to the medication track '''
@@ -133,13 +133,13 @@ class MedicationTrack(object):
         currDose = triple[2]
 
         # Adjust lastStart and lastEnd if necessary
-        if(currEnd > self.lastEnd):
+        if currEnd > self.lastEnd:
             self.lastEnd = currEnd
-        if(currStart > self.lastStart):
+        if currStart > self.lastStart:
             self.lastStart = currStart
 
         # Update maximum dose if the current event has a higher dose than the previous maximum
-        if(currDose > self.maxDose):
+        if currDose > self.maxDose:
             self.maxDose = currDose
         return
 
@@ -176,42 +176,17 @@ class MedicationTrack(object):
         self.mergedIntervals = result
         return
 
+def addToTrack(entry, tracks):
+    ''' Given a MedicationEntry object, this function adds it to a MedicationTrack, creating a new track if none exists for that drug.'''
+    name = entry.name
+    if name in tracks:
+        currTrack = tracks.get(name)
+        currTrack.addEvent(entry.triple)
+    else:
+        newTrack = MedicationTrack(entry.triple, entry.name, entry.dose, entry.doseUnits, entry.admMethod, entry.classification, entry.end, entry.start)
+        tracks[name] = newTrack
+    return
 
-#class MedicationHistory(object):
-#    '''This class looks at all medications a patient is on and keeps track of unique medication names and the minimum date among them.'''
-#    def __init__(self):
-#        self.meds = []
-#        self.minDate = date.today()
-#        self.medNames = []
-#        self.med2idx = {}
-#        self.idx2med = {}
-#
-#    def add_meds(self, med_array):
-#        # make list of (unique) medication names
-#        self.medNames = list(set([med.name for med in med_array]))
-#
-#        # map medication names to display groups (for tracked display)
-#        for i,name in enumerate(self.medNames):
-#            self.idx2med[i]=name
-#            self.med2idx[name]=i
-
-        # add each MedicationEvent from the input array to the MedicationHistory
-#        for med in med_array:
-#            if type(med) is MedicationEntry:
-#                # set display group for current medication using the mapping generated above
-#                med.display_group = self.med2idx[med.name]
-
-                # add MedicationEvent to history
-#                self.meds.append(med.to_dict())
-
-                # update earliest time in history, if relevant
-#                if med.start != "n/a" and med.start < self.minDate:
-#                    self.minDate = med.start
-
-
-        # viewing buffer for time window
-#        self.minDate = self.minDate - datetime.timedelta(days=30)
-                
 def initialize_epic(data):
     try:
         defaultEnd = date.today()
@@ -233,16 +208,7 @@ def initialize_epic(data):
         print "Malformed data for object initialization"
         return None
 
-def addToTrack(entry, tracks):
-    ''' Given a MedicationEntry object, this function adds it to a MedicationTrack, creating a new track if none exists for that drug.'''
-    name = entry.name
-    if name in tracks:
-        currTrack = tracks.get(name)
-        currTrack.addEvent(entry.triple)
-    else:
-        newTrack = MedicationTrack(entry.triple, entry.name, entry.dose, entry.doseUnits, entry.admMethod, entry.classification, entry.end, entry.start)
-        tracks[name] = newTrack
-    return
+
 
 def initialize_hapi(entry):
     '''For use with HAPI medication data. Creates a medicationEntry object by parsing data from the provided JSON entry'''
@@ -280,6 +246,8 @@ def load_patient1_meds():
         d = track.getDict()
         outputTracks.append(d)
     output = sorted(outputTracks, key=lambda x:(x.get('lastEnd'), x.get('lastStart')), reverse = True)
+    for idx,track_dict in enumerate(output):
+        track_dict['rank']=idx+1
     return output
 
 def getClassification(name):
@@ -294,4 +262,4 @@ def getClassification(name):
     except:
         return None
 
-#load_patient1_meds()
+

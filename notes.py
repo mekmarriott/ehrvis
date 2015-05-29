@@ -4,11 +4,8 @@
 from flask import Flask, request, json
 from dateutil import parser
 from pprint import pprint
-from time import mktime
 from datetime import datetime, timedelta
-
-def date2utc(timestamp):
-    return 1000*mktime(timestamp.date().timetuple())
+from ehrvisutil import date2utc
 
 class NoteEntry(object):
 
