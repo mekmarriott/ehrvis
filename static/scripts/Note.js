@@ -113,7 +113,7 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 		var ranges = { xaxis: { from: centerPoint - diff*0.5, to: centerPoint + diff*0.5 }, yaxis: { from: axes.yaxis.min, to: axes.yaxis.max } }
         note_nav.setSelection(ranges, true);
 		replot(ranges);
-		note_plot.highlight(item.series, item.dataIndex);
+		// note_plot.highlight(item.series, item.dataIndex);
       }
     });
 
@@ -123,9 +123,7 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 
         // set tooltip contents
         set_preview_data(item.series.label,item.dataIndex)
-
    
-        // $("#tooltip").html("<strong>Percentile:</strong> " + y + "<br><strong> Dose: </strong> " + x + " Gy")
         $("#note_tooltip").html(Note.curr_timestamp + "<br><strong> Type: </strong> " + Note.curr_type + "<br><strong> \
         	Service: </strong> " + Note.curr_service + "<br><strong> Preview: </strong>" + Note.curr_preview)
           .css({top: item.pageY+5, left: item.pageX+5, 'background-color':item.series.color})
@@ -153,7 +151,6 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 			note_plot.clearSelection();
 		}
 	}
-	// now connect the two
 
 	$("#note_nav_target").bind("plotselected", function (event, ranges) {
 		note_plot.setSelection(ranges);

@@ -10,8 +10,9 @@
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.shift.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.fillbetween.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.crosshair.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.symbol.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/deepCopy.js"></script>
-	<script language="javascript" type="text/javascript" src="/static/scripts/Note.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/scripts/Medication.js"></script>
 
 <!-- <body> -->
 
@@ -19,14 +20,18 @@
 		<h2>Medications	</h2>
 	</div>
 
+	
+
 	<div id="content">
+		<div id="tooltip-replacement" class="well" style="font-size:1.6rem;"></div>
 
 		<div class="demo-container">
-			<div id="note_plot_target" class="demo-placeholder"></div>
+<!-- 		<div class="demo-container" style="overflow: scroll">-->
+			<div id="med_plot_target" class="demo-placeholder"></div>
 		</div>
 
 		<div class="demo-container" style="height:150px;">
-			<div id="note_nav_target" class="demo-placeholder"></div>
+			<div id="med_nav_target" class="demo-placeholder"></div>
 		</div>
 
 	</div>
@@ -34,114 +39,13 @@
 
 	<script>
 		var medData;
-		var Med = {};
-		Med.colors = ["gray"];
-		Med.colormod = Med.colors.length;
-		Med.maxRank = 0;
-		Med.maxWeight = 0.5;
-		Med.offset = 0;
-		Med.offset = Med.maxWeight/2;
-		Med.fillOpacity = 0.4; 
-		Med.tracks = [];
-		Med.drugNames = [];
-		Med.dataset = [];
-		Med.plot_options = {};
-		Med.nav_options = {};
-		Med.plot_height = 450;
-		Med.plot_height_default = 450;
-		Med.plot_height_max = 1000;
-		Med.plot_height_incr = 45;
-		Med.nav_height = 100;
-		Med.nav_height_default = 100;
-		Med.nav_height_incr = 10;
-		Med.nav_height_max = 200;
-
-
-		Med.plot_meds = function (){
-			Med.plot_options.yaxis = { min: 0.5, max: Med.maxRank+1, ticks: Med.drugNames };
-			Med.plot_options.crosshair = { mode: 'x'};
-			Med.plot_options.grid = { hoverable: true, autoHighlight: false };
-			Med.nav_options.yaxis = { min: 0.5, max: Med.maxRank+1, ticks:[]};
-
-			$.plot('#note_plot_target',Med.dataset, Med.plot_options);	
-			$.plot('#note_nav_target',Med.dataset, Med.nav_options);
-		}
-
-
-		Med.build_dataset = function (){
-			Med.dataset = [];
-			for (var i = Med.tracks.length - 1; i >= 0; i--) {
-				Med.dataset.push({ id: i.toString() +"lower", data: Med.tracks[i].lbound, lines: { show: true, lineWidth: 0, fill: false }, color: Med.colors[i % Med.colormod] });
-				Med.dataset.push({ id: i.toString() +"upper", data: Med.tracks[i].ubound, lines: { show: true, lineWidth: 0, fill: Med.fillOpacity }, color: Med.colors[i % Med.colormod],fillBetween: i.toString() +"lower"});
-				Med.drugNames.push( [Med.tracks[i].rank, Med.tracks[i].name] )
-			}
-
-			return
-		}
-
-		Med.form_dataseries = function (medtrack){
-			medtrack.ubound = owl.deepCopy(medtrack.data);
-			medtrack.lbound = owl.deepCopy(medtrack.data);
-			for (var i = medtrack.data.length - 1; i >= 0; i--) {
-				if (medtrack.data[i]){
-					medtrack.ubound[i][1]/= (medtrack.maxdose / Med.maxWeight );
-					medtrack.ubound[i][1]+= medtrack.rank - Med.offset;
-					medtrack.lbound[i][1]= medtrack.rank - Med.offset;
-					if (medtrack.rank > Med.maxRank){
-						Med.maxRank = medtrack.rank;
-					}
-				}
-			}
-		}
-
-		Med.form_all_series = function(){
-			for (var i = Med.tracks.length - 1; i >= 0; i--) {
-				Med.form_dataseries(Med.tracks[i])
-			};
-		
-		}
-
-		Med.transfer_data = function(){
-			Med.tracks = [];
-			for (var i = medData.length - 1; i >= 0; i--) {
-			 	Med.tracks.push( { data: medData[i].plotData, maxdose: medData[i].maxDose, rank: medData[i].rank, name: medData[i].drugName } )
-			}; 			
-		}
 
 		window.onload = function(){
 			console.log("Loading");
 
-
-
-			var data1 = [[0,200],[1,200],null,[2,300],[3,300],null,[3,600],[30,600]]; 
-			var data2 = [[0,12.5],[1,12.5],null,[2,50],[3,50],null,[3,37.5],[30,37.5]]; 
-			var data3 = [[0,2],[15,2],null,[25,5],[30,5]]; 
-
-			var track1 = {data: data1, maxdose: 600, rank: 9, name: "Drug 1" };
-			var track2 = {data: data2, maxdose: 50, rank: 8, name: "Drug 2" };
-			var track3 = {data: data3, maxdose: 5, rank: 7, name: "Drug 3" };
-			var track4 = {data: owl.deepCopy(data1), maxdose: 600, rank: 6, name: "Drug 4" };
-			var track5 = {data: owl.deepCopy(data2), maxdose: 50, rank: 5, name: "Drug 5" };
-			var track6 = {data: owl.deepCopy(data3), maxdose: 5, rank: 4, name: "Drug 6" };
-			var track7 = {data: owl.deepCopy(data1), maxdose: 600, rank: 3, name: "Drug 7" };
-			var track8 = {data: owl.deepCopy(data2), maxdose: 50, rank: 2, name: "Drug 8" };
-			var track9 = {data: owl.deepCopy(data3), maxdose: 5, rank: 1, name: "Drug 9" };
-			var track10 = {data: owl.deepCopy(data1), maxdose: 600, rank: 10, name: "Drug 10" };
-			var track11 = {data: owl.deepCopy(data2), maxdose: 50, rank: 11, name: "Drug 11" };
-			var track12 = {data: owl.deepCopy(data3), maxdose: 5, rank: 12, name: "Drug 12" };
-			var track13 = {data: owl.deepCopy(data1), maxdose: 600, rank: 13, name: "Drug 13" };
-			var track14 = {data: owl.deepCopy(data2), maxdose: 50, rank: 14, name: "Drug 14" };
-			var track15 = {data: owl.deepCopy(data3), maxdose: 5, rank: 15, name: "Drug 15" };
-
-
-			Med.tracks = [track1, track2, track3, track4, track5, track6, track7, track8, track9, track10, track11, track12, track13, track14, track15 ];
-			Med.form_all_series();
-			Med.build_dataset();
-			Med.plot_meds();
-
-			// ----------------------------------
-			// load note data and create timeline
-			// ----------------------------------
+			// ----------------------------------------
+			// load medication data and create timeline
+			// ----------------------------------------
 
 			$.getJSON( "/_medications/", function(result) {
 
@@ -152,13 +56,7 @@
 				Med.form_all_series();
 				Med.build_dataset();
 				Med.plot_meds()
-				// notePreviews = result['previewData']
-				// noteSeries = result['plottingSeries']
-				// minDate = result['minDate']
-				// maxDate = result['maxDate']
-				// hospitalStays = result['hospitalizations']
-				// console.log(hospitalStays)
-				// createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate);
+
 			});
 
 		}

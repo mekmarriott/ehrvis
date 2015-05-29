@@ -85,7 +85,7 @@ class MedicationTrack(object):
      
             # Upon initialization, add the initializing MedicationEntry to the track's intervals
             self.intervals.append(triple)
-         
+            self.active=False;
         except:
             print "Malformed data for MedicationTrack object initialization"
 
@@ -97,6 +97,7 @@ class MedicationTrack(object):
         for block in self.intervals:
             result += "\t" + str(block[2]) + " " + str(block[0]) + " to " + str(block[1]) + "\n"
         return result
+
 
     def getDict(self):
         ''' This function packages the MedicationTrack as a dict, which is processed by the app front end to display the medication track. 
@@ -119,7 +120,7 @@ class MedicationTrack(object):
             plotData.append([date2utc(entry[1]), entry[2]])
             plotData.append(None) #spacer
         return { 'plotData': plotData, 'lastEnd': date2utc(self.lastEnd), 'lastStart': date2utc(self.lastStart), 'drugName': self.name, 'maxDose': self.maxDose, 
-                    'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 'classification': self.classification}  
+                    'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 'classification': self.classification, 'active':self.lastEnd > datetime.datetime.now().date() }  
 
         
     def addEvent(self, triple):
@@ -246,7 +247,7 @@ def load_patient1_meds():
         track.consolidateTrack()
         d = track.getDict()
         outputTracks.append(d)
-    output = sorted(outputTracks, key=lambda x:(x.get('lastEnd'), x.get('lastStart')), reverse = True)
+    output = sorted(outputTracks, key=lambda x:(x.get('lastEnd'), x.get('lastStart')), reverse = False)
     for idx,track_dict in enumerate(output):
         track_dict['rank']=idx+1
     return output
