@@ -1,74 +1,74 @@
 
-var initNoteTour = function() {
+var initMedTour = function() {
   $("#demo-start-page").fadeOut(200);
   console.log("Starting tour...");
   noteSteps = [
     {
-      element: "#note_plot_target",
-      title: "Note Chart",
-      content: "This chart plots patient on a timeline.",
-      placement: "top",
-    },
-    {
-      element: ".legend",
-      title: "Note Timeline Legend",
-      content: "Notes are color-coded by type",
-      placement: "left",
-    },
-    {
-      element: "#inpatientkey",
-      title: "Note Timeline Legend",
-      content: "Additionally, the background of the chart has shaded regions...",
+      element: "#med_plot_target",
+      title: "Medication Chart",
+      content: "This chart plots a patient's medications on a timeline.",
       placement: "bottom",
     },
     {
-      element: "#inpatientkey",
-      title: "Note Timeline Legend",
-      content: "...which represent inpatient and outpatient periods in the medical record.",
+      element: "#med_plot_target",
+      title: "Medication Chart",
+      content: "Thicker lines mean higher dose, in relative terms for each drug.",
       placement: "bottom",
     },
     {
-      element: "#note_plot_target",
-      title: "Note Chart",
-      content: "The main plot show a focused portion of the patient's record.",
-      placement: "top",
-    },
-    {
-      element: "#note_plot_target",
-      title: "Note Chart",
-      content: "To change the viewing region, scroll to zoom in/out...",
-      placement: "top",
-    },
-    {
-      element: "#note_plot_target",
-      title: "Note Chart",
-      content: "...or click and drag left/right to pan.",
-      placement: "top",
-    },
-    {
-      element: "#note_nav_target",
-      title: "Note Navigation",
-      content: "The naviagation strip below displays the entire recorded medical history...",
-      placement: "top"
-    },
-    {
-      element: "#note_nav_target",
-      title: "Note Navigation",
-      content: "...and can be used for quick naviagation. Try moving the selection window along the lower timeline.",
-      placement: "top"
-    },
-    {
-      element: "#choices",
-      title: "Note Filtering",
-      content: "This is a filtering selection for the note timeline...try clicking on the different selections to toggle displays of different types of patient notes.",
+      element: "#med_plot_target",
+      title: "Medications",
+      content: "The points marking the ends of intervals are interactive. Try hovering the mouse over a point...",
       placement: "bottom",
+    },  
+    {
+      element: "#med_plot_target",
+      title: "Medication Axis",
+      content: "Medication names are previewed on the y-axis...",
+      placement: "bottom",
+    },
+    {
+      element: "#tooltip-replacement",
+      title: "Medication Details",
+      content: "...but further information can be seen on the panel above after hovering over a point.",
+      placement: "bottom",
+    },
+    {
+      element: "#med_plot_target",
+      title: "Medications",
+      content: "Medication lists can be long, so not all medications may be shown.",
+      placement: "bottom",
+    },
+    {
+      element: "#med_plot_target",
+      title: "Medications",
+      content: "Zoom (scroll) or pan (click and drag) to see other times or medications",
+      placement: "bottom",
+    },
+    {
+      element: "#med_nav_target",
+      title: "Full timeline",
+      content: "The lower timeline spans the entire prescription history.",
+      placement: "top",
+    },
+    {
+      element: "#med_nav_target",
+      title: "Full timeline",
+      content: "Drag the selection window slider, or simply click on a region of interest to jump there on the main timeline.",
+      placement: "top",
+    },
+    {
+      element: "#med_plot_target",
+      title: "",
+      content: "Click on the main timeline to wrap up",
+      placement: "top",
       reflex: true
-    }
+    },
   ]
 
   // Instance the tour
-  var NoteTour = new Tour({
-    name: "note-tour",
+  var MedTour = new Tour({
+    name: "med-tour",
     steps: noteSteps,
     container: "body",
     keyboard: true,
@@ -99,7 +99,7 @@ var initNoteTour = function() {
     onRedirectError: function (tour) {}
   });
   // Initialize the tour
-  NoteTour.init();
+  MedTour.init();
   // Start the tour
-  NoteTour.start();
+  MedTour.start();
 }

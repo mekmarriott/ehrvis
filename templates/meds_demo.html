@@ -1,6 +1,10 @@
 
 {% extends "base.html" %}
 
+{% block css %}
+	<link href="/static/css/bootstrap-tour.min.css" rel="stylesheet">
+{% endblock %}
+
 {% block main %}
 	<link rel="stylesheet" href="/static/css/style.css">
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.js"></script>
@@ -24,7 +28,7 @@
 		<p> We assembled a quick demo to help you get started with the tools and features of our visualization. </p> 
 		<p>Let's begin now!</p> </br> 
 		<p>
-			<button class='btn btn-primary btn-lg' onclick='initNoteTour();'>Start Tour</button> 
+			<button class='btn btn-primary btn-lg' onclick='initMedTour();'>Start Tour</button> 
 			<span data-role='separator'> 
 			<button class='btn btn-primary btn-lg' onclick='$("#demo-start-page").fadeOut(200);'> No Thanks! </button>
 		</p>

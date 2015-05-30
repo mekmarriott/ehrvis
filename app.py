@@ -47,11 +47,6 @@ def about():
     """Render the website's about page."""
     return render_template('about.html')
 
-@app.route('/timeline/')
-def timeline():
-    """Render prototype of timeline"""
-    return render_template('timeline.html')
-
 @app.route('/notes_demo/')
 def note_timeline():
     """Render prototype of timeline"""

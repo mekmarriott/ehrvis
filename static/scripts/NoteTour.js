@@ -6,7 +6,7 @@ var initNoteTour = function() {
     {
       element: "#note_plot_target",
       title: "Note Chart",
-      content: "This chart plots patient on a timeline.",
+      content: "This chart plots patient notes on a timeline.",
       placement: "top",
     },
     {
