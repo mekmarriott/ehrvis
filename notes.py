@@ -2,10 +2,10 @@
 # Need to parse query output to store information of interest
 
 from flask import Flask, request, json
-from dateutil import parser
-# from pprint import pprint
-# from datetime import datetime, timedelta
-# from ehrvisutil import date2utc
+# from dateutil import parser
+from pprint import pprint
+from datetime import datetime, timedelta
+from ehrvisutil import date2utc
 
 # class NoteEntry(object):
 
