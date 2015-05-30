@@ -1,0 +1,21 @@
+{
+  "name": "static",
+  "version": "0.0.0",
+  "homepage": "https://github.com/mekmarriott/ehrvis",
+  "authors": [
+    "Emma Marriott <mekmarriott@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "core-label": "Polymer/core-label#~0.5.6",
+    "paper-checkbox": "Polymer/paper-checkbox#~0.5.6",
+    "paper-dialog": "Polymer/paper-dialog#~0.5.6"
+  }
+}
