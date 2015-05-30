@@ -95,3 +95,10 @@ input[type=checkbox] {
 .legend table {
   border-spacing: 5px;
 }
+
+.choice-button {
+  opacity: 0.2;
+}
+.pressed {
+  opacity: 1.0;
+}

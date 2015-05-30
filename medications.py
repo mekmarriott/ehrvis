@@ -276,18 +276,17 @@ def load_patient1_meds():
     returnList = []
     tracks = {}
     outputTracks = []
+
     for entry in entryList:
         medEntry = initialize_hapi(entry)
         if medEntry:
             addToTrack(medEntry, tracks)
-        else:
-            print "EMPTY"
-            print entry["resource"]["medication"]["display"].strip()
-            print 
+
     for key, track in tracks.items():
         track.consolidateTrack()
         d = track.getDict()
         outputTracks.append(d)
+        
     output = sorted(outputTracks, key=lambda x:(x.get('lastEnd'), x.get('lastStart')), reverse = False)
     for idx,track_dict in enumerate(output):
         track_dict['rank']=idx+1
