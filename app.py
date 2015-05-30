@@ -112,11 +112,12 @@ def note_fulltext(service_id,note_id):
     global note_data
     i=int(note_id)
     print "Fulltext requested"
-    try:
-        print note_data.notesByService[service_id][i].fulltext
-        return jsonify(fulltext=note_data.notesByService[service_id][i].fulltext)
-    except:
-        return jsonify(fulltext="Unavailable")
+    return jsonify(fulltext=note_data.notesByService[service_id][i].fulltext)
+    # try:
+    #     print note_data.notesByService[service_id][i].fulltext
+    #     return jsonify(fulltext=note_data.notesByService[service_id][i].fulltext)
+    # except:
+    #     return jsonify(fulltext="Unavailable")
 
 @app.route('/_note/<service_id>/<note_id>/preview/')
 def note_preview(sevice_id,note_id):
