@@ -65,6 +65,11 @@ input[type=checkbox] {
   color: #999;
 }
 
+#med_plot_target .tickLabel{
+
+    font-size: 150%;
+ }
+
 .demo-container {
   box-sizing: border-box;
   width: 95%;

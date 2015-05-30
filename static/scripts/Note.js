@@ -44,7 +44,7 @@ Note.navOptions.selection =  { mode: null, color: "#88baee" }
 Note.formSeries= function(series){
 	out = [];
 	for (var i = series.length - 1; i >= 0; i--) {
-		out.push({label: series[i].label, data: series[i].data, color: series[i].color, points: {show: true}, lines: {show: false } })
+		out.push({label: series[i].label, data: series[i].data, color: series[i].color, points: {show: true, symbol: series[i].symbol}, lines: {show: false } })
 	};
 	return out
 }

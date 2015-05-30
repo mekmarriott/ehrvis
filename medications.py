@@ -261,7 +261,7 @@ def load_playground_meds():
             doseUnits = info[4]
             admMethod = info[5]
  
-            entry = MedicationEntry(name, start, "n/a", dose, doseUnits, "n/a", end)
+            entry = MedicationEntry(name, start, "n/a", dose, doseUnits, admMethod, end)
             addToTrack(entry, tracks)
     for key, track in tracks.items():
         track.consolidateTrack()
