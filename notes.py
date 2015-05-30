@@ -38,8 +38,9 @@ class NoteEntry(object):
 
 class NoteHistory(object):
 
-    services = ["Medicine", "Emergency Medicine", "Critical Care", "Other"]
-    serv2color = {services[0]:'#2244dd',services[1]:'#dd2222',services[2]:'#dd9933',services[-1]:'#222222'}
+    services = ["Medicine", "Emergency Medicine", "Critical Care", "Imaging Studies", "Laboratory Studies", "Procedures", "Other"]
+    serv2color = {services[0]:'#2244dd',services[1]:'#dd2222',services[2]:'#dd9933',services[3]:'green',services[4]:'purple',services[5]:'brown',services[-1]:'#222222'}
+    # serv2icon = {services[0]:'#2244dd',services[1]:'#dd2222',services[2]:'#dd9933',services[3]:'green',services[4]:,'purple',services[5]:'brown',services[-1]:'#222222'}
 
 
     def __init__(self):
@@ -58,17 +59,25 @@ class NoteHistory(object):
             result += "Note " + str(i) + " preview:" + self.notes[k].preview + "\n"
         return result
 
-    def standard_service(self,service):
+    def standard_service(self,service, _type):
         if "Emergency" in service:
             return self.services[1]
-        elif "Medicine" in service:
-            return self.services[0]
         elif "Critical Care" in service:
             return self.services[2]
         elif "CCU" in service:
             return self.services[2]
         elif "General Surgery" in service:
             return self.services[-1]
+        elif "Radiology" in service:
+            return self.services[3]
+        elif "Sonography" in service:
+            return self.services[3]
+        elif "Laboratory" in service:
+            return self.services[4]
+        elif "Colonscopy" in _type:
+            return self.services[5]
+        elif "Medicine" in service:
+            return self.services[0]
         else:
             return self.services[-1]
 
@@ -201,7 +210,7 @@ class NoteHistory(object):
                     # ------------------------------------------------------------------
 
                     # 1. get service
-                    s = self.standard_service(note.service)
+                    s = self.standard_service(note.service, note._type)
 
                     # 2. make dict entry for service if doesn't exist, key = service, value = plot data and color
                     if s not in self.series:
@@ -272,6 +281,18 @@ def initialize_epic(entry):
     except:
         print "Malformed data for NoteEntry object population"
         return None    
+
+
+def load_playground_notes():
+    entryList = json.load(open('static/Note_Sandbox/playground.json'))
+    returnList = []
+    for i,entry in enumerate(entryList):
+        returnList.append(initialize_epic(entry))
+        returnList[-1]._id=i
+    history = NoteHistory();
+    history.add_notes(returnList)
+    history.compile_hospitalizations()
+    return history    
 
 def load_epic_notes():
     entryList = json.load(open('static/Note_Sandbox/notes.json'))

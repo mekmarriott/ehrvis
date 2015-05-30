@@ -6,25 +6,55 @@ var initNoteTour = function() {
     {
       element: "#note_plot_target",
       title: "Note Chart",
-      content: "This note chart displays...",
+      content: "This chart plots patient on a timeline.",
       placement: "top",
     },
     {
       element: ".legend",
       title: "Note Timeline Legend",
-      content: "This is the legend for the note timeline...",
+      content: "Notes are color-coded by type",
       placement: "left",
     },
-        {
+    {
       element: "#inpatientkey",
       title: "Note Timeline Legend",
-      content: "This is the legend for the note timeline...",
+      content: "Additionally, the background of the chart has shaded regions...",
       placement: "bottom",
+    },
+    {
+      element: "#inpatientkey",
+      title: "Note Timeline Legend",
+      content: "...which represent inpatient and outpatient periods in the medical record.",
+      placement: "bottom",
+    },
+    {
+      element: "#note_plot_target",
+      title: "Note Chart",
+      content: "The main plot show a focused portion of the patient's record.",
+      placement: "top",
+    },
+    {
+      element: "#note_plot_target",
+      title: "Note Chart",
+      content: "To change the viewing region, scroll to zoom in/out...",
+      placement: "top",
+    },
+    {
+      element: "#note_plot_target",
+      title: "Note Chart",
+      content: "...or click and drag left/right to pan.",
+      placement: "top",
     },
     {
       element: "#note_nav_target",
       title: "Note Navigation",
-      content: "This is the overview of the patient's entire recorded medical history...",
+      content: "The naviagation strip below displays the entire recorded medical history...",
+      placement: "top"
+    },
+    {
+      element: "#note_nav_target",
+      title: "Note Navigation",
+      content: "...and can be used for quick naviagation. Try moving the selection window along the lower timeline.",
       placement: "top"
     },
     {

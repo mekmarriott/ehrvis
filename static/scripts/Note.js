@@ -66,7 +66,7 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 
 
 	// set main plot window to [t_max-90days,t_max] by default
-	Note.plotOptions.xaxis.min = minDate;
+	Note.plotOptions.xaxis.min = Math.max(minDate,maxDate - 90*(24*60*60*1000))
 	Note.plotOptions.xaxis.max = maxDate;
 	Note.plotOptions.xaxis.panRange = [minDate, maxDate];
 
@@ -89,7 +89,7 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 
 	// set initial range
 	var axes = note_plot.getAxes();
-	var initRange = { xaxis: { from: maxDate - 90*(24*60*60*1000), to: maxDate }, yaxis: { from: axes.yaxis.min, to: axes.yaxis.max } }
+	var initRange = { xaxis: { from: Math.max(minDate,maxDate - 90*(24*60*60*1000)), to: maxDate }, yaxis: { from: axes.yaxis.min, to: axes.yaxis.max } }
 	note_nav.setSelection(initRange, true);
 	replot(initRange);
 
