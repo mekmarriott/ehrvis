@@ -200,7 +200,7 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 	for (var i = Note.plotData.length - 1; i >= 0; i--) {
 		// choiceContainer.append("<paper-checkbox style='font-size:1.3rem; margin:10px; color:" + Note.plotData[i].color+"; background-color:" + Note.plotData[i].color+"'
 		 // aria-label:"+Note.plotData[i].label+" active checked></paper-checkbox");	
-
+	
 		var checkhtml = "<br/>"+
 				"<div style='color:#e5e5e5; background-color:"+ Note.plotData[i].color+ "; margin-right:0.5rem; border-radius:0.5rem; padding: 0.5rem; padding-top:0.8rem; padding-right:1rem; font-size:1.5rem'>" +
 					"<input type='checkbox' checked='checked' value="+i+" id='" + Note.plotData[i].label + "'></input>" +
