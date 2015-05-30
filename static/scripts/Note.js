@@ -113,7 +113,7 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 		var ranges = { xaxis: { from: centerPoint - diff*0.5, to: centerPoint + diff*0.5 }, yaxis: { from: axes.yaxis.min, to: axes.yaxis.max } }
         note_nav.setSelection(ranges, true);
 		replot(ranges);
-		note_plot.highlight(item.series, item.dataIndex);
+		// note_plot.highlight(item.series, item.dataIndex); //need to fix this functionality...
       }
     });
 

@@ -1,6 +1,10 @@
 
 {% extends "base.html" %}
 
+{% block css %}
+	<link href="/static/css/bootstrap-tour.min.css" rel="stylesheet">
+{% endblock %}
+
 {% block main %}
 	<link rel="stylesheet" href="/static/css/style.css">
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.js"></script>
@@ -11,6 +15,8 @@
 	<script language="javascript" type="text/javascript" src="/static/scripts/Note.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/bower_components/webcomponentsjs/webcomponents.js"></script>
 	<link href="/static/bower_components/paper-dialog/paper-dialog.html" rel="import">
+	<script language="javascript" type="text/javascript" src="/static/js/bootstrap-tour.min.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/scripts/NoteTour.js"></script>
 
 <!-- <body> -->
 
@@ -55,6 +61,7 @@
 				hospitalStays = result['hospitalizations']
 				console.log(hospitalStays)
 				createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate);
+				startNoteTour();
 			});
 
 		}
@@ -63,5 +70,3 @@
 	</script>
 
 {% endblock %}
-<!-- </body>
-</html> -->
