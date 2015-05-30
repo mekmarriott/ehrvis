@@ -196,8 +196,9 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 
 	// button selecting/filtering controls
 	var choiceContainer = $("#choices");
+	choiceContainer.append("<strong style='margin-top: 11px; border-radius: 20px; margin-right: 5px;'> Filter Options: </strong>");
 	for (var i = Note.plotData.length - 1; i >= 0; i--) {
-		var checkhtml = "<button class='btn btn-default choice-button pressed' name='" + i + "' style='margin-right: 15px; color: white; background: " + 
+		var checkhtml = "<button class='btn btn-default choice-button pressed' name='" + i + "' style='margin: 5px; color: white; background: " + 
 						Note.plotData[i].color + "'>" + Note.plotData[i].label + " </button>"
 		choiceContainer.append(checkhtml);
 	};

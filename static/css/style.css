@@ -97,7 +97,7 @@ input[type=checkbox] {
 }
 
 .choice-button {
-  opacity: 0.3
+  opacity: 0.2;
 }
 .pressed {
   opacity: 1.0;
