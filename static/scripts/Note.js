@@ -279,7 +279,7 @@ function set_preview_data(service,idx){
 }
 
 function set_fulltext(service,idx){
-	$.getJSON( "/_note/" + service + "/" + idx + "/fulltext" , function(result) {
+	$.getJSON( "/_note/" + service + "/" + idx + "/fulltext/" , function(result) {
 		Note.curr_fulltext= result.fulltext;
 		displayFulltext();
 	});
