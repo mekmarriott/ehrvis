@@ -2,7 +2,6 @@
 # Need to parse query output to store information of interest
 
 from flask import Flask, request, json
-from dateutil import parser
 from pprint import pprint
 from datetime import datetime, timedelta
 from ehrvisutil import date2utc
@@ -258,7 +257,8 @@ def initialize_mimic(entry):
         fulltext = entry["fulltext"]
         _id = entry["visObject"]["id"]
         start = entry["visObject"]["start"]
-        start = parser.parse(start)
+        # start = parser.parse(start)
+        start = datetime.strptime(start, "%Y-%m-%d %H:%M" ) #2012-01-13 10:00
         group = entry["visObject"]["group"]
         
         return NoteEntry(service, preview, fulltext, _id, start, group)
@@ -273,7 +273,8 @@ def initialize_epic(entry):
         fulltext = entry["fulltext"]
         _id = entry["visObject"]["id"]
         time = entry["visObject"]["start"]
-        time = parser.parse(time)
+        # time = parser.parse(time)
+        time = datetime.strptime(time, "%Y-%m-%d %H:%M" ) #2012-01-13 10:00
         _type = entry["type"]
         inpatient = entry["inpatient"]=="true" or entry["inpatient"]=="True" 
         return NoteEntry(service,preview,fulltext,_id,time,_type,inpatient)
