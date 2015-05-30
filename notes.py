@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Need to parse query output to store information of interest
 
-# from flask import Flask, request, json
+from flask import Flask, request, json
 # from dateutil import parser
 # from pprint import pprint
 # from datetime import datetime, timedelta
