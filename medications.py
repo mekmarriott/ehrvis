@@ -2,12 +2,10 @@
 # The classes and methods in this file are used to parse and organize medication information from the Ajax queries made in app.py
 
 from flask import Flask, request, json
-# from dateutil import parser
-import datetime
+from datetime import datetime, timedelta
 from pprint import pprint
 import urllib2
 from sortedcontainers import SortedListWithKey, SortedList
-# from dateutil.parser import *
 from operator import itemgetter
 from ehrvisutil import date2utc
 
@@ -120,7 +118,7 @@ class MedicationTrack(object):
             plotData.append([date2utc(entry[1]), entry[2]])
             plotData.append(None) #spacer
         return { 'plotData': plotData, 'lastEnd': date2utc(self.lastEnd), 'lastStart': date2utc(self.lastStart), 'drugName': self.name, 'maxDose': self.maxDose, 
-                    'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 'classification': self.classification, 'active':self.lastEnd > datetime.datetime.now().date() }  
+                    'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 'classification': self.classification, 'active':self.lastEnd > datetime.now() }  
 
         
     def addEvent(self, triple):
@@ -193,7 +191,8 @@ def initialize_epic(data):
     try:
         defaultEnd = date.today()
         name =  data["content"]["medication"]["display"]
-        start = datetime.datetime.strptime(data["content"]["dosageInstruction"][0]["timingSchedule"]["event"][0]["start"])
+        start = data["content"]["dosageInstruction"][0]["timingSchedule"]["event"][0]["start"]
+        start = datetime.strptime(start, "%Y-%m-%dT%H:%M:%SZ")
         status = data["content"]["status"]
         dose = int(data["content"]["dosageInstruction"][0]["doseQuantity"]["value"]) 
         doseUnits = None
@@ -204,7 +203,7 @@ def initialize_epic(data):
         if (end == "0001-01-01T00:00:00"):
             end = defaultEnd
         else:
-            end = datetime.datetime.strptime(end)
+            end = datetime.strptime(end, "%Y-%m-%dT%H:%M:%S")
         return MedicationEntry(name, start, status, dose, doseUnits, admMethod, end)
     except: 
         print "Malformed data for object initialization"
@@ -215,9 +214,10 @@ def initialize_epic(data):
 def initialize_hapi(entry):
     '''For use with HAPI medication data. Creates a medicationEntry object by parsing data from the provided JSON entry'''
     try:
-        start = datetime.datetime.strptime(entry["resource"]["dateWritten"]).date()
+        start = entry["resource"]["dateWritten"]
+        start = datetime.strptime(start, "%Y-%m-%d")
         name = entry["resource"]["medication"]["display"].strip()
-        duration = datetime.timedelta(days=1)
+        duration = timedelta(days=1)
         timeUnit = entry["resource"]["dispense"]["expectedSupplyDuration"]["units"]
         if timeUnit == "months":
             duration *= 30
@@ -242,7 +242,12 @@ def load_patient1_meds():
     outputTracks = []
     for entry in entryList:
         medEntry = initialize_hapi(entry)
-        addToTrack(medEntry, tracks)
+        if medEntry:
+            addToTrack(medEntry, tracks)
+        else:
+            print "EMPTY"
+            print entry["resource"]["medication"]["display"].strip()
+            print 
     for key, track in tracks.items():
         track.consolidateTrack()
         d = track.getDict()
@@ -263,4 +268,5 @@ def getClassification(name):
         return classification
     except:
         return None
+
 
