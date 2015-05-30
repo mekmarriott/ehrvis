@@ -1,0 +1,15 @@
+Glyburide	2014-04-03	2014-05-03	5	mg	oral
+Glyburide	2014-05-03	2014-05-13	10	mg	oral
+Glyburide	2014-05-13	n/a	15	mg	oral
+Carvedilol	2014-04-03	n/a	6.25	mg	oral
+Furosemide	2014-04-03	n/a	40	mg	n/a
+Lisinopril	2014-04-03	n/a	5	mg	oral
+Ibuprofen	2014-04-03	2014-05-11	1	n/a	oral
+Ibuprofen	2014-05-13	n/a	1	n/a	oral
+Solumedrol	2014-05-10	2014-05-11	125	mg	IV
+Moxifloxacin	2014-05-10	2014-05-11	800	mg	IV
+Oxygen	2014-05-10	2014-05-11	1	n/a	nasal cannula
+Albuterol/Ipatropium	2014-05-10	2014-05-12	66	micrograms	n/a
+Insulin Aspart	2014-05-11	2014-05-12	56	units max	subcutaneous
+Insulin Aspart	2014-05-12	2014-05-13	2014	72	units max	subcutaneous
+Methylprednisolone	2014-05-11	2014-05-12	500	mg	IV

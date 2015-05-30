@@ -3,7 +3,7 @@
 
 from flask import Flask, request, json
 from dateutil import parser
-import datetime
+from datetime import datetime, date
 from pprint import pprint
 import urllib2
 from sortedcontainers import SortedListWithKey, SortedList
@@ -175,44 +175,8 @@ class MedicationTrack(object):
                 currEnd = max(currEnd, end)
         self.mergedIntervals = result
         return
-
-
-#class MedicationHistory(object):
-#    '''This class looks at all medications a patient is on and keeps track of unique medication names and the minimum date among them.'''
-#    def __init__(self):
-#        self.meds = []
-#        self.minDate = date.today()
-#        self.medNames = []
-#        self.med2idx = {}
-#        self.idx2med = {}
-#
-#    def add_meds(self, med_array):
-#        # make list of (unique) medication names
-#        self.medNames = list(set([med.name for med in med_array]))
-#
-#        # map medication names to display groups (for tracked display)
-#        for i,name in enumerate(self.medNames):
-#            self.idx2med[i]=name
-#            self.med2idx[name]=i
-
-        # add each MedicationEvent from the input array to the MedicationHistory
-#        for med in med_array:
-#            if type(med) is MedicationEntry:
-#                # set display group for current medication using the mapping generated above
-#                med.display_group = self.med2idx[med.name]
-
-                # add MedicationEvent to history
-#                self.meds.append(med.to_dict())
-
-                # update earliest time in history, if relevant
-#                if med.start != "n/a" and med.start < self.minDate:
-#                    self.minDate = med.start
-
-
-        # viewing buffer for time window
-#        self.minDate = self.minDate - datetime.timedelta(days=30)
                 
-def initialize_epic(data):
+def initialize_fhir(data):
     try:
         defaultEnd = date.today()
         name =  data["content"]["medication"]["display"]
@@ -267,6 +231,39 @@ def initialize_hapi(entry):
     except:
         return None
 
+def load_playground_meds():
+    '''For use with manually entered Epic Playground medication data'''
+
+    defaultEnd = datetime.today() 
+    infile = "static/epic_playground/epic_medications.txt"
+    returnList = []
+    tracks = {}
+    outputTracks = []
+
+    with open(infile, 'r') as f:
+        for line in f:
+            line = line.strip()
+            info = line.split("\t")
+            name = info[0]
+            start = datetime.strptime(info[1], '%Y-%m-%d')
+            if info[2] == "n/a": 
+                end = defaultEnd
+            else:
+                end =  datetime.strptime(info[2], '%Y-%m-%d')
+            dose = float(info[3])
+            doseUnits = info[4]
+            admMethod = info[5]
+ 
+            entry = MedicationEntry(name, start, "n/a", dose, doseUnits, "n/a", end)
+            addToTrack(entry, tracks)
+    for key, track in tracks.items():
+        track.consolidateTrack()
+        d = track.getDict()
+        outputTracks.append(d)
+    output = sorted(outputTracks, key=lambda x:(x.get('lastEnd'), x.get('lastStart')), reverse = True)
+    return output
+            
+
 def load_patient1_meds():
     entryList = json.load(open('static/FHIR_Sandbox/patient1_medications.json'))
     returnList = []
@@ -295,3 +292,4 @@ def getClassification(name):
         return None
 
 #load_patient1_meds()
+#load_playground_meds()
