@@ -59,6 +59,13 @@ var initMedTour = function() {
       placement: "top",
     },
     {
+      element: "#navbar-hold",
+      title: "Next Steps",
+      content: "When you're done exploring the medication demo, you can use this navigation bar to go to the note demo or the timelines for the sample case.",
+      placement: "bottom",
+      reflex: true
+    },
+    {
       element: "#med_plot_target",
       title: "",
       content: "Click on the main timeline to wrap up",

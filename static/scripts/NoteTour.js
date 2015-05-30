@@ -64,6 +64,13 @@ var initNoteTour = function() {
       content: "This is a filtering selection for the note timeline...try clicking on the different selections to toggle displays of different types of patient notes.",
       placement: "bottom",
       reflex: true
+    },
+    {
+      element: "#navbar-hold",
+      title: "Next Steps",
+      content: "When you're done exploring the medication demo, you can use this navigation bar to go to the note demo or the timelines for the sample case.",
+      placement: "bottom",
+      reflex: true
     }
   ]
 
