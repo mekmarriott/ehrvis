@@ -66,59 +66,59 @@ def med_timeline():
 #=======================================================================
 #       Routing for all AJAX calls
 #=======================================================================
-# @app.route('/_medications/')
-# def medications():
-#     global medication_data
-#     print "Called med data load"
-#     """Return all medication information."""
-#     medication_data = load_patient1_meds()
-#     print medication_data
+@app.route('/_medications/')
+def medications():
+    global medication_data
+    print "Called med data load"
+    """Return all medication information."""
+    medication_data = load_patient1_meds()
+    print medication_data
 
-#     return jsonify(medication_data=medication_data)
-#     # return jsonify(medication_data=medication_data.meds, 
-#     #                         minDate=medication_data.minDate,
-#     #                         med_indices=[k for k in medication_data.idx2med],
-#     #                         med_names=[medication_data.idx2med[k] for k in medication_data.idx2med])
+    return jsonify(medication_data=medication_data)
+    # return jsonify(medication_data=medication_data.meds, 
+    #                         minDate=medication_data.minDate,
+    #                         med_indices=[k for k in medication_data.idx2med],
+    #                         med_names=[medication_data.idx2med[k] for k in medication_data.idx2med])
 
-# @app.route('/_notes/')
-# def notes():
-#     global note_data
-#     print "Called"
-#     """Return all note information."""
-#     # note_data = load_mimic_notes()
-#     note_data = load_epic_notes()
+@app.route('/_notes/')
+def notes():
+    global note_data
+    print "Called"
+    """Return all note information."""
+    # note_data = load_mimic_notes()
+    note_data = load_epic_notes()
 
-#     return jsonify(previewData=note_data.previewsByService, plottingSeries=note_data.series.values(), 
-#                     hospitalizations=note_data.hospitalizations, minDate=date2utc(note_data.minDate), maxDate=date2utc(note_data.maxDate))
+    return jsonify(previewData=note_data.previewsByService, plottingSeries=note_data.series.values(), 
+                    hospitalizations=note_data.hospitalizations, minDate=date2utc(note_data.minDate), maxDate=date2utc(note_data.maxDate))
 
 
-# @app.route('/_services/')
-# def services():
-#     global note_data
-#     try:
-#         return jsonify(services=note_data.notesByService.keys())
-#     except:
-#         return jsonify(services="Unavailable")
+@app.route('/_services/')
+def services():
+    global note_data
+    try:
+        return jsonify(services=note_data.notesByService.keys())
+    except:
+        return jsonify(services="Unavailable")
 
-# @app.route('/_note/<service_id>/<note_id>/fulltext/')
-# def note_fulltext(service_id,note_id):
-#     global note_data
-#     i=int(note_id)
-#     print "Fulltext requested"
-#     try:
-#         return jsonify(fulltext=note_data.notesByService[service_id][i].fulltext)
-#     except:
-#         return jsonify(fulltext="Unavailable")
+@app.route('/_note/<service_id>/<note_id>/fulltext/')
+def note_fulltext(service_id,note_id):
+    global note_data
+    i=int(note_id)
+    print "Fulltext requested"
+    try:
+        return jsonify(fulltext=note_data.notesByService[service_id][i].fulltext)
+    except:
+        return jsonify(fulltext="Unavailable")
 
-# @app.route('/_note/<service_id>/<note_id>/preview/')
-# def note_preview(sevice_id,note_id):
-#     global note_data
-#     i=int(note_id)
-#     print "Preview requested"
-#     try:
-#         return jsonify(fulltext=note_data.notesByService[service_id][i].preview)
-#     except:
-#         return jsonify(fulltext="Unavailable")
+@app.route('/_note/<service_id>/<note_id>/preview/')
+def note_preview(sevice_id,note_id):
+    global note_data
+    i=int(note_id)
+    print "Preview requested"
+    try:
+        return jsonify(fulltext=note_data.notesByService[service_id][i].preview)
+    except:
+        return jsonify(fulltext="Unavailable")
 
 
 
