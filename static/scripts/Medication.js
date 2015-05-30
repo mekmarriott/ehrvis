@@ -38,15 +38,15 @@ Med.truncate_name = function(name){
 Med.plot_meds = function (){
     // main plot options
     Med.plotOptions.yaxis = { min: Math.max(0,Med.maxRank-Med.maxItems), max: Med.maxRank+1, ticks: Med.drugNamePreviews, panRange: [0,Med.maxRank], zoomRange: false     };
-    Med.plotOptions.xaxis = { min: Date.now()-90*Med.day, max: Date.now(), mode: 'time', panRange: [Med.minDate,Med.maxDate], zoomRange: [21*Med.day,365*Med.day]};
+    Med.plotOptions.xaxis = { min: Math.max(Med.minDate,Med.maxDate-90*Med.day), max: Med.maxDate, mode: 'time', panRange: [Med.minDate,Med.maxDate], zoomRange: [21*Med.day,365*Med.day]};
     Med.plotOptions.crosshair = { mode: 'none'};
     Med.plotOptions.grid = { hoverable: true, clickable: true };
     Med.plotOptions.pan = { interactive: true };
     Med.plotOptions.zoom = { interactive: true };
 
     // nav plot options
-    Med.navOptions.yaxis = { min: 0.5, max: Med.maxRank+1, ticks:[], panRange: [Med.minDate, Med.maxDate]};
-    Med.navOptions.xaxis = { mode: 'time'};
+    Med.navOptions.yaxis = { min: 0.5, max: Med.maxRank+1, ticks:[]};
+    Med.navOptions.xaxis = { mode: 'time', panRange: [Med.minDate, Med.maxDate]};
     Med.navOptions.grid = { clickable: true, autoHighlight: false, markings: [] };
     Med.navOptions.selection =  { mode: null, color: "orange" }
     Med.navOptions.shift = { interactive: true };
@@ -173,7 +173,7 @@ Med.plot_meds = function (){
 
     // set initial range
     var axes = med_plot.getAxes();
-    var initRange = { xaxis: { from: Med.maxDate - 90*Med.day, to: Med.maxDate }, yaxis: { from: axes.yaxis.min, to: axes.yaxis.max } }
+    var initRange = { xaxis: { from: Math.max(Med.minDate,Med.maxDate - 90*Med.day), to: Med.maxDate }, yaxis: { from: axes.yaxis.min, to: axes.yaxis.max } }
     med_nav.setSelection(initRange, true);
     replot(initRange);
 

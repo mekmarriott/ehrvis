@@ -97,7 +97,7 @@ class MedicationTrack(object):
         return result
 
 
-    def getDict(self):
+    def getDict(self, maxDate):
         ''' This function packages the MedicationTrack as a dict, which is processed by the app front end to display the medication track. 
 
             Keys/Values
@@ -118,7 +118,7 @@ class MedicationTrack(object):
             plotData.append([date2utc(entry[1]), entry[2]])
             plotData.append(None) #spacer
         return { 'plotData': plotData, 'lastEnd': date2utc(self.lastEnd), 'lastStart': date2utc(self.lastStart), 'drugName': self.name, 'maxDose': self.maxDose, 
-                    'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 'classification': self.classification, 'active':self.lastEnd > datetime.now() }  
+                    'doseUnits': self.doseUnits, 'admMethod': self.admMethod, 'classification': self.classification, 'active':self.lastEnd >= maxDate }  
 
         
     def addEvent(self, triple):
@@ -241,7 +241,7 @@ def initialize_hapi(entry):
 def load_playground_meds():
     '''For use with manually entered Epic Playground medication data'''
 
-    defaultEnd = datetime.today() 
+    defaultEnd = datetime(2014,5,17)
     infile = "static/epic_playground/epic_medications.txt"
     returnList = []
     tracks = {}
@@ -265,9 +265,11 @@ def load_playground_meds():
             addToTrack(entry, tracks)
     for key, track in tracks.items():
         track.consolidateTrack()
-        d = track.getDict()
+        d = track.getDict(defaultEnd)
         outputTracks.append(d)
-    output = sorted(outputTracks, key=lambda x:(x.get('lastEnd'), x.get('lastStart')), reverse = True)
+    output = sorted(outputTracks, key=lambda x:(x.get('lastEnd'), x.get('lastStart')), reverse = False)
+    for idx,track_dict in enumerate(output):
+        track_dict['rank']=idx+1
     return output
             
 
@@ -277,6 +279,8 @@ def load_patient1_meds():
     tracks = {}
     outputTracks = []
 
+    defaultEnd = datetime.now()
+
     for entry in entryList:
         medEntry = initialize_hapi(entry)
         if medEntry:
@@ -284,7 +288,7 @@ def load_patient1_meds():
 
     for key, track in tracks.items():
         track.consolidateTrack()
-        d = track.getDict()
+        d = track.getDict(defaultEnd)
         outputTracks.append(d)
         
     output = sorted(outputTracks, key=lambda x:(x.get('lastEnd'), x.get('lastStart')), reverse = False)
