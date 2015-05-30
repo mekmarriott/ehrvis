@@ -82,16 +82,20 @@ Med.plot_meds = function (){
         var thismed = Med.tracks[ser_id].name;
         var thisdate = new Date(item.datapoint[0]);
         var curridx,presentdose;
+        var thisdoseUnit = "mg";
         thisdate = thisdate.toString().substr(0,15);
+        if (Med.tracks[ser_id].doseUnits) {
+            thisdoseUnit = Med.tracks[ser_id].doseUnits;
+        }
         if (!Med.tracks[ser_id].active){
             presentdose = "<i>(inactive)</i>";        
-        }else{
+        } else {
             curridx = Med.tracks[ser_id].data.length - 2;
             presentdose = Med.tracks[ser_id].data[curridx][1].toString() + "mg";
         }
 
 
-        var content = thismed+"&#151<strong>Current:</strong> "+ presentdose+"<br><strong>Dose:</strong> " + thisdose + "mg on " + thisdate;
+        var content = thismed+"&#151<strong>Current:</strong> "+ presentdose+"<br><strong>Dose:</strong> " + thisdose + thisdoseUnit + " on " + thisdate;
         $('#tooltip-replacement').html(content)
 
 
@@ -219,7 +223,7 @@ Med.form_all_series = function(){
 Med.transfer_data = function(){
     Med.tracks = [];
     for (var i = medData.length - 1; i >= 0; i--) {
-        Med.tracks.push( { data: medData[i].plotData, maxdose: medData[i].maxDose, rank: medData[i].rank, name: medData[i].drugName, active: medData[i].active } )
+        Med.tracks.push( { data: medData[i].plotData, maxdose: medData[i].maxDose, rank: medData[i].rank, name: medData[i].drugName, active: medData[i].active, doseUnits: medData[i].doseUnits} )
         if (medData[i].plotData[0][0] < Med.minDate){
             Med.minDate = medData[i].plotData[0][0];
         }

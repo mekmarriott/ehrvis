@@ -20,17 +20,18 @@ var initMedTour = function() {
       title: "Medications",
       content: "The points marking the ends of intervals are interactive. Try hovering the mouse over a point...",
       placement: "bottom",
+      reflex: true
     },  
+    {
+      element: "#tooltip-replacement",
+      title: "Medication Details",
+      content: "...and further information can be seen on the panel above after hovering over a point.",
+      placement: "bottom",
+    },
     {
       element: "#med_plot_target",
       title: "Medication Axis",
       content: "Medication names are previewed on the y-axis...",
-      placement: "bottom",
-    },
-    {
-      element: "#tooltip-replacement",
-      title: "Medication Details",
-      content: "...but further information can be seen on the panel above after hovering over a point.",
       placement: "bottom",
     },
     {

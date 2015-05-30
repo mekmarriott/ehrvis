@@ -55,7 +55,8 @@ var initNoteTour = function() {
       element: "#note_nav_target",
       title: "Note Navigation",
       content: "...and can be used for quick naviagation. Try moving the selection window along the lower timeline.",
-      placement: "top"
+      placement: "top",
+      reflex: true
     },
     {
       element: "#choices",
