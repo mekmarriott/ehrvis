@@ -17,7 +17,7 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 
 import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-from medications import load_patient1_meds#, load_playground_meds
+from medications import load_patient1_meds, load_playground_meds
 from notes import load_epic_notes, load_playground_notes
 from ehrvisutil import date2utc
 import json
@@ -78,10 +78,10 @@ def medications(case_id=None):
     global medication_data
     print "Called med data load"
     """Return all medication information."""
-    medication_data = load_patient1_meds()
     if case_id == "playground":
-        pass
-        # note_date = load_playground_meds()
+        medication_data = load_playground_meds()
+    else:
+        medication_data = load_patient1_meds()
     return jsonify(medication_data=medication_data)
 
 @app.route('/_notes/')
@@ -90,7 +90,6 @@ def notes(case_id=None):
     global note_data
     print "Called"
     """Return all note information."""
-    # note_data = load_mimic_notes()
     if case_id == "playground":
         note_data = load_playground_notes()
     else:

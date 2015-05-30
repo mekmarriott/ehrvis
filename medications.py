@@ -126,6 +126,7 @@ class MedicationTrack(object):
         # Add MedicationEntry to the track.
         self.intervals.append(triple)
 
+        print triple
         currStart = triple[0]
         currEnd = triple[1]
         currDose = triple[2]
@@ -236,6 +237,39 @@ def initialize_hapi(entry):
         return drug
     except:
         return None
+
+def load_playground_meds():
+    '''For use with manually entered Epic Playground medication data'''
+
+    defaultEnd = datetime.today() 
+    infile = "static/epic_playground/epic_medications.txt"
+    returnList = []
+    tracks = {}
+    outputTracks = []
+
+    with open(infile, 'r') as f:
+        for line in f:
+            line = line.strip()
+            info = line.split("\t")
+            name = info[0]
+            start = datetime.strptime(info[1], '%Y-%m-%d')
+            if info[2] == "n/a": 
+                end = defaultEnd
+            else:
+                end =  datetime.strptime(info[2], '%Y-%m-%d')
+            dose = float(info[3])
+            doseUnits = info[4]
+            admMethod = info[5]
+ 
+            entry = MedicationEntry(name, start, "n/a", dose, doseUnits, "n/a", end)
+            addToTrack(entry, tracks)
+    for key, track in tracks.items():
+        track.consolidateTrack()
+        d = track.getDict()
+        outputTracks.append(d)
+    output = sorted(outputTracks, key=lambda x:(x.get('lastEnd'), x.get('lastStart')), reverse = True)
+    return output
+            
 
 def load_patient1_meds():
     entryList = json.load(open('static/FHIR_Sandbox/patient1_medications.json'))

@@ -1,0 +1,118 @@
+[
+	{
+		"drugName":"Glyburide",
+		"active":true,
+		"doseUnits":"mg",
+		"admMethod":"PO",
+		"lastEnd":,
+		"lastStart":,
+		"maxDose":15,
+		"plotData":[]
+	},
+	{
+		"drugName":"Carvedilol",
+		"active":true,
+		"doseUnits":"mg",
+		"admMethod":"PO",
+		"lastEnd":,
+		"lastStart":,
+		"maxDose":6.25,
+		"plotData":[]
+	},
+	{
+		"drugName":"Furosemide",
+		"active":true,
+		"doseUnits":"mg",
+		"admMethod":"PO",
+		"lastEnd":,
+		"lastStart":,
+		"maxDose":40,
+		"plotData":[]
+	},
+	{
+		"drugName":"Lisinopril",
+		"active":true,
+		"doseUnits":"mg",
+		"admMethod":"PO",
+		"lastEnd":,
+		"lastStart":,
+		"maxDose":5,
+		"plotData":[]
+	},
+	{
+		"drugName":"Ibuprofen",
+		"active":true,
+		"doseUnits":"mg PRN",
+		"admMethod":"PO",
+		"lastEnd":,
+		"lastStart":,
+		"maxDose":400,
+		"plotData":[]
+	},
+	{
+		"drugName":"Solumedrol",
+		"active":true,
+		"doseUnits":"mg",
+		"admMethod":"IV",
+		"lastEnd":,
+		"lastStart":,
+		"maxDose":125,
+		"plotData":[]
+	},
+	{
+		"drugName":"Moxifloxacin",
+		"active":false,
+		"doseUnits":"mg",
+		"admMethod":"IV",
+		"lastEnd":,
+		"lastStart":,
+		"maxDose":800,
+		"plotData":[]
+	},
+	{
+		"drugName":"Oxygen",
+		"active":false,
+		"doseUnits":"L PRN",
+		"admMethod":"Nasal Cannula",
+		"lastEnd":,
+		"lastStart":,
+		"maxDose":1,
+		"plotData":[]
+	},
+	{
+		"drugName":"Albuterol/Ipratropium",
+		"active":false,
+		"doseUnits":"mcg",
+		"admMethod":"Nebulizer",
+		"lastEnd":,
+		"lastStart":,
+		"maxDose":66,
+		"plotData":[]
+	},
+	{
+		"drugName":"Insulin Aspart",
+		"active":false,
+		"doseUnits":"units max",
+		"admMethod":"Subcutaneous Injection",
+		"lastEnd":,
+		"lastStart":,
+		"maxDose":72,
+		"plotData":[]
+	},
+	{
+		"drugName":"Methylprednisolone",
+		"active":false,
+		"doseUnits":"mg",
+		"admMethod:"IV",
+		"lastEnd":,
+		"lastStart":,
+		"maxDose":500,
+		"plotData":[]"
+	}
+]
+
+
+
+
+
+
