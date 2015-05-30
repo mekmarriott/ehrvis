@@ -35,6 +35,20 @@ var initNoteTour = function() {
     },
     {
       element: "#note_plot_target",
+      title: "Note Preview",
+      content: "The points marking the notes interactive. Try hovering the mouse over a point to see a preview of the note.",
+      placement: "bottom",
+      backdrop: false
+    }, 
+    {
+      element: "#note_plot_target",
+      title: "Note Details",
+      content: "Now try clicking on the note instead to see the full text. ",
+      placement: "bottom",
+      backdrop: false
+    },
+    {
+      element: "#note_plot_target",
       title: "Note Chart",
       content: "To change the viewing region, scroll to zoom in/out...",
       placement: "top",

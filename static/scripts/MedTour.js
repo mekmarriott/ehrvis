@@ -20,12 +20,13 @@ var initMedTour = function() {
       title: "Medications",
       content: "The points marking the ends of intervals are interactive. Try hovering the mouse over a point...",
       placement: "bottom",
-      reflex: true,
+      backdrop: false
+      // reflex: true,
     },  
     {
       element: "#tooltip-replacement",
       title: "Medication Details",
-      content: "...and further information can be seen on the panel above after hovering over a point.",
+      content: "...and further information will be displayed here on this panel above after hovering over a point.",
       placement: "bottom",
     },
     {
