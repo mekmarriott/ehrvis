@@ -18,8 +18,8 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from medications import load_patient1_meds
-from notes import load_epic_notes, date2utc
-from time import mktime
+from notes import load_epic_notes
+from ehrvisutil import date2utc
 import json
 
 global medication_data
@@ -52,15 +52,15 @@ def timeline():
     """Render prototype of timeline"""
     return render_template('timeline.html')
 
-@app.route('/flot/')
-def flot():
+@app.route('/notes/')
+def note_timeline():
     """Render prototype of timeline"""
-    return render_template('flot.html')
+    return render_template('notes.html')
 
-@app.route('/flotmeds/')
-def flotmeds():
+@app.route('/meds/')
+def med_timeline():
     """Render prototype of timeline"""
-    return render_template('flotmeds.html')   
+    return render_template('meds.html')   
 #=======================================================================
 
 #=======================================================================
@@ -69,14 +69,16 @@ def flotmeds():
 @app.route('/_medications/')
 def medications():
     global medication_data
-    print "Called"
+    print "Called med data load"
     """Return all medication information."""
     medication_data = load_patient1_meds()
-    print medication_data.medNames
-    return jsonify(medication_data=medication_data.meds, 
-                            minDate=medication_data.minDate,
-                            med_indices=[k for k in medication_data.idx2med],
-                            med_names=[medication_data.idx2med[k] for k in medication_data.idx2med])
+    print medication_data
+
+    return jsonify(medication_data=medication_data)
+    # return jsonify(medication_data=medication_data.meds, 
+    #                         minDate=medication_data.minDate,
+    #                         med_indices=[k for k in medication_data.idx2med],
+    #                         med_names=[medication_data.idx2med[k] for k in medication_data.idx2med])
 
 @app.route('/_notes/')
 def notes():
@@ -89,6 +91,14 @@ def notes():
     return jsonify(previewData=note_data.previewsByService, plottingSeries=note_data.series.values(), 
                     hospitalizations=note_data.hospitalizations, minDate=date2utc(note_data.minDate), maxDate=date2utc(note_data.maxDate))
 
+
+@app.route('/_services/')
+def services():
+    global note_data
+    try:
+        return jsonify(services=note_data.notesByService.keys())
+    except:
+        return jsonify(services="Unavailable")
 
 @app.route('/_note/<service_id>/<note_id>/fulltext/')
 def note_fulltext(service_id,note_id):

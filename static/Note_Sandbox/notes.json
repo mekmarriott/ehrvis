@@ -792,7 +792,7 @@
 		"preview":"note preview text.....",
 		"fulltext":"full text of note",
 		"type":"Progress Note",
-		"service":"Critical Care",
+		"service":"CCU",
 		"inpatient":"true",
 		"admission":"false",
 		"discharge":"false"
@@ -806,7 +806,7 @@
 		"preview":"note preview text.....",
 		"fulltext":"full text of note",
 		"type":"Progress Note",
-		"service":"Critical Care",
+		"service":"CCU",
 		"inpatient":"true",
 		"admission":"false",
 		"discharge":"false"
@@ -820,7 +820,7 @@
 		"preview":"note preview text.....",
 		"fulltext":"full text of note",
 		"type":"Progress Note",
-		"service":"Critical Care",
+		"service":"CCU",
 		"inpatient":"true",
 		"admission":"false",
 		"discharge":"false"
@@ -834,7 +834,7 @@
 		"preview":"note preview text.....",
 		"fulltext":"full text of note",
 		"type":"Progress Note",
-		"service":"Critical Care",
+		"service":"CCU",
 		"inpatient":"true",
 		"admission":"false",
 		"discharge":"false"
@@ -848,7 +848,7 @@
 		"preview":"note preview text.....",
 		"fulltext":"full text of note",
 		"type":"Progress Note",
-		"service":"Critical Care",
+		"service":"CCU",
 		"inpatient":"true",
 		"admission":"false",
 		"discharge":"false"
@@ -1394,7 +1394,7 @@
 		"preview":"note preview text.....",
 		"fulltext":"full text of note",
 		"type":"ED Provider Note",
-		"service":"Critical Care",
+		"service":"CCU",
 		"inpatient":"false",
 		"admission":"false",
 		"discharge":"false"
@@ -1422,7 +1422,7 @@
 		"preview":"note preview text.....",
 		"fulltext":"full text of note",
 		"type":"ED Provider Note",
-		"service":"Critical Care",
+		"service":"CCU",
 		"inpatient":"false",
 		"admission":"false",
 		"discharge":"false"
@@ -1716,7 +1716,7 @@
 		"preview":"note preview text.....",
 		"fulltext":"full text of note",
 		"type":"ED Provider Note",
-		"service":"Critical Care",
+		"service":"CCU",
 		"inpatient":"false",
 		"admission":"false",
 		"discharge":"false"
@@ -1828,7 +1828,7 @@
 		"preview":"note preview text.....",
 		"fulltext":"full text of note",
 		"type":"Progress Note",
-		"service":"Critical Care",
+		"service":"CCU",
 		"inpatient":"true",
 		"admission":"false",
 		"discharge":"false"
@@ -1870,7 +1870,7 @@
 		"preview":"note preview text.....",
 		"fulltext":"full text of note",
 		"type":"Discharge Summary",
-		"service":"Critical Care",
+		"service":"CCU",
 		"inpatient":"true",
 		"admission":"false",
 		"discharge":"true"
