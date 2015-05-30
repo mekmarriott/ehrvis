@@ -185,44 +185,36 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 		replot(newrange);
 	});
 
-
-
+	// button selecting/filtering controls
 	var choiceContainer = $("#choices");
 	for (var i = Note.plotData.length - 1; i >= 0; i--) {
-		// choiceContainer.append("<paper-checkbox style='font-size:1.3rem; margin:10px; color:" + Note.plotData[i].color+"; background-color:" + Note.plotData[i].color+"'
-		 // aria-label:"+Note.plotData[i].label+" active checked></paper-checkbox");	
-	
-		var checkhtml = "<br/>"+
-				"<div style='color:#e5e5e5; background-color:"+ Note.plotData[i].color+ "; margin-right:0.5rem; border-radius:0.5rem; padding: 0.5rem; padding-top:0.8rem; padding-right:1rem; font-size:1.5rem'>" +
-					"<input type='checkbox' checked='checked' value="+i+" id='" + Note.plotData[i].label + "'></input>" +
-					"<label for='id" + Note.plotData[i].label + "'>"+ Note.plotData[i].label + "</label>"+
-				"</div>"
-		choiceContainer.append(checkhtml);	
-
+		var checkhtml = "<button class='btn btn-default choice-button pressed' name='" + i + "' style='margin-right: 15px; color: white; background: " + 
+						Note.plotData[i].color + "'>" + Note.plotData[i].label + " </button>"
+		choiceContainer.append(checkhtml);
 	};
-	choiceContainer.find("input").click(plotAccordingToChoices);
+
+	$("#choices button").click(function() {
+		console.log("clicked");
+	    $(this).toggleClass('pressed').promise().done(function(){
+	    	plotAccordingToChoices();
+	    });
+	});
 
 	function plotAccordingToChoices() {
-
-		choiceContainer.find("input:checked").each(function () {
-			var idx = $(this).val();
-			console.log(idx);
-			console.log(Note.plotData[idx].points.show);
-			Note.plotData[idx].points.show= true
+		$("#choices").find('button').each(function(index) {
+    		var idx = $(this).attr('name');
+			if ($(this).hasClass("pressed")) {
+				Note.plotData[idx].points.show = true
+				console.log(idx + "is pressed")
+			} else {
+				Note.plotData[idx].points.show = false
+				console.log(idx + "is not pressed")
+			}
+			var axes = note_plot.getAxes();
+			Note.plotOptions.xaxis.min = axes.xaxis.min
+			Note.plotOptions.xaxis.max = axes.xaxis.max
+			note_plot = $.plot("#note_plot_target", Note.plotData, Note.plotOptions);
 		});
-
-		choiceContainer.find("input:not(:checked)").each(function () {
-			var idx = $(this).val();
-			console.log(idx);
-			console.log(Note.plotData[idx].points.show);
-			Note.plotData[idx].points.show= false
-		});	
-
-		var axes = note_plot.getAxes();
-		Note.plotOptions.xaxis.min = axes.xaxis.min
-		Note.plotOptions.xaxis.max = axes.xaxis.max
-		note_plot = $.plot("#note_plot_target", Note.plotData, Note.plotOptions);
-
 	}
 
 	$("#note_plot_target").append("<div id='inpatientkey' style='position:absolute;left:30px;top:20px;color:#666;font-size:small; box-shadow:0.2rem 0.2rem #000'></div>")
