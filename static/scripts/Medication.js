@@ -45,7 +45,7 @@ Med.plot_meds = function (){
     Med.plotOptions.zoom = { interactive: true };
 
     // nav plot options
-    Med.navOptions.yaxis = { min: 0.5, max: Med.maxRank+1, ticks:[]};
+    Med.navOptions.yaxis = { min: 0.5, max: Med.maxRank+1, ticks:[], panRange: [0,Med.maxRank]};
     Med.navOptions.xaxis = { mode: 'time', panRange: [Med.minDate, Med.maxDate]};
     Med.navOptions.grid = { clickable: true, autoHighlight: false, markings: [] };
     Med.navOptions.selection =  { mode: null, color: "orange" }
@@ -83,15 +83,34 @@ Med.plot_meds = function (){
         var thisdate = new Date(item.datapoint[0]);
         var curridx,presentdose;
         thisdate = thisdate.toString().substr(0,15);
+
+
+
+        var thisunits, thismethod;
+        if (!Med.tracks[ser_id].method || Med.tracks[ser_id].method=="n/a"){
+            thismethod = "";
+        }else{
+            thismethod = "&nbsp"+Med.tracks[ser_id].method
+        }
+
+        if (!Med.tracks[ser_id].doseUnits){
+            thisunits = "mg";
+        }else{
+            thisunits = Med.tracks[ser_id].doseUnits;
+            thisunits=thisunits.replace("_"," ");
+        }
+        console.log(thisunits)
+
         if (!Med.tracks[ser_id].active){
             presentdose = "<i>(inactive)</i>";        
         }else{
             curridx = Med.tracks[ser_id].data.length - 2;
-            presentdose = Med.tracks[ser_id].data[curridx][1].toString() + "mg";
+            presentdose = Med.tracks[ser_id].data[curridx][1].toString() + "&nbsp" +thisunits;
         }
 
 
-        var content = thismed+"&#151<strong>Current:</strong> "+ presentdose+"<br><strong>Dose:</strong> " + thisdose + "mg on " + thisdate;
+
+        var content = thismed+ thismethod+"&#151<strong>Current:</strong> "+ presentdose+"<br><strong>Total Daily Dose:</strong> " + thisdose + "&nbsp" +thisunits + " on " + thisdate;
         $('#tooltip-replacement').html(content)
 
 
@@ -219,7 +238,7 @@ Med.form_all_series = function(){
 Med.transfer_data = function(){
     Med.tracks = [];
     for (var i = medData.length - 1; i >= 0; i--) {
-        Med.tracks.push( { data: medData[i].plotData, maxdose: medData[i].maxDose, rank: medData[i].rank, name: medData[i].drugName, active: medData[i].active } )
+        Med.tracks.push( { data: medData[i].plotData, maxdose: medData[i].maxDose, rank: medData[i].rank, name: medData[i].drugName, active: medData[i].active, doseUnits: medData[i].doseUnits, method: medData[i].admMethod } )
         if (medData[i].plotData[0][0] < Med.minDate){
             Med.minDate = medData[i].plotData[0][0];
         }

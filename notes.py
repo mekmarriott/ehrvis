@@ -73,7 +73,7 @@ class NoteHistory(object):
             return self.services[3]
         elif "Laboratory" in service:
             return self.services[4]
-        elif "Colonscopy" in _type:
+        elif "Colonoscopy" in _type:
             return self.services[5]
         elif "Medicine" in service:
             return self.services[0]
@@ -213,7 +213,7 @@ class NoteHistory(object):
 
                     # 2. make dict entry for service if doesn't exist, key = service, value = plot data and color
                     if s not in self.series:
-                        self.series[s]={'label':s,'color':self.serv2color[s],'data':[]}
+                        self.series[s]={'label':s,'color':self.serv2color[s],'symbol':self.serv2icon[s], 'data':[]}
 
                     # 3. append [time,height] pair to relevant data series
                     self.series[s]['data'].append([date2utc(t),note.heightcount])
