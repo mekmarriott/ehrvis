@@ -13,20 +13,26 @@
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.symbol.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/deepCopy.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/scripts/Medication.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/bootstrap-tour.min.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/scripts/MedTour.js"></script>
 
-<!-- <body> -->
 
-<!-- 	<div id="header">
-		<h2>Medications	</h2>
-	</div> -->
-
-	
-
+	<div class='tour-backdrop jumbotron' style='opacity: 0.9' id='demo-start-page'>
+		<h1>Welcome</h1>
+		<p>This is the redesigned medical record interface</p> 
+		<p>This patient visualization for medications has been specially designed to display and explore patterns in an individual's prescription history. </p> 
+		<p> We assembled a quick demo to help you get started with the tools and features of our visualization. </p> 
+		<p>Let's begin now!</p> </br> 
+		<p>
+			<button class='btn btn-primary btn-lg' onclick='initNoteTour();'>Start Tour</button> 
+			<span data-role='separator'> 
+			<button class='btn btn-primary btn-lg' onclick='$("#demo-start-page").fadeOut(200);'> No Thanks! </button>
+		</p>
+	</div>
 	<div id="content">
 		<div id="tooltip-replacement" class="well" style="font-size:1.6rem;"></div>
 
 		<div class="demo-container">
-<!-- 		<div class="demo-container" style="overflow: scroll">-->
 			<div id="med_plot_target" class="demo-placeholder"></div>
 		</div>
 
@@ -48,7 +54,6 @@
 			// ----------------------------------------
 
 			$.getJSON( "/_medications/", function(result) {
-
 				
 				medData = result['medication_data']
 
@@ -56,14 +61,9 @@
 				Med.form_all_series();
 				Med.build_dataset();
 				Med.plot_meds()
-
 			});
-
 		}
-
-		
 	</script>
 
 {% endblock %}
-<!-- </body>
-</html> -->
+

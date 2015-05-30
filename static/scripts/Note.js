@@ -135,9 +135,18 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
         // set tooltip contents
         set_preview_data(item.series.label,item.dataIndex)
    
+        // handle cases when close to edge of page:
+        var dist_to_edge = window.innerWidth - item.pageX, ttip_pos = item.pageX+5;
+
+        if (dist_to_edge < 250){
+        	ttip_pos -= (250-dist_to_edge);
+        }
+
+
+
         $("#note_tooltip").html(Note.curr_timestamp + "<br><strong> Type: </strong> " + Note.curr_type + "<br><strong> \
         	Service: </strong> " + Note.curr_service + "<br><strong> Preview: </strong>" + Note.curr_preview)
-          .css({top: item.pageY+5, left: item.pageX+5, 'background-color':item.series.color})
+          .css({top: item.pageY+5, left: ttip_pos, 'background-color':item.series.color})
           .fadeIn(200);
       } else {
         $("#note_tooltip").hide();
@@ -206,15 +215,11 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 
 		choiceContainer.find("input:checked").each(function () {
 			var idx = $(this).val();
-			console.log(idx);
-			console.log(Note.plotData[idx].points.show);
 			Note.plotData[idx].points.show= true
 		});
 
 		choiceContainer.find("input:not(:checked)").each(function () {
 			var idx = $(this).val();
-			console.log(idx);
-			console.log(Note.plotData[idx].points.show);
 			Note.plotData[idx].points.show= false
 		});	
 
@@ -239,7 +244,6 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 function displayFulltext(){
 	var noteToast = document.getElementById('note_detail');
 	noteToast.toggle();
-	console.log(Note.curr_fulltext);
 	// noteToast.innerHTML = lipsum;
 	noteToast.innerHTML = Note.curr_fulltext;
 	noteToast.heading = Note.curr_type;
@@ -270,7 +274,6 @@ function height_conversion(data_array){
 
 function set_preview_data(service,idx){
 	Note.curr_preview = notePreviews[service][idx]['preview'];
-	console.log(Note.curr_preview);
 	Note.curr_service = notePreviews[service][idx]['service'];
 	Note.curr_type = notePreviews[service][idx]['type'];
 	Note.curr_timestamp = notePreviews[service][idx]['time'];
