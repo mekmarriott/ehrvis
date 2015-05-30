@@ -20,10 +20,20 @@
 
 
 <!-- <body> -->
+	<div class='tour-backdrop jumbotron' style='opacity: 0.9' id='demo-start-page'>
+		<h1>Welcome</h1>
+		<p>This is the redesigned medical record interface</p> 
+		<p>This patient visualization for medical notes has been specially designed to display and explore patterns in an individual's health history. </p> 
+		<p> We assembled a quick demo to help you get started with the tools and features of our visualization. </p> 
+		<p>Let's begin now!</p> </br> 
+		<p>
+			<button class='btn btn-primary btn-lg' onclick='initNoteTour();'>Start Tour</button> 
+			<span data-role='separator'> 
+			<button class='btn btn-primary btn-lg' onclick='$("#demo-start-page").fadeOut(200);'> No Thanks! </button>
+		</p>
+	</div>
 
-	<div id="note-title"></div> <!-- keep this for now for the walkthrough...can be replaced with our logo/title? -->
-	
-	<div class="container-fluid" align="center">
+	<div class="container-fluid" id="note-timeline" align="center">
 
 
 		<div horizontal layout id="choices" class="well"></div>
@@ -74,7 +84,6 @@
 				hospitalStays = result['hospitalizations']
 				console.log(hospitalStays)
 				createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate);
-				initNoteTour();
 			});
 
 		}

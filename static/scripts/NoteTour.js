@@ -1,40 +1,52 @@
 
 var initNoteTour = function() {
+  $("#demo-start-page").fadeOut(200);
   console.log("Starting tour...");
   noteSteps = [
     {
-      element: "#note-title",
-      title: "Demo",
-      content: "Welcome to the redesigned medical record interface!",
-      placement: "bottom",
-      backdropPadding: 20
-    },
-    {
       element: "#note_plot_target",
       title: "Note Chart",
-      content: "This is the note chart...",
+      content: "This note chart displays...",
       placement: "top",
+    },
+    {
+      element: ".legend",
+      title: "Note Timeline Legend",
+      content: "This is the legend for the note timeline...",
+      placement: "left",
+    },
+        {
+      element: "#inpatientkey",
+      title: "Note Timeline Legend",
+      content: "This is the legend for the note timeline...",
+      placement: "bottom",
     },
     {
       element: "#note_nav_target",
       title: "Note Navigation",
       content: "This is the overview of the patient's entire recorded medical history...",
-      placement: "top",
+      placement: "top"
+    },
+    {
+      element: "#choices",
+      title: "Note Filtering",
+      content: "This is a filtering selection for the note timeline...try clicking on the different selections to toggle displays of different types of patient notes.",
+      placement: "bottom",
+      reflex: true
     }
   ]
 
-  // templateString = "<div class='popover tour'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div><div class='popover-navigation'><button class='btn btn-default' data-role='prev'>« Prev</button><span data-role='separator'>|</span><button class='btn btn-default' data-role='next'>Next »</button></div><button class='btn btn-default' data-role='end'>End tour</button></nav></div>"
   // Instance the tour
   var NoteTour = new Tour({
     name: "note-tour",
     steps: noteSteps,
     container: "body",
     keyboard: true,
-    storage: window.localStorage,
+    storage: false,
     debug: false,
     backdrop: true,
     backdropContainer: 'body',
-    backdropPadding: 0,
+    backdropPadding: 10,
     redirect: true,
     orphan: false,
     duration: false,
