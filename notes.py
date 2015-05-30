@@ -272,7 +272,6 @@ def initialize_epic(entry):
         fulltext = entry["fulltext"]
         _id = entry["visObject"]["id"]
         time = entry["visObject"]["start"]
-        print(time)
         time = datetime.strptime(time, "%Y-%m-%d %H:%M" ) #2012-01-13 10:00
         _type = entry["type"]
         inpatient = entry["inpatient"]=="true" or entry["inpatient"]=="True" 

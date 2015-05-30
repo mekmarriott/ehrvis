@@ -66,13 +66,6 @@ var initMedTour = function() {
       placement: "bottom",
       reflex: true
     },
-    {
-      element: "#med_plot_target",
-      title: "",
-      content: "Click on the main timeline to wrap up",
-      placement: "top",
-      reflex: true
-    },
   ]
 
   // Instance the tour

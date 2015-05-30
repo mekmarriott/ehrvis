@@ -126,7 +126,6 @@ class MedicationTrack(object):
         # Add MedicationEntry to the track.
         self.intervals.append(triple)
 
-        print triple
         currStart = triple[0]
         currEnd = triple[1]
         currDose = triple[2]
