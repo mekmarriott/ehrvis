@@ -1,1 +1,1 @@
-web: foreman start
+web: gunicorn app:app
