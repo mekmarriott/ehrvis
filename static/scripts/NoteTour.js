@@ -1,15 +1,25 @@
 
-function startNoteTour() {
+var initNoteTour = function() {
+  console.log("Starting tour...");
   noteSteps = [
+    {
+      element: "#note-title",
+      title: "Demo",
+      content: "Welcome to the redesigned medical record interface!",
+      placement: "bottom",
+      backdropPadding: 20
+    },
     {
       element: "#note_plot_target",
       title: "Note Chart",
-      content: "This is the note chart..."
+      content: "This is the note chart...",
+      placement: "top",
     },
     {
       element: "#note_nav_target",
       title: "Note Navigation",
-      content: "This is the overview of the patient's entire recorded medical history..."
+      content: "This is the overview of the patient's entire recorded medical history...",
+      placement: "top",
     }
   ]
 
@@ -46,10 +56,10 @@ function startNoteTour() {
     onResume: function (tour, duration) {},
     onRedirectError: function (tour) {}
   });
-
+  console.log("launching???");
   // Initialize the tour
   NoteTour.init();
-
+  console.log("OK");
   // Start the tour
   NoteTour.start();
 }

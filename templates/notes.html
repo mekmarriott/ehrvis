@@ -21,9 +21,8 @@
 
 <!-- <body> -->
 
-
-
-
+	<div id="note-title"></div> <!-- keep this for now for the walkthrough...can be replaced with our logo/title? -->
+	
 	<div class="container-fluid" align="center">
 
 
@@ -42,7 +41,7 @@
 	</div>
 
 	<paper-dialog id="note_detail" heading="Title" class="scrolling" backdrop layered="false">
-		<p>blahblahblah I'm cool.</p>
+		<p></p>
     </paper-dialog>
 
     <style>
@@ -75,7 +74,7 @@
 				hospitalStays = result['hospitalizations']
 				console.log(hospitalStays)
 				createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate);
-				startNoteTour();
+				initNoteTour();
 			});
 
 		}
