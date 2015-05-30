@@ -36,16 +36,16 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'EHR_visualization_2015'
 #       General routing for application
 #=======================================================================
 @app.route('/')
-def home():
+def about():
     """Render website's home page."""
     print "RENDERING HOME.HTML"
-    return render_template('home.html')
-
-
-@app.route('/about/')
-def about():
-    """Render the website's about page."""
     return render_template('about.html')
+
+
+# @app.route('/dashboard/')
+# def dashboard():
+#     """Render the website's about page."""
+#     return render_template('home.html')
 
 @app.route('/notes_demo/')
 def note_timeline():

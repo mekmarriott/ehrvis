@@ -20,7 +20,7 @@ var initMedTour = function() {
       title: "Medications",
       content: "The points marking the ends of intervals are interactive. Try hovering the mouse over a point...",
       placement: "bottom",
-      reflex: true
+      reflex: true,
     },  
     {
       element: "#tooltip-replacement",

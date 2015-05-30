@@ -48,7 +48,7 @@ Med.plot_meds = function (){
     Med.navOptions.yaxis = { min: 0.5, max: Med.maxRank+1, ticks:[]};
     Med.navOptions.xaxis = { mode: 'time', panRange: [Med.minDate, Med.maxDate]};
     Med.navOptions.grid = { clickable: true, autoHighlight: false, markings: [] };
-    Med.navOptions.selection =  { mode: null, color: "orange" }
+    Med.navOptions.selection =  { mode: null, color: "#887f7f" }
     Med.navOptions.shift = { interactive: true };
 
     // $('#med_plot_target').css({height: '1500px'})
@@ -84,7 +84,7 @@ Med.plot_meds = function (){
         var curridx,presentdose;
         var thisdoseUnit = "mg";
         thisdate = thisdate.toString().substr(0,15);
-        if (Med.tracks[ser_id].doseUnits) {
+        if (Med.tracks[ser_id].doseUnits != null) {
             thisdoseUnit = Med.tracks[ser_id].doseUnits;
         }
         if (!Med.tracks[ser_id].active){

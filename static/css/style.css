@@ -95,7 +95,17 @@ input[type=checkbox] {
 
 .choice-button {
   opacity: 0.2;
+  text-shadow: none;
 }
 .pressed {
   opacity: 1.0;
+  font: '18px/1.5em "proxima-nova", Helvetica, Arial, sans-serif';
+}
+
+.offset-left {
+  margin-left: 100px;
+}
+
+.offset-right {
+  margin-right: 100px;
 }
