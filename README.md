@@ -70,7 +70,8 @@ Just to make organization easier, I'm going to list the files and what should go
 - **.gitignore:** Has pretty much everything covered so you can ignore it
 - **requirements.txt:** Change when you install a new python dependency (as described in step 7 of Setting Up)
 - **app.py:** Where all the magic happens
-- **objects.py:** For python data models
+- **medications.py:** For python data models related to medications
+- **notes.py:** For python data models related to clinical notes
 
 ==================================================
 Dependencies
