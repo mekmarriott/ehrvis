@@ -7,71 +7,71 @@ from pprint import pprint
 from datetime import datetime, timedelta
 from ehrvisutil import date2utc
 
-class NoteEntry(object):
+# class NoteEntry(object):
 
-    def __init__(self, service, preview, fulltext, _id, time, _type = "Other/Unknown", inpatient=False):
-        try:
-            self._type = _type
-            self.service = service
-            self.time = time
-            self.preview = preview
-            self.fulltext = fulltext
-            self._id = _id
-            self.inpatient = inpatient
-            self.heightcount = 0
-        except: 
-            print "Malformed data for object initialization"
-
-
-    def __str__(self):
-        result = ""
-        result += "Type: " + self._type + "\n"
-        result += "Service: " + self.service + "\n"
-        result += "Date: " + str(self.time) + "\n"
-        result += "Preview: " + self.preview + "\n"
-        return result
+#     def __init__(self, service, preview, fulltext, _id, time, _type = "Other/Unknown", inpatient=False):
+#         try:
+#             self._type = _type
+#             self.service = service
+#             self.time = time
+#             self.preview = preview
+#             self.fulltext = fulltext
+#             self._id = _id
+#             self.inpatient = inpatient
+#             self.heightcount = 0
+#         except: 
+#             print "Malformed data for object initialization"
 
 
-    def to_dict(self):
-        # omit "fulltext" for faster loading
-        return {'service':self.service, 'preview':self.preview,'time':self.time.strftime('%A %d %B %Y, %-I:%M %p'),         
-                'type':self._type, 'inpatient': self.inpatient, 'id':self._id, 'heightcount':self.heightcount}
-
-class NoteHistory(object):
-
-    services = ["Medicine", "Emergency Medicine", "Critical Care", "Other"]
-    serv2color = {services[0]:'#2244dd',services[1]:'#dd2222',services[2]:'#dd9933',services[-1]:'#222222'}
+#     def __str__(self):
+#         result = ""
+#         result += "Type: " + self._type + "\n"
+#         result += "Service: " + self.service + "\n"
+#         result += "Date: " + str(self.time) + "\n"
+#         result += "Preview: " + self.preview + "\n"
+#         return result
 
 
-    def __init__(self):
-        self.notes = {}
-        self.notesByDate = {}
-        self.notesByService = {}
-        self.previewsByService = {}
-        self.minDate = datetime.now()      # as late as any possible dates
-        self.maxDate = datetime(1900,1,1)  # earlier than all reasonable dates
-        self.series = {}
-        self.hospitalizations = []
+#     def to_dict(self):
+#         # omit "fulltext" for faster loading
+#         return {'service':self.service, 'preview':self.preview,'time':self.time.strftime('%A %d %B %Y, %-I:%M %p'),         
+#                 'type':self._type, 'inpatient': self.inpatient, 'id':self._id, 'heightcount':self.heightcount}
 
-    def __str__(self):
-        result = ""
-        for i,k in enumerate(self.notes):
-            result += "Note " + str(i) + " preview:" + self.notes[k].preview + "\n"
-        return result
+# class NoteHistory(object):
 
-    def standard_service(self,service):
-        if "Emergency" in service:
-            return self.services[1]
-        elif "Medicine" in service:
-            return self.services[0]
-        elif "Critical Care" in service:
-            return self.services[2]
-        elif "CCU" in service:
-            return self.services[2]
-        elif "General Surgery" in service:
-            return self.services[-1]
-        else:
-            return self.services[-1]
+#     services = ["Medicine", "Emergency Medicine", "Critical Care", "Other"]
+#     serv2color = {services[0]:'#2244dd',services[1]:'#dd2222',services[2]:'#dd9933',services[-1]:'#222222'}
+
+
+#     def __init__(self):
+#         self.notes = {}
+#         self.notesByDate = {}
+#         self.notesByService = {}
+#         self.previewsByService = {}
+#         self.minDate = datetime.now()      # as late as any possible dates
+#         self.maxDate = datetime(1900,1,1)  # earlier than all reasonable dates
+#         self.series = {}
+#         self.hospitalizations = []
+
+#     def __str__(self):
+#         result = ""
+#         for i,k in enumerate(self.notes):
+#             result += "Note " + str(i) + " preview:" + self.notes[k].preview + "\n"
+#         return result
+
+#     def standard_service(self,service):
+#         if "Emergency" in service:
+#             return self.services[1]
+#         elif "Medicine" in service:
+#             return self.services[0]
+#         elif "Critical Care" in service:
+#             return self.services[2]
+#         elif "CCU" in service:
+#             return self.services[2]
+#         elif "General Surgery" in service:
+#             return self.services[-1]
+#         else:
+#             return self.services[-1]
 
 
 
