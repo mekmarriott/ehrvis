@@ -2,12 +2,12 @@
 # The classes and methods in this file are used to parse and organize medication information from the Ajax queries made in app.py
 
 from flask import Flask, request, json
-from dateutil import parser
+# from dateutil import parser
 import datetime
 from pprint import pprint
 import urllib2
 from sortedcontainers import SortedListWithKey, SortedList
-from dateutil.parser import *
+# from dateutil.parser import *
 from operator import itemgetter
 from ehrvisutil import date2utc
 
@@ -193,7 +193,7 @@ def initialize_epic(data):
     try:
         defaultEnd = date.today()
         name =  data["content"]["medication"]["display"]
-        start = parse(data["content"]["dosageInstruction"][0]["timingSchedule"]["event"][0]["start"])
+        start = datetime.datetime.strptime(data["content"]["dosageInstruction"][0]["timingSchedule"]["event"][0]["start"])
         status = data["content"]["status"]
         dose = int(data["content"]["dosageInstruction"][0]["doseQuantity"]["value"]) 
         doseUnits = None
@@ -204,7 +204,7 @@ def initialize_epic(data):
         if (end == "0001-01-01T00:00:00"):
             end = defaultEnd
         else:
-            end = parse(end)
+            end = datetime.datetime.strptime(end)
         return MedicationEntry(name, start, status, dose, doseUnits, admMethod, end)
     except: 
         print "Malformed data for object initialization"
@@ -215,7 +215,7 @@ def initialize_epic(data):
 def initialize_hapi(entry):
     '''For use with HAPI medication data. Creates a medicationEntry object by parsing data from the provided JSON entry'''
     try:
-        start = parse(entry["resource"]["dateWritten"]).date()
+        start = datetime.datetime.strptime(entry["resource"]["dateWritten"]).date()
         name = entry["resource"]["medication"]["display"].strip()
         duration = datetime.timedelta(days=1)
         timeUnit = entry["resource"]["dispense"]["expectedSupplyDuration"]["units"]
@@ -263,5 +263,4 @@ def getClassification(name):
         return classification
     except:
         return None
-
 
