@@ -18,8 +18,8 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 # from medications import load_patient1_meds
-from notes import load_epic_notes
-from ehrvisutil import date2utc
+# from notes import load_epic_notes
+# from ehrvisutil import date2utc
 import json
 
 global medication_data
