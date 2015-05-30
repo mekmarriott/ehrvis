@@ -14,26 +14,17 @@
 	<script language="javascript" type="text/javascript" src="/static/js/deepCopy.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/scripts/Medication.js"></script>
 
-<!-- <body> -->
-
-<!-- 	<div id="header">
-		<h2>Medications	</h2>
-	</div> -->
-
-	
 
 	<div id="content">
 		<div id="tooltip-replacement" class="well" style="font-size:1.6rem;"></div>
 
 		<div class="demo-container">
-<!-- 		<div class="demo-container" style="overflow: scroll">-->
 			<div id="med_plot_target" class="demo-placeholder"></div>
 		</div>
 
 		<div class="demo-container" style="height:120px;">
 			<div id="med_nav_target" class="demo-placeholder"></div>
 		</div>
-
 	</div>
 
 
@@ -47,23 +38,17 @@
 			// load medication data and create timeline
 			// ----------------------------------------
 
-			$.getJSON( "/_medications/", function(result) {
+			$.getJSON( "/_medications/playground", function(result) {
 
-				
 				medData = result['medication_data']
 
 				Med.transfer_data();
 				Med.form_all_series();
 				Med.build_dataset();
 				Med.plot_meds()
-
 			});
-
-		}
-
-		
+		}	
 	</script>
 
 {% endblock %}
-<!-- </body>
-</html> -->
+

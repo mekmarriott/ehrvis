@@ -1,0 +1,73 @@
+
+{% extends "base.html" %}
+
+{% block css %}
+	<link href="/static/css/bootstrap-tour.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+	<link rel="stylesheet" href="/static/css/style.css">
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.time.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.navigate.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.selection.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.shift.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.fillbetween.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.crosshair.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.symbol.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/deepCopy.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/scripts/Medication.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/js/bootstrap-tour.min.js"></script>
+	<script language="javascript" type="text/javascript" src="/static/scripts/MedTour.js"></script>
+
+
+	<div class='tour-backdrop jumbotron' style='opacity: 0.9' id='demo-start-page'>
+		<h1>Welcome</h1>
+		<p>This is the redesigned medical record interface</p> 
+		<p>This patient visualization for medications has been specially designed to display and explore patterns in an individual's prescription history. </p> 
+		<p> We assembled a quick demo to help you get started with the tools and features of our visualization. </p> 
+		<p>Let's begin now!</p> </br> 
+		<p>
+			<button class='btn btn-primary btn-lg' onclick='initMedTour();'>Start Tour</button> 
+			<span data-role='separator'> 
+			<button class='btn btn-primary btn-lg' onclick='$("#demo-start-page").fadeOut(200);'> No Thanks! </button>
+		</p>
+	</div>
+	<div id="content">
+		<div id="tooltip-replacement" class="well" style="font-size:1.6rem;"></div>
+
+		<div class="demo-container">
+			<div id="med_plot_target" class="demo-placeholder"></div>
+		</div>
+
+		<div class="demo-container" style="height:120px;">
+			<div id="med_nav_target" class="demo-placeholder"></div>
+		</div>
+
+	</div>
+
+
+	<script>
+		var medData;
+
+		window.onload = function(){
+			console.log("Loading");
+
+			// ----------------------------------------
+			// load medication data and create timeline
+			// ----------------------------------------
+
+			$.getJSON( "/_medications/", function(result) {
+				
+				medData = result['medication_data']
+
+				Med.transfer_data();
+				Med.form_all_series();
+				Med.build_dataset();
+				Med.plot_meds()
+			});
+		}
+	</script>
+
+{% endblock %}
+

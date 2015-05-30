@@ -95,8 +95,15 @@ Med.plot_meds = function (){
         $('#tooltip-replacement').html(content)
 
 
+        // handle cases when close to edge of page:
+        var dist_to_edge = window.innerWidth - item.pageX, ttip_pos = item.pageX+5;
+
+        if (dist_to_edge < 250){
+            ttip_pos -= (250-dist_to_edge);
+        }
+
         $("#med_tooltip").html(content)
-          .css({top: item.pageY+5, left: item.pageX+5, 'background-color':'000'})
+          .css({top: item.pageY+5, left: ttip_pos, 'background-color':'000'})
           .fadeIn(200);
       } else {
         $("#med_tooltip").hide();

@@ -6,7 +6,7 @@ var initNoteTour = function() {
     {
       element: "#note_plot_target",
       title: "Note Chart",
-      content: "This chart plots patient on a timeline.",
+      content: "This chart plots patient notes on a timeline.",
       placement: "top",
     },
     {
@@ -98,10 +98,8 @@ var initNoteTour = function() {
     onResume: function (tour, duration) {},
     onRedirectError: function (tour) {}
   });
-  console.log("launching???");
   // Initialize the tour
   NoteTour.init();
-  console.log("OK");
   // Start the tour
   NoteTour.start();
 }

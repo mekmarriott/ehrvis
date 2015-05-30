@@ -17,8 +17,8 @@ Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 
 import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify
-from medications import load_patient1_meds
-from notes import load_epic_notes
+from medications import load_patient1_meds#, load_playground_meds
+from notes import load_epic_notes, load_playground_notes
 from ehrvisutil import date2utc
 import json
 
@@ -47,47 +47,55 @@ def about():
     """Render the website's about page."""
     return render_template('about.html')
 
-@app.route('/timeline/')
-def timeline():
-    """Render prototype of timeline"""
-    return render_template('timeline.html')
-
-@app.route('/notes/')
+@app.route('/notes_demo/')
 def note_timeline():
     """Render prototype of timeline"""
-    return render_template('notes.html')
+    return render_template('notes_demo.html')
 
-@app.route('/meds/')
+@app.route('/meds_demo/')
 def med_timeline():
     """Render prototype of timeline"""
-    return render_template('meds.html')   
+    return render_template('meds_demo.html')  
+
+@app.route('/notes_eval/')
+def note_eval():
+    """Render prototype of timeline"""
+    return render_template('notes_eval.html')
+
+@app.route('/meds_eval/')
+def med_eval():
+    """Render prototype of timeline"""
+    return render_template('meds_eval.html')  
+
 #=======================================================================
 
 #=======================================================================
 #       Routing for all AJAX calls
 #=======================================================================
 @app.route('/_medications/')
-def medications():
+@app.route('/_medications/<case_id>')
+def medications(case_id=None):
     global medication_data
     print "Called med data load"
     """Return all medication information."""
     medication_data = load_patient1_meds()
-    print medication_data
-
+    if case_id == "playground":
+        pass
+        # note_date = load_playground_meds()
     return jsonify(medication_data=medication_data)
-    # return jsonify(medication_data=medication_data.meds, 
-    #                         minDate=medication_data.minDate,
-    #                         med_indices=[k for k in medication_data.idx2med],
-    #                         med_names=[medication_data.idx2med[k] for k in medication_data.idx2med])
 
 @app.route('/_notes/')
-def notes():
+@app.route('/_notes/<case_id>')
+def notes(case_id=None):
     global note_data
     print "Called"
     """Return all note information."""
     # note_data = load_mimic_notes()
-    note_data = load_epic_notes()
-
+    if case_id == "playground":
+        note_data = load_playground_notes()
+    else:
+        note_data = load_epic_notes()    
+        print note_data
     return jsonify(previewData=note_data.previewsByService, plottingSeries=note_data.series.values(), 
                     hospitalizations=note_data.hospitalizations, minDate=date2utc(note_data.minDate), maxDate=date2utc(note_data.maxDate))
 

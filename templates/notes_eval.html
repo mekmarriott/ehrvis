@@ -15,30 +15,10 @@
 	<script language="javascript" type="text/javascript" src="/static/scripts/Note.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/bower_components/webcomponentsjs/webcomponents.js"></script>
 	<link href="/static/bower_components/paper-dialog/paper-dialog.html" rel="import">
-	<script language="javascript" type="text/javascript" src="/static/js/bootstrap-tour.min.js"></script>
-	<script language="javascript" type="text/javascript" src="/static/scripts/NoteTour.js"></script>
-
-	
-<!-- <body> -->
-	<div class='tour-backdrop jumbotron' style='opacity: 0.9' id='demo-start-page'>
-		<h1>Welcome</h1>
-		<p>This is the redesigned medical record interface</p> 
-		<p>This patient visualization for medical notes has been specially designed to display and explore patterns in an individual's health history. </p> 
-		<p> We assembled a quick demo to help you get started with the tools and features of our visualization. </p> 
-		<p>Let's begin now!</p> </br> 
-		<p>
-			<button class='btn btn-primary btn-lg' onclick='initNoteTour();'>Start Tour</button> 
-			<span data-role='separator'> 
-			<button class='btn btn-primary btn-lg' onclick='$("#demo-start-page").fadeOut(200);'> No Thanks! </button>
-		</p>
-	</div>
 
 	<div class="container-fluid" id="note-timeline" align="center">
 
-
 		<div horizontal layout id="choices" class="well"></div>
-
-
 
 		<div class="demo-container">
 			<div id="note_plot_target" class="demo-placeholder"></div>
@@ -76,19 +56,16 @@
 			// load note data and create timeline
 			// ----------------------------------
 
-			$.getJSON( "/_notes/", function(result) {
+			$.getJSON( "/_notes/playground", function(result) {
+				console.log(result)
 				notePreviews = result['previewData']
 				noteSeries = result['plottingSeries']
 				minDate = result['minDate']
 				maxDate = result['maxDate']
 				hospitalStays = result['hospitalizations']
-				console.log(hospitalStays)
 				createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate);
 			});
-
 		}
-
-		
 	</script>
 
 {% endblock %}

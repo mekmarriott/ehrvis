@@ -191,8 +191,10 @@ def initialize_epic(data):
     try:
         defaultEnd = date.today()
         name =  data["content"]["medication"]["display"]
+
         start = data["content"]["dosageInstruction"][0]["timingSchedule"]["event"][0]["start"]
         start = datetime.strptime(start, "%Y-%m-%dT%H:%M:%SZ")
+
         status = data["content"]["status"]
         dose = int(data["content"]["dosageInstruction"][0]["doseQuantity"]["value"]) 
         doseUnits = None

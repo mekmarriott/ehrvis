@@ -40,8 +40,7 @@ class NoteHistory(object):
 
     services = ["Medicine", "Emergency Medicine", "Critical Care", "Imaging Studies", "Laboratory Studies", "Procedures", "Other"]
     serv2color = {services[0]:'#2244dd',services[1]:'#dd2222',services[2]:'#dd9933',services[3]:'green',services[4]:'purple',services[5]:'brown',services[-1]:'#222222'}
-    # serv2icon = {services[0]:'#2244dd',services[1]:'#dd2222',services[2]:'#dd9933',services[3]:'green',services[4]:,'purple',services[5]:'brown',services[-1]:'#222222'}
-
+    serv2icon = {services[0]:'circle',services[1]:'circle',services[2]:'circle',services[3]:'diamond',services[4]:'diamond',services[5]:'cross',services[-1]:'circle'}
 
     def __init__(self):
         self.notes = {}
@@ -273,7 +272,7 @@ def initialize_epic(entry):
         fulltext = entry["fulltext"]
         _id = entry["visObject"]["id"]
         time = entry["visObject"]["start"]
-        # time = parser.parse(time)
+        print(time)
         time = datetime.strptime(time, "%Y-%m-%d %H:%M" ) #2012-01-13 10:00
         _type = entry["type"]
         inpatient = entry["inpatient"]=="true" or entry["inpatient"]=="True" 
