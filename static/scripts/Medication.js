@@ -77,33 +77,29 @@ Med.plot_meds = function (){
    
         ser_id = parseInt(item.series.id);
         
-        thisdose = Med.tracks[ser_id].maxdose*(Med.offset + (item.datapoint[1]-Med.tracks[ser_id].rank))/Med.maxWeight;
-        thisdose = Math.round(thisdose * 100) / 100
-        thismed = Med.tracks[ser_id].name
-        thisdate = new Date(item.datapoint[0])
-        thisdate = thisdate.toString().substr(0,15)
-        console.log(Med.tracks[ser_id].active)
+        var thisdose = Med.tracks[ser_id].maxdose*(Med.offset + (item.datapoint[1]-Med.tracks[ser_id].rank))/Med.maxWeight;
+        thisdose = Math.round(thisdose * 100) / 100;
+        var thismed = Med.tracks[ser_id].name;
+        var thisdate = new Date(item.datapoint[0]);
+        var curridx,presentdose;
+        thisdate = thisdate.toString().substr(0,15);
         if (!Med.tracks[ser_id].active){
-            presentdose = "<i>(inactive)</i>"           
+            presentdose = "<i>(inactive)</i>";        
         }else{
-            curridx = Med.tracks[ser_id].data.length - 2
-            presentdose = Med.tracks[ser_id].data[curridx][1].toString() + "mg"
+            curridx = Med.tracks[ser_id].data.length - 2;
+            presentdose = Med.tracks[ser_id].data[curridx][1].toString() + "mg";
         }
 
-        $('#tooltip-replacement').html(thismed+"<br><strong>Dose:</strong> " + thisdose + "mg on " + thisdate +"<br><strong> Current:</strong> "+ presentdose)
 
-        // console.log(dat_id)
-        // console.log(Med.tracks[ser_id])
-        // console.log(Med.tracks[ser_id].data[dat_id][1])
-        // time = new Date(Med.tracks[ser_id].data[dat_id][0])
-        // dose = Med.tracks[ser_id].data[dat_id][1]
-        // content = time.toString().substr(0,10)+"<br><strong>Med:</strong>"+ item.series.id +"<br><strong>Dose: </strong>"+dose.toString;
+        var content = thismed+"&#151<strong>Current:</strong> "+ presentdose+"<br><strong>Dose:</strong> " + thisdose + "mg on " + thisdate;
+        $('#tooltip-replacement').html(content)
 
-        // $("#med_tooltip").html(content)
-        //   .css({top: item.pageY+5, left: item.pageX+5, 'background-color':'000'})
-        //   .fadeIn(200);
+
+        $("#med_tooltip").html(content)
+          .css({top: item.pageY+5, left: item.pageX+5, 'background-color':'000'})
+          .fadeIn(200);
       } else {
-        // $("#med_tooltip").hide();
+        $("#med_tooltip").hide();
       }
     });
 
@@ -130,17 +126,16 @@ Med.plot_meds = function (){
     }
 
     $("#med_nav_target").bind("plotclick", function (event, pos, item) {
-
-      if (item) {
-        var centerPoint_x = item.datapoint[0];
-        var centerPoint_y = item.datapoint[1];
+      // if (item) {
+        var centerPoint_x = pos.x;//item.datapoint[0];
+        var centerPoint_y = pos.y;//item.datapoint[1];
         var axes = med_plot.getAxes();
         var diff_x = axes.xaxis.max - axes.xaxis.min;
         var diff_y = axes.yaxis.max - axes.yaxis.min;
         var ranges = { xaxis: { from: centerPoint_x - diff_x*0.5, to: centerPoint_x + diff_x*0.5 }, yaxis: { from: centerPoint_y - diff_y*0.5, to: centerPoint_y + diff_y*0.5 } }
         med_nav.setSelection(ranges, true);
         replot(ranges);
-      }
+      // }
     });
 
     $("#med_nav_target").bind("plotselected", function (event, ranges) {

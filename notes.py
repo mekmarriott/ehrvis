@@ -60,17 +60,15 @@ class NoteHistory(object):
         return result
 
     def standard_service(self,service):
-        if service == "Medicine":
-            return self.services[0]
-        elif service == "General Medicine":
-            return self.services[0]
-        elif service == "Internal Medicine":
-            return self.services[0]
-        elif service == "Emergency Medicine":
+        if "Emergency" in service:
             return self.services[1]
-        elif service == "Critical Care":
+        elif "Medicine" in service:
+            return self.services[0]
+        elif "Critical Care" in service:
             return self.services[2]
-        elif service == "General Surgery":
+        elif "CCU" in service:
+            return self.services[2]
+        elif "General Surgery" in service:
             return self.services[-1]
         else:
             return self.services[-1]
@@ -99,7 +97,7 @@ class NoteHistory(object):
                 idx+=1
 
                 # look for next inpatient note. this defines the start date of the hospitalization
-                if self.notes[ks[idx]].inpatient:
+                if self.notes[ks[idx]].inpatient or "H&P" in self.notes[ks[idx]]._type:
                     hosp.append(date2utc(self.notes[ks[idx]].time))
                     print hosp
 
@@ -119,6 +117,19 @@ class NoteHistory(object):
                             # exit while loop 
                             break  
 
+                        if "Discharge" in self.notes[ks[idx]]._type:
+                            # append time from CURRENT note to "hosp" as end date
+                            hosp.append(date2utc(self.notes[ks[idx]].time))
+
+                            print hosp
+
+                            # append current hospitalization to hospitalization list
+                            self.hospitalizations.append(hosp)
+
+                            hosp = []
+
+                            # exit while loop 
+                            break
 
                         if not self.notes[ks[idx]].inpatient:
 

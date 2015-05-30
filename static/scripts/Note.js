@@ -11,6 +11,7 @@ Note.curr_service = "";
 Note.curr_timestamp = "";
 Note.curr_fulltext = "";
 Note.curr_noteID = 0;
+Note.inpatientColor = "#e0e5e1"
 
 
 // data format: [ { data: ---, label: ---}, {data: ----, label: ---}, ... ]
@@ -40,11 +41,21 @@ Note.navOptions.shift = { interactive: true };
 Note.navOptions.legend = { show: false };
 Note.navOptions.selection =  { mode: null, color: "#88baee" }
 
+Note.formSeries= function(series){
+	out = [];
+	for (var i = series.length - 1; i >= 0; i--) {
+		out.push({label: series[i].label, data: series[i].data, color: series[i].color, points: {show: true}, lines: {show: false } })
+	};
+	return out
+}
+
 function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 
+
 	// assign dataseries:
-	Note.plotData = noteSeries;
-	
+	Note.plotData = Note.formSeries(noteSeries);
+
+
 	// convert heighcounts to heights
 	for (var i = Note.plotData.length - 1; i >= 0; i--) {
 		height_conversion(Note.plotData[i].data)
@@ -66,8 +77,8 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 
 	// mark hospital stays
 	for (var i = hospitalStays.length - 1; i >= 0; i--) {
-		Note.plotOptions.grid.markings.push({ xaxis: { from: hospitalStays[i][0], to: hospitalStays[i][1]}, color: "#e5e7e5" });
-		Note.navOptions.grid.markings.push({ xaxis: { from: hospitalStays[i][0], to: hospitalStays[i][1]}, color: "#e5e7e5" });
+		Note.plotOptions.grid.markings.push({ xaxis: { from: hospitalStays[i][0], to: hospitalStays[i][1]}, color: Note.inpatientColor });
+		Note.navOptions.grid.markings.push({ xaxis: { from: hospitalStays[i][0], to: hospitalStays[i][1]}, color: Note.inpatientColor });
 	}
 
 	// plot dataseries
@@ -174,15 +185,63 @@ function createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate){
 		replot(newrange);
 	});
 
+
+
+	var choiceContainer = $("#choices");
+	for (var i = Note.plotData.length - 1; i >= 0; i--) {
+		// choiceContainer.append("<paper-checkbox style='font-size:1.3rem; margin:10px; color:" + Note.plotData[i].color+"; background-color:" + Note.plotData[i].color+"'
+		 // aria-label:"+Note.plotData[i].label+" active checked></paper-checkbox");	
+
+		var checkhtml = "<br/>"+
+				"<div style='color:#e5e5e5; background-color:"+ Note.plotData[i].color+ "; margin-right:0.5rem; border-radius:0.5rem; padding: 0.5rem; padding-top:0.8rem; padding-right:1rem; font-size:1.5rem'>" +
+					"<input type='checkbox' checked='checked' value="+i+" id='" + Note.plotData[i].label + "'></input>" +
+					"<label for='id" + Note.plotData[i].label + "'>"+ Note.plotData[i].label + "</label>"+
+				"</div>"
+		choiceContainer.append(checkhtml);	
+
+	};
+	choiceContainer.find("input").click(plotAccordingToChoices);
+
+	function plotAccordingToChoices() {
+
+		choiceContainer.find("input:checked").each(function () {
+			var idx = $(this).val();
+			console.log(idx);
+			console.log(Note.plotData[idx].points.show);
+			Note.plotData[idx].points.show= true
+		});
+
+		choiceContainer.find("input:not(:checked)").each(function () {
+			var idx = $(this).val();
+			console.log(idx);
+			console.log(Note.plotData[idx].points.show);
+			Note.plotData[idx].points.show= false
+		});	
+
+		var axes = note_plot.getAxes();
+		Note.plotOptions.xaxis.min = axes.xaxis.min
+		Note.plotOptions.xaxis.max = axes.xaxis.max
+		note_plot = $.plot("#note_plot_target", Note.plotData, Note.plotOptions);
+
+	}
+
+	$("#note_plot_target").append("<div id='inpatientkey' style='position:absolute;left:30px;top:20px;color:#666;font-size:small; box-shadow:0.2rem 0.2rem #000'></div>")
+	$("#inpatientkey").append("<div id='ik-inner' style='width: 150px; height: 25px; background-color:"+Note.inpatientColor+"; padding-top:0.5rem; text-align:center'>Inpatient Periods</div>")
+	$("#inpatientkey").append("<div id='ik-inner' style='width: 150px; height: 25px; background-color:#fff; padding-top:0.5rem; text-align:center'>Outpatient Periods</div>")
+
+	// $(Inpatient stays <div style='background-color:red'></div>");
+	// $("#note_plot_target").append("<div style='position:absolute;left:30px;top:40px;color:#666;font-size:small'>Outpatient <div style='background-color:red'></div></div>");
+
 }
+
 
 
 function displayFulltext(){
 	var noteToast = document.getElementById('note_detail');
 	noteToast.toggle();
 	console.log(Note.curr_fulltext);
-	noteToast.innerHTML = lipsum;
-	// noteToast.innerHTML = Note.curr_fulltext;
+	// noteToast.innerHTML = lipsum;
+	noteToast.innerHTML = Note.curr_fulltext;
 	noteToast.heading = Note.curr_type;
 }
 
@@ -224,5 +283,7 @@ function set_fulltext(service,idx){
 		displayFulltext();
 	});
 }
+
+
 
 var lipsum = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur. Donec ut libero sed arcu vehicula ultricies a non tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut gravida lorem. Ut turpis felis, pulvinar a semper sed, adipiscing id dolor. Pellentesque auctor nisi id magna consequat sagittis. Curabitur dapibus enim sit amet elit pharetra tincidunt feugiat nisl imperdiet. Ut convallis libero in urna ultrices accumsan. Donec sed odio eros. Donec viverra mi quis quam pulvinar at malesuada arcu rhoncus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. In rutrum accumsan ultricies. Mauris vitae nisi at sem facilisis semper ac in est.</p><br><p>Vivamus fermentum semper porta. Nunc diam velit, adipiscing ut tristique vitae, sagittis vel odio. Maecenas convallis ullamcorper ultricies. Curabitur ornare, ligula semper consectetur sagittis, nisi diam iaculis velit, id fringilla sem nunc vel mi. Nam dictum, odio nec pretium volutpat, arcu ante placerat erat, non tristique elit urna et turpis. Quisque mi metus, ornare sit amet fermentum et, tincidunt et orci. Fusce eget orci a orci congue vestibulum. Ut dolor diam, elementum et vestibulum eu, porttitor vel elit. Curabitur venenatis pulvinar tellus gravida ornare. Sed et erat faucibus nunc euismod ultricies ut id justo. Nullam cursus suscipit nisi, et ultrices justo sodales nec. Fusce venenatis facilisis lectus ac semper. Aliquam at massa ipsum. Quisque bibendum purus convallis nulla ultrices ultricies. Nullam aliquam, mi eu aliquam tincidunt, purus velit laoreet tortor, viverra pretium nisi quam vitae mi. Fusce vel volutpat elit. Nam sagittis nisi dui.</p><br><p>Suspendisse lectus leo, consectetur in tempor sit amet, placerat quis neque. Etiam luctus porttitor lorem, sed suscipit est rutrum non. Curabitur lobortis nisl a enim congue semper. Aenean commodo ultrices imperdiet. Vestibulum ut justo vel sapien venenatis tincidunt. Phasellus eget dolor sit amet ipsum dapibus condimentum vitae quis lectus. Aliquam ut massa in turpis dapibus convallis. Praesent elit lacus, vestibulum at malesuada et, ornare et est. Ut augue nunc, sodales ut euismod non, adipiscing vitae orci. Mauris ut placerat justo. Mauris in ultricies enim. Quisque nec est eleifend nulla ultrices egestas quis ut quam. Donec sollicitudin lectus a mauris pulvinar id aliquam urna cursus. Cras quis ligula sem, vel elementum mi. Phasellus non ullamcorper urna.\</p><br><p>Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In euismod ultrices facilisis. Vestibulum porta sapien adipiscing augue congue id pretium lectus molestie. Proin quis dictum nisl. Morbi id quam sapien, sed vestibulum sem. Duis elementum rutrum mauris sed convallis. Proin vestibulum magna mi. Aenean tristique hendrerit magna, ac facilisis nulla hendrerit ut. Sed non tortor sodales quam auctor elementum. Donec hendrerit nunc eget elit pharetra pulvinar. Suspendisse id tempus tortor. Aenean luctus, elit commodo laoreet commodo, justo nisi consequat massa, sed vulputate quam urna quis eros. Donec vel.</p>"

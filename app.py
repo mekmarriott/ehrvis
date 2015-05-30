@@ -52,15 +52,15 @@ def timeline():
     """Render prototype of timeline"""
     return render_template('timeline.html')
 
-@app.route('/flot/')
-def flot():
+@app.route('/notes/')
+def note_timeline():
     """Render prototype of timeline"""
-    return render_template('flot.html')
+    return render_template('notes.html')
 
-@app.route('/flotmeds/')
-def flotmeds():
+@app.route('/meds/')
+def med_timeline():
     """Render prototype of timeline"""
-    return render_template('flotmeds.html')   
+    return render_template('meds.html')   
 #=======================================================================
 
 #=======================================================================
@@ -91,6 +91,14 @@ def notes():
     return jsonify(previewData=note_data.previewsByService, plottingSeries=note_data.series.values(), 
                     hospitalizations=note_data.hospitalizations, minDate=date2utc(note_data.minDate), maxDate=date2utc(note_data.maxDate))
 
+
+@app.route('/_services/')
+def services():
+    global note_data
+    try:
+        return jsonify(services=note_data.notesByService.keys())
+    except:
+        return jsonify(services="Unavailable")
 
 @app.route('/_note/<service_id>/<note_id>/fulltext/')
 def note_fulltext(service_id,note_id):
