@@ -62,8 +62,7 @@ def printSummaryStatistics(standard, ehrvis):
        -Overall (all participants): Mean, Median, Standard Deviation
        -Split between physicians and med students: Mean, Median, SD
        -Split by years of EHR experiance: Mean, Median, Standard Deviation
-       -Split by years of 
-    Also, print to a .csv file
+    Also, print specifications for a Latex table to file.
     '''
     # Get overall results for standard system
     oSAvg, oSMed, oSSD, oSIndivScores = calcSUscore(standard)
@@ -102,9 +101,7 @@ def printSummaryStatistics(standard, ehrvis):
     nFT = len(ftSIndivScores)
     nT = len(tSIndivScores)
 
-
-
-    print "Standard System:"
+    print "Standard System: Mean, Median, and Standard Deviation"
     print "\t Overall: " + str(oSAvg) + "\t" + str(oSMed) + "\t" + str(oSSD)
     print "\t Med Students (" + str(nStudents) + "): " + str(mSAvg) + "\t" + str(mSMed) + "\t" + str(mSSD) 
     print "\t Doctors (" + str(nDoctors) + "): " + str(pSAvg) + "\t" + str(pSMed) + "\t" + str(pSSD) 
@@ -113,7 +110,7 @@ def printSummaryStatistics(standard, ehrvis):
     print "\t 5-10 Years Experience (" + str(nFT) + "): " + str(ftSAvg) + "\t" + str(ftSMed) + "\t" + str(ftSSD) 
     print "\t 10+ Years Experience (" + str(nT) + "): " + str(tSAvg) + "\t" + str(tSMed) + "\t" + str(tSSD) 
 
-    print "EHRVis Interface:"
+    print "EHRVis Interface: Mean, Median, and Standard Deviation"
     print "\t Overall: " + str(oEAvg) + "\t" + str(oEMed) + "\t" + str(oESD)
     print "\t Med Students (" + str(nStudents) + "): " + str(mEAvg) + "\t" + str(mEMed) + "\t" + str(mESD) 
     print "\t Doctors (" + str(nDoctors) + "): " + str(pEAvg) + "\t" + str(pEMed) + "\t" + str(pESD) 
@@ -122,11 +119,47 @@ def printSummaryStatistics(standard, ehrvis):
     print "\t 5-10 Years Experience (" + str(nFT) + "): " + str(ftEAvg) + "\t" + str(ftEMed) + "\t" + str(ftESD) 
     print "\t 10+ Years Experience (" + str(nT) + "): " + str(tEAvg) + "\t" + str(tEMed) + "\t" + str(tESD) 
 
+    # LATEX File Section: Standard EHR
+    o = open("standard_summary_table_20.tex", 'w')
+    o.write('% Please add the following required packages to your document preamble:' + "\n")
+    o.write('\usepackage[table,xcdraw]{xcolor}' + "\n")
+    o.write(str('\\') + "begin{table}[h]" + "\n")
+    o.write(str('\\') + "begin{tabular}{|l|l|l|l|}" + "\n")
+    o.write(str('\\') + 'hline' + "\n")
+    o.write(str('\\') + 'rowcolor[HTML]{191870}' + "\n") 
+    o.write(str('\\') + 'multicolumn{1}{|c|}{\cellcolor[HTML]{191870}{\color[HTML]{FFFFFF} {\\bf Group}}} & {\color[HTML]{FFFFFF}{\\bf Mean}} & {\color[HTML]{FFFFFF} {\\bf Median}} & {\color[HTML]{FFFFFF} {\\bf Std. Dev.}} \\\\ \hline' + "\n")
+    o.write('All Participants                                                           & ' + str(oSAvg) + '                       & ' + str(oSMed) + '                          & ' + str(oSSD) + '                              \\\\ \hline' + "\n")
+    o.write('Medical Students (' + str(nStudents) + ')' + '                                                           & '+ str(mSAvg) + '                       & ' + str(mSMed) + '                          & ' + str(mSSD) + '                              \\\\ \hline' + "\n")
+    o.write('Physicians (' + str(nDoctors) + ')' + '                                                                 & ' + str(pSAvg) + '                       & ' + str(pSMed) + '                          & ' + str(pSSD) + '                              \\\\ \hline' + "\n")
+    o.write('0-1 Years Experience (' + str(nZO) + ')' + '                                                       & ' + str(zoSAvg) + '                        & ' + str(zoSMed) + '                           & ' + str(zoSSD) + '                               \\\\ \hline' + "\n")
+    o.write('2-5 Years Experience (' + str(nTF) + ')' + '                                                       & ' + str(tfSAvg) + '                        & ' + str(tfSMed) + '                           & ' + str(tfSSD) + '                               \\\\ \hline' + "\n")
+    o.write('5-10 Years Experience (' + str(nFT) + ')' + '                                                      & ' + str(ftSAvg) + '                        & ' + str(ftSMed) + '                           & ' + str(ftSSD) + '                               \\\\ \hline' + "\n")
+    o.write('10+ Years Experience(' + str(nT) + ')' + '                                                       & ' + str(tSAvg) + '                        & ' + str(tSMed) + '                           & ' + str(tSSD) + '                               \\\\ \hline' + "\n")
+    o.write("\end{tabular}" + "\n")
+    o.write("\end{table}" + "\n")
+    o.close()
 
- #mavgSU, mmedSU, msd, medStudentIndivScores = calcSUscore(medStudents)
-    #pavgSU, pmedSU, psd, physicianIndivScores = calcSUscore(physicians)
-    #print "Med Students (" + str(len(medStudentIndivScores)) + "): " + str(msd) + " Doctors (" + str(len(physicianIndivScores)) + "): " + str(psd)
-    #plotSUscores(medStudentIndivScores, physicianIndivScores)
+   # LATEX File Section: EHRVis
+    o = open("ehrvis_summary_table_20.tex", 'w')
+    o.write('% Please add the following required packages to your document preamble:' + "\n")
+    o.write('\usepackage[table,xcdraw]{xcolor}' + "\n")
+    o.write(str('\\') + "begin{table}[h]" + "\n")
+    o.write(str('\\') + "begin{tabular}{|l|l|l|l|}" + "\n")
+    o.write(str('\\') + 'hline' + "\n")
+    o.write(str('\\') + 'rowcolor[HTML]{191870}' + "\n") 
+    o.write(str('\\') + 'multicolumn{1}{|c|}{\cellcolor[HTML]{191870}{\color[HTML]{FFFFFF} {\\bf Group}}} & {\color[HTML]{FFFFFF}{\\bf Mean}} & {\color[HTML]{FFFFFF} {\\bf Median}} & {\color[HTML]{FFFFFF} {\\bf Std. Dev.}} \\\\ \hline' + "\n")
+    o.write('All Participants                                                           & ' + str(oEAvg) + '                       & ' + str(oEMed) + '                          & ' + str(oESD) + '                              \\\\ \hline' + "\n")
+    o.write('Medical Students (' + str(nStudents) + ')' + '                                                            & '+ str(mEAvg) + '                       & ' + str(mEMed) + '                          & ' + str(mESD) + '                              \\\\ \hline' + "\n")
+    o.write('Physicians (' + str(nDoctors) + ')' + '                                                                 & ' + str(pEAvg) + '                       & ' + str(pEMed) + '                          & ' + str(pESD) + '                              \\\\ \hline' + "\n")
+    o.write('0-1 Years Experience (' + str(nZO) + ')' + '                                                       & ' + str(zoEAvg) + '                        & ' + str(zoEMed) + '                           & ' + str(zoESD) + '                               \\\\ \hline' + "\n")
+    o.write('2-5 Years Experience (' + str(nTF) + ')' + '                                                       & ' + str(tfEAvg) + '                        & ' + str(tfEMed) + '                           & ' + str(tfESD) + '                               \\\\ \hline' + "\n")
+    o.write('5-10 Years Experience (' + str(nFT) + ')' + '                                                      & ' + str(ftEAvg) + '                        & ' + str(ftEMed) + '                           & ' + str(ftESD) + '                               \\\\ \hline' + "\n")
+    o.write('10+ Years Experience (' + str(nT) + ')' + '                                                       & ' + str(tEAvg) + '                        & ' + str(tEMed) + '                           & ' + str(tESD) + '                               \\\\ \hline' + "\n")
+    o.write("\end{tabular}" + "\n")
+    o.write("\end{table}" + "\n")
+    o.close()
+
+
 
  
 def calcSUscore(t):
@@ -152,9 +185,9 @@ def calcSUscore(t):
                 ans = ans - 1 
                 currSU = currSU + ans
         indivScores.append(2.5*currSU)    
-    avgSU = np.mean(indivScores) 
-    medSU = np.median(indivScores)
-    sd = np.std(indivScores)
+    avgSU = round(np.mean(indivScores), 2) 
+    medSU = round(np.median(indivScores), 2)
+    sd = round(np.std(indivScores), 2)
     #print medSU
     #print sd
     return avgSU, medSU, sd, indivScores
@@ -198,7 +231,6 @@ def splitByEHRYears(t):
     #print "10+ years:"
     #calcSUscore(tenUp)
     return zeroToOne, twoToFive, fiveToTen, tenUp
-
 
 def overallAnalysis(standardSUS, ehrvisSUS):
     '''This function plots standard EHR and EHRVis scores in a histogram. No separation by profession- this is across all users'''
