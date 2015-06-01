@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from textwrap import wrap
 
+
 def main():
     infile = sys.argv[1]
     standardSUS, ehrvisSUS, adlEhrvis = process(infile)
@@ -12,16 +13,20 @@ def main():
     medStudents, physicians = splitByProfession(ehrvisSUS)
     zeroToOne, twoToFive, fiveToTen, tenUp = splitByEHRYears(ehrvisSUS)
 
+    #Output comprehensive summary statistics
+    printSummaryStatistics(standardSUS, ehrvisSUS)
+
     # For plotting med students and physician scores in a histogram: Interesting way of seeing whether a particular group was more harsh or lenient in general
-    #avgSU, medSU, sd, medStudentIndivScores = calcSUscore(medStudents)
-    #avgSU, medSU, sd, physicianIndivScores = calcSUscore(physicians)
+    #mavgSU, mmedSU, msd, medStudentIndivScores = calcSUscore(medStudents)
+    #pavgSU, pmedSU, psd, physicianIndivScores = calcSUscore(physicians)
+    #print "Med Students (" + str(len(medStudentIndivScores)) + "): " + str(msd) + " Doctors (" + str(len(physicianIndivScores)) + "): " + str(psd)
     #plotSUscores(medStudentIndivScores, physicianIndivScores)
 
-    # Plot standard EHR and EHRVis scores in a histogram. No separation by profession- this is across all users
+    # Plot standard EHR and EHRVis scores in a histogram. No separation by profession- this is across all users. For presentation
     #overallAnalysis(standardSUS, ehrvisSUS)
 
-    # Plot all users' answers to the 5 extra EHRVis questions
-    analyzeExtraQuestions(adlEhrvis)
+    # Plot all users' answers to the 5 extra EHRVis questions. For presentation
+    #analyzeExtraQuestions(adlEhrvis)
 
 
 def process(infile):
@@ -51,7 +56,79 @@ def process(infile):
             ehrvisSUS.append(background + ehrvisQs)
             adlEhrvis.append(background + adlQs)
     return standardSUS, ehrvisSUS, adlEhrvis
-   
+  
+def printSummaryStatistics(standard, ehrvis):
+    '''This function calculates SU scores for the standard and EHRVis systems and then prints a summary of their statistics, including:
+       -Overall (all participants): Mean, Median, Standard Deviation
+       -Split between physicians and med students: Mean, Median, SD
+       -Split by years of EHR experiance: Mean, Median, Standard Deviation
+       -Split by years of 
+    Also, print to a .csv file
+    '''
+    # Get overall results for standard system
+    oSAvg, oSMed, oSSD, oSIndivScores = calcSUscore(standard)
+    # Get overall results for EHRVis
+    oEAvg, oEMed, oESD, oEIndivScores = calcSUscore(ehrvis)
+
+    # Get physician results for standard system
+    medStudentsStandard, physiciansStandard = splitByProfession(standard)
+    nDoctors = len(physiciansStandard)
+    nStudents = len(medStudentsStandard)
+    pSAvg, pSMed, pSSD, pSIndivScores = calcSUscore(physiciansStandard)
+    # Get med student results for standard system
+    mSAvg, mSMed, mSSD, mSIndivScores = calcSUscore(medStudentsStandard)
+     # Get physician results for EHRVis system
+    medStudentsEhrvis, physiciansEhrvis = splitByProfession(ehrvis)
+    pEAvg, pEMed, pESD, pEIndivScores = calcSUscore(physiciansEhrvis)
+    # Get med student results for EHRVis system
+    mEAvg, mEMed, mESD, mEIndivScores = calcSUscore(medStudentsEhrvis)
+
+    sZeroToOne, sTwoToFive, sFiveToTen, sTenUp = splitByEHRYears(standard)
+    eZeroToOne, eTwoToFive, eFiveToTen, eTenUp = splitByEHRYears(ehrvis)
+
+    # Get results for standard system by years of EHR Use (in same order as above)
+    zoSAvg, zoSMed, zoSSD, zoSIndivScores = calcSUscore(sZeroToOne)
+    tfSAvg, tfSMed, tfSSD, tfSIndivScores = calcSUscore(sTwoToFive)
+    ftSAvg, ftSMed, ftSSD, ftSIndivScores = calcSUscore(sFiveToTen)
+    tSAvg, tSMed, tSSD, tSIndivScores = calcSUscore(sTenUp) 
+    # Get results for EHRVis system by years of EHR Use (in same order as above)
+    zoEAvg, zoEMed, zoESD, zoEIndivScores = calcSUscore(eZeroToOne)
+    tfEAvg, tfEMed, tfESD, tfEIndivScores = calcSUscore(eTwoToFive)
+    ftEAvg, ftEMed, ftESD, ftEIndivScores = calcSUscore(eFiveToTen)
+    tEAvg, tEMed, tESD, tEIndivScores = calcSUscore(eTenUp)
+    # Get size of each group
+    nZO = len(zoSIndivScores)
+    nTF = len(tfSIndivScores)
+    nFT = len(ftSIndivScores)
+    nT = len(tSIndivScores)
+
+
+
+    print "Standard System:"
+    print "\t Overall: " + str(oSAvg) + "\t" + str(oSMed) + "\t" + str(oSSD)
+    print "\t Med Students (" + str(nStudents) + "): " + str(mSAvg) + "\t" + str(mSMed) + "\t" + str(mSSD) 
+    print "\t Doctors (" + str(nDoctors) + "): " + str(pSAvg) + "\t" + str(pSMed) + "\t" + str(pSSD) 
+    print "\t 0-1 Years Experience (" + str(nZO) + "): " + str(zoSAvg) + "\t" + str(zoSMed) + "\t" + str(zoSSD) 
+    print "\t 2-5 Years Experience (" + str(nTF) + "): " + str(tfSAvg) + "\t" + str(tfSMed) + "\t" + str(tfSSD) 
+    print "\t 5-10 Years Experience (" + str(nFT) + "): " + str(ftSAvg) + "\t" + str(ftSMed) + "\t" + str(ftSSD) 
+    print "\t 10+ Years Experience (" + str(nT) + "): " + str(tSAvg) + "\t" + str(tSMed) + "\t" + str(tSSD) 
+
+    print "EHRVis Interface:"
+    print "\t Overall: " + str(oEAvg) + "\t" + str(oEMed) + "\t" + str(oESD)
+    print "\t Med Students (" + str(nStudents) + "): " + str(mEAvg) + "\t" + str(mEMed) + "\t" + str(mESD) 
+    print "\t Doctors (" + str(nDoctors) + "): " + str(pEAvg) + "\t" + str(pEMed) + "\t" + str(pESD) 
+    print "\t 0-1 Years Experience (" + str(nZO) + "): " + str(zoEAvg) + "\t" + str(zoEMed) + "\t" + str(zoESD) 
+    print "\t 2-5 Years Experience (" + str(nTF) + "): " + str(tfEAvg) + "\t" + str(tfEMed) + "\t" + str(tfESD) 
+    print "\t 5-10 Years Experience (" + str(nFT) + "): " + str(ftEAvg) + "\t" + str(ftEMed) + "\t" + str(ftESD) 
+    print "\t 10+ Years Experience (" + str(nT) + "): " + str(tEAvg) + "\t" + str(tEMed) + "\t" + str(tESD) 
+
+
+ #mavgSU, mmedSU, msd, medStudentIndivScores = calcSUscore(medStudents)
+    #pavgSU, pmedSU, psd, physicianIndivScores = calcSUscore(physicians)
+    #print "Med Students (" + str(len(medStudentIndivScores)) + "): " + str(msd) + " Doctors (" + str(len(physicianIndivScores)) + "): " + str(psd)
+    #plotSUscores(medStudentIndivScores, physicianIndivScores)
+
+ 
 def calcSUscore(t):
     '''Reads in a table of SUS question answers and calculates the System Usability Score'''
     # Remove background info since we only want scores
@@ -75,12 +152,10 @@ def calcSUscore(t):
                 ans = ans - 1 
                 currSU = currSU + ans
         indivScores.append(2.5*currSU)    
-    print indivScores
     avgSU = np.mean(indivScores) 
     medSU = np.median(indivScores)
     sd = np.std(indivScores)
     #print medSU
-    print avgSU
     #print sd
     return avgSU, medSU, sd, indivScores
 
@@ -128,15 +203,16 @@ def splitByEHRYears(t):
 def overallAnalysis(standardSUS, ehrvisSUS):
     '''This function plots standard EHR and EHRVis scores in a histogram. No separation by profession- this is across all users'''
     avgSU, medSU, sd, standard = calcSUscore(standardSUS)
-    avgSU, medSU, sd, ehrvis = calcSUscore(ehrvisSUS)
+    eavgSU, medSU, sd, ehrvis = calcSUscore(ehrvisSUS)
+    print "Standard: " + str(avgSU) + " EHRVis: " + str(eavgSU)
 
     plt.figure()
-    plt.hist([standard, ehrvis], bins = 7, histtype='barstacked', color = ["steelblue", "lightskyblue"])
-    plt.ylim([0,10]) # Raise y range to make plot look cleaner
+    plt.hist([standard, ehrvis], bins = 6, histtype='barstacked', color = ["steelblue", "lightskyblue"])
+    plt.ylim([0,16]) # Raise y range to make plot look cleaner
     plt.legend(["Standard EHR System", "EHRVis Interface"])
     plt.title("Distribution of Standard Usability Scores Across All Participants")
-    plt.xlabel('Standard Usability Score')
-    plt.ylabel('Number of scores')
+    plt.xlabel('Standard Usability Score', fontsize=13)
+    plt.ylabel('Number of scores', fontsize=13)
     plt.show()
 
 def analyzeExtraQuestions(t):
