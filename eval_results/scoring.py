@@ -7,7 +7,9 @@ def main():
     standardSUS, ehrvisSUS, adlEhrvis = process(infile)
     #calcSUscore(standardSUS)
     #calcSUscore(ehrvisSUS)
-    scoresByProfession(ehrvisSUS)
+    medStudents, physicians = splitByProfession(ehrvisSUS)
+    zeroToOne, twoToFive, fiveToTen, tenUp = splitByEHRYears(ehrvisSUS)
+
 
 def process(infile):
     '''Read in results file and create 3 tables based on question type:
@@ -70,8 +72,8 @@ def calcSUscore(t):
     return avgSU, medSU, sd, indivScores
 
 
-def scoresByProfession(t):
-    '''This function splits the table by profession (med student or physician) and calculates the SU scores for the groups separately. Only accomodates those groups right now'''
+def splitByProfession(t):
+    '''This function splits the table by profession (med student or physician) and returns the two groups. Only accomodates those groups right now'''
     medStudents = []# row[0]=="Medical Student") row for row in t ]
     physicians = []
     for row in t:
@@ -79,12 +81,37 @@ def scoresByProfession(t):
             medStudents.append(row)
         else:
             physicians.append(row)
-    calcSUscore(medStudents)
-    calcSUscore(physicians)
+    
+    return medStudents, physicians
+    #calcSUscore(medStudents)
+    #calcSUscore(physicians)
 
-def scoresByEHRYears(t):
-    ''' '''
-    pass
+def splitByEHRYears(t):
+    '''This function splits the table by years of experience with EHRs and returns the groups separately. '''
+    zeroToOne = []
+    twoToFive = []
+    fiveToTen = []
+    tenUp = []
+    for row in t:
+        if row[1] == "0-1":
+            zeroToOne.append(row)
+        elif row[1] == "2-5":
+            twoToFive.append(row)
+        elif row[1] == "5-10":
+            fiveToTen.append(row)
+        else:
+            tenUp.append(row)
+    #print "0 to 1 years:"
+    #calcSUscore(zeroToOne)
+    #print "2 to 5 years:"
+    #calcSUscore(twoToFive)
+    #print "5 to 10 years:"
+    #calcSUscore(fiveToTen)
+    #print "10+ years:"
+    #calcSUscore(tenUp)
+    return zeroToOne, twoToFive, fiveToTen, tenUp 
+
+
 
  
 main()
