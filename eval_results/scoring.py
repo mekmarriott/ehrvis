@@ -5,7 +5,9 @@ import numpy as np
 def main():
     infile = sys.argv[1]
     standardSUS, ehrvisSUS, adlEhrvis = process(infile)
-    calcSUscore(standardSUS)
+    #calcSUscore(standardSUS)
+    #calcSUscore(ehrvisSUS)
+    scoresByProfession(ehrvisSUS)
 
 def process(infile):
     '''Read in results file and create 3 tables based on question type:
@@ -62,10 +64,27 @@ def calcSUscore(t):
     avgSU = np.mean(indivScores) 
     medSU = np.median(indivScores)
     sd = np.std(indivScores)
-    print medSU
+    #print medSU
     print avgSU
-    print sd
+    #print sd
     return avgSU, medSU, sd, indivScores
 
 
+def scoresByProfession(t):
+    '''This function splits the table by profession (med student or physician) and calculates the SU scores for the groups separately. Only accomodates those groups right now'''
+    medStudents = []# row[0]=="Medical Student") row for row in t ]
+    physicians = []
+    for row in t:
+        if row[0] == "Medical Student":
+            medStudents.append(row)
+        else:
+            physicians.append(row)
+    calcSUscore(medStudents)
+    calcSUscore(physicians)
+
+def scoresByEHRYears(t):
+    ''' '''
+    pass
+
+ 
 main()
