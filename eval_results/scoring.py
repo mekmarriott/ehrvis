@@ -160,70 +160,62 @@ def analyzeExtraQuestions(t):
                 responses[j][2] += 1
             if ans == "No":
                 responses[j][3] += 1
-    print responses
-
     Q1 = responses[0]
     Q2 = responses[1]
     Q3 = responses[2]
     Q4 = responses[3]
     Q5 = responses[4]
 
-    #plt.style.use('ggplot')
-    fig, axes = plt.subplots(nrows=2, ncols=3)
-    ax1, ax2, ax3, ax4, ax5, ax6 = axes.ravel()
-    plt.tight_layout(pad=0.4, w_pad=0.7, h_pad=1.0)
+    fig = plt.figure(figsize=(10,5))
+
+    ax1 = plt.subplot2grid((2, 3), (0, 0))
+    ax2 = plt.subplot2grid((2, 3), (0, 1))
+    ax3 = plt.subplot2grid((2, 3), (0, 2))#, colspan=1, rowspan=1)
+    ax4 = plt.subplot2grid((2, 3), (1, 0))#, rowspan=1)
+    ax5 = plt.subplot2grid((2, 3), (1, 1), rowspan=1)
+
+    plt.tight_layout(pad=0.5, w_pad=2, h_pad=4.0)
     x = np.arange(4)
-    width = 0.25
+    width = 0.35
 
     # Question 1 plot
-    ax1.bar(x, Q1, width, align='center')
+    ax1.bar(x, Q1, width, align='center', color = "navy")
     ax1.set_xticks(x)
-    ax1.set_xticklabels(['Yes', 'Somewhat', 'Unsure', 'No'])
-    ax1.set_xlabel('x-label')
-    ax1.set_ylabel('y-label')
-    #ax1.set_title("Did EHRVis help you see patterns of patient interaction with medical system?", fontsize = 12)
-    ax1.set_title("\n".join(wrap("Did EHRVis help you see patterns of patient interaction with medical system?", 12)))
+    ax1.set_xticklabels(['Yes', 'Somewhat', 'Unsure', 'No'], fontsize=11)
+    ax1.set_ylabel('Responses')
+    ax1.set_title("Did EHRVis Notes help you see patterns of \n patient interaction with medical system? \n", fontsize=11)
+    ax1.set_ylim([0, 14])
 
     # Question 2 plot
-    ax2.bar(x, Q2, width, align='center')
+    ax2.bar(x, Q2, width, align='center', color = "navy")
     ax2.set_xticks(x)
-    ax2.set_xticklabels(['Yes', 'Somewhat', 'Unsure', 'No'])
+    ax2.set_xticklabels(['Yes', 'Somewhat', 'Unsure', 'No'], fontsize=11)
+    ax2.set_title("Did EHRVis help you see changes to the \n patient's medications more easily?", fontsize=11)
+    ax2.set_ylim([0, 14])
   
     # Question 3 plot
-    ax3.bar(x, Q3, width, align='center')
+    ax3.bar(x, Q3, width, align='center', color = "navy")
     ax3.set_xticks(x)
-    ax3.set_xticklabels(['Yes', 'Somewhat', 'Unsure', 'No'])
+    ax3.set_xticklabels(['Yes', 'Somewhat', 'Unsure', 'No'], fontsize=11)
+    ax3.set_title("Was EHRVis helpful for visualizing \n trends in the patient case?", fontsize=11)
+    ax3.set_ylim([0, 14])
 
     # Question 4 plot
-    ax4.bar(x, Q4, width, align='center')
+    ax4.bar(x, Q4, width, align='center', color = "navy")
     ax4.set_xticks(x)
-    ax4.set_xticklabels(['Yes', 'Somewhat', 'Unsure', 'No'])
+    ax4.set_ylabel('Responses')
+    ax4.set_xticklabels(['Yes', 'Somewhat', 'Unsure', 'No'], fontsize=11)
+    ax4.set_title("Would EHRVis help you make \n clinical decisions faster?", fontsize=11)
+    ax4.set_ylim([0, 14])
 
     # Question 5 plot
-    ax5.bar(x, Q5, width, align='center')
+    ax5.bar(x, Q5, width, align='center', color = "navy")
     ax5.set_xticks(x)
-    ax5.set_xticklabels(['Yes', 'Somewhat', 'Unsure', 'No'])
+    ax5.set_xticklabels(['Yes', 'Somewhat', 'Unsure', 'No'], fontsize=11)
+    ax5.set_title("Would EHRVis help you make \n clinical decisions more easily?", fontsize=11)
+    ax5.set_ylim([0, 14])
 
-
-
-    #f = plt.figure()
-    #ax = f.add_axes([0.1, 0.1, 0.8, 0.8])
-    #axes[0, 0].ax.bar(x, Q1, align='center')
-    #ax.set_xticks(x)
-    #ax.set_xticklabels(['Yes', 'Somewhat', 'Unsure', 'No'])
+    plt.subplots_adjust(top=0.85, left=0.05)
     plt.show()
-    # add some text for labels, title and axes ticks
-    #ax.set_ylabel('Scores')
-    #ax.set_title('Scores by group and gender')
-    #ax.set_xticks(ind+width)
-    #ax.set_xticklabels( ('G1', 'G2', 'G3', 'G4', 'G5') )
-#    Plot scores for one system at a time for doctors and med students
-#    physicians = np.array(physicians)
-#    medStudents = np.array(medStudents)
 
-#    plt.figure()
-#    plt.hist([medStudents,physicians], 7, histtype='barstacked')
-#    plt.show()
-
- 
 main()
