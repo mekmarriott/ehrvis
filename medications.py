@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-# The classes and methods in this file are used to parse and organize medication information from the Ajax queries made in app.py
+# Author: Dana Wyman
+# The classes and methods in this file are used to parse and organize medication information from the raw data, typically in JSON form.
 
 from flask import Flask, request, json
 from datetime import datetime, timedelta
@@ -188,6 +189,7 @@ def addToTrack(entry, tracks):
     return
 
 def initialize_epic(data):
+
     try:
         defaultEnd = date.today()
         name =  data["content"]["medication"]["display"]
