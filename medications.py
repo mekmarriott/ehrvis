@@ -178,6 +178,7 @@ class MedicationTrack(object):
         return
                 
 def initialize_fhir(data):
+'''For use with FHIR data'''
     try:
         defaultEnd = date.today()
         name =  data["content"]["medication"]["display"]
