@@ -1,3 +1,5 @@
+ // Author: Emma Marriott
+ // Description: This script uses applies a walkthrough module from the bootstrap.js library to demo the interactive features of the Medications timeline
 
 var initMedTour = function() {
   $("#demo-start-page").fadeOut(200);

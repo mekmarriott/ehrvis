@@ -1,20 +1,36 @@
+<!--  Authors: Emma Marriott, Baris Ungun. sections are marked below with author indicated -->
+<!--  Description: 
+			-This page contains placeholders for the medication timeline;
+			-After loading, the page requests note data (evaluation case) from the flask web server
+			-After loading, the page calls a timeline creation method from Medication.js
+ -->
+
+	<!-- PAGE STRUCTURE - Author: EM -->
 
 {% extends "base.html" %}
 
 {% block main %}
 	<link rel="stylesheet" href="/static/css/style.css">
+
+	<!-- flot.js plotting library and plugins -->
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.time.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.navigate.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.selection.js"></script>
-	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.shift.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.fillbetween.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.crosshair.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.symbol.js"></script>
+
+	<!-- custom flot.js plugin -->
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.shift.js"></script>
+
+	<!-- required by Medication.js for array copying -->
 	<script language="javascript" type="text/javascript" src="/static/js/deepCopy.js"></script>
+
+	<!-- custom js library -->
 	<script language="javascript" type="text/javascript" src="/static/scripts/Medication.js"></script>
 
-
+	<!-- timeline -->
 	<div id="content">
 		<div id="tooltip-replacement" class="well" style="font-size:1.6rem;"></div>
 
@@ -28,7 +44,10 @@
 	</div>
 
 
+	<!-- PAGE CONTENT POPULATION - Author : BU -->
+
 	<script>
+		// global variable medData, expected by Med.js 
 		var medData;
 
 		window.onload = function(){
@@ -38,14 +57,17 @@
 			// load medication data and create timeline
 			// ----------------------------------------
 
+			// jQuery AJAX call with anonymous function callback
 			$.getJSON( "/_medications/playground", function(result) {
 
+				// load data from flask web server
 				medData = result['medication_data']
 
-				Med.transfer_data();
-				Med.form_all_series();
-				Med.build_dataset();
-				Med.plot_meds()
+				// call Med.js library timeline creation methods in sequence
+				Med.transferData();
+				Med.formAllSeries();
+				Med.buildDataset();
+				Med.plotMeds()
 			});
 		}	
 	</script>

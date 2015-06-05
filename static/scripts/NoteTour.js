@@ -1,3 +1,5 @@
+ // Author: Emma Marriott
+ // Description: This script uses applies a walkthrough module from the bootstrap.js library to demo the interactive features of the Notes timeline
 
 var initNoteTour = function() {
   $("#demo-start-page").fadeOut(200);

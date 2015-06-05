@@ -1,8 +1,10 @@
 #!/usr/bin/env python
-# Need to parse query output to store information of interest
 
-from flask import Flask, request, json
-from pprint import pprint
+# Author: Baris Ungun
+# Description: Defines Note & NoteHistory object classes and auxiliary methods for populating them from JSON data
+
+
+from flask import json
 from datetime import datetime, timedelta
 from ehrvisutil import date2utc
 

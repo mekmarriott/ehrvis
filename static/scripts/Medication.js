@@ -1,3 +1,14 @@
+// Author: Baris Ungun, Emma Marriott (both authors contributed significantly to most portions; sections are marked below with lead author indicated)
+// Description: This script defines the medication timeline library
+// Dependencies: flot.js, jQuery
+
+
+// < MED OBJECT: SETUP FOR DATA PLOTTING --- Lead : BU >
+// -implicit inputs:
+//          1. the existence of <div>s with div-id's "med_plot_target" and "med_nav_target" & validly specified heights (flot.js requirement)
+//          2. the existence of a global variable medData containing data for plotting in medication timeline              
+
+
 var Med = {};
 Med.colors = ["#25f"];              //blue
 Med.colormod = Med.colors.length;
@@ -8,7 +19,7 @@ Med.offset = 0;
 Med.maxItems = 15;
 Med.minDate=Date.now();
 Med.maxDate=0;
-Med.day = 24*60*60*1000 //in milliseconds
+Med.day = 24*60*60*1000 // 1 day in milliseconds
 Med.fillOpacity = 0.8; 
 Med.tracks = [];
 Med.drugNames = [];
@@ -27,7 +38,8 @@ Med.nav_height_incr = 10;
 Med.nav_height_max = 200;
 
 
-Med.truncate_name = function(name){
+// truncate name for display on y-axis ticks
+Med.truncateName = function(name){
     if (name.length > Med.displayNameLength){
         return name.substr(0,Med.displayNameLength)+"..."
     }else{
@@ -35,7 +47,8 @@ Med.truncate_name = function(name){
     }
 }
 
-Med.plot_meds = function (){
+
+Med.plotMeds = function (){
     // main plot options
     Med.plotOptions.yaxis = { min: Math.max(0,Med.maxRank-Med.maxItems), max: Med.maxRank+1, ticks: Med.drugNamePreviews, panRange: [0,Med.maxRank], zoomRange: false     };
     Med.plotOptions.xaxis = { min: Math.max(Med.minDate,Med.maxDate-90*Med.day), max: Med.maxDate, mode: 'time', panRange: [Med.minDate,Med.maxDate], zoomRange: [21*Med.day,365*Med.day]};
@@ -191,8 +204,8 @@ Med.plot_meds = function (){
 
 }
 
-
-Med.build_dataset = function (){
+// convert data in Med.tracks to
+Med.buildDataset = function (){
     Med.dataset = [];
     Med.navdataset = [];
     for (var i = Med.tracks.length - 1; i >= 0; i--) {
@@ -203,13 +216,16 @@ Med.build_dataset = function (){
 
 
         Med.drugNames.push( [Med.tracks[i].rank, Med.tracks[i].name] )
-        Med.drugNamePreviews.push( [Med.tracks[i].rank , Med.truncate_name(Med.tracks[i].name)] )        
+        Med.drugNamePreviews.push( [Med.tracks[i].rank , Med.truncateName(Med.tracks[i].name)] )        
     }
 
     return
 }
 
-Med.form_dataseries = function (medtrack){
+// form data series: given a medication's ranking, calculate a proportional display height
+Med.formDataseries = function (medtrack){
+    // copy medication data series to form new series---upper (variable y-postion) and lower (fixed y-position) lines to plot with
+    //      fill-between option to make variable-thickness bars.
     medtrack.ubound = owl.deepCopy(medtrack.data);
     medtrack.lbound = owl.deepCopy(medtrack.data);
     for (var i = medtrack.data.length - 1; i >= 0; i--) {
@@ -217,6 +233,8 @@ Med.form_dataseries = function (medtrack){
             medtrack.ubound[i][1]/= (medtrack.maxdose / Med.maxWeight );
             medtrack.ubound[i][1]+= medtrack.rank - Med.offset;
             medtrack.lbound[i][1]= medtrack.rank - Med.offset;
+
+            // infer medication with largest rank (use in setting y-axis limits)
             if (medtrack.rank > Med.maxRank){
                 Med.maxRank = medtrack.rank;
             }
@@ -224,14 +242,18 @@ Med.form_dataseries = function (medtrack){
     }
 }
 
-Med.form_all_series = function(){
+
+// form all data series based on data stored in Med.tracks
+Med.formAllSeries = function(){
     for (var i = Med.tracks.length - 1; i >= 0; i--) {
         Med.form_dataseries(Med.tracks[i])
     };
 
 }
 
-Med.transfer_data = function(){
+
+// transfer data from global variable medData into Med.tracks with some naming transformations; infer minimum and maximum dates for timeline
+Med.transferData = function(){
     Med.tracks = [];
     for (var i = medData.length - 1; i >= 0; i--) {
 

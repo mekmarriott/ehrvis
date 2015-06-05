@@ -1,3 +1,11 @@
+<!--  Author: Emma Marriott, Baris Ungun. sections are marked below with author indicated -->
+<!--  Description: 
+			-This page contains placeholders for the notes timeline;
+			-After loading, the page requests note data (evaluation case) from the flask web server
+			-After loading, the page calls a timeline creation method from Note.js
+ -->
+
+	<!-- PAGE STRUCTURE - Author: EM -->
 
 {% extends "base.html" %}
 
@@ -7,16 +15,26 @@
 
 {% block main %}
 	<link rel="stylesheet" href="/static/css/style.css">
+
+	<!-- flot.js plotting library and plugins -->
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.time.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.navigate.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.selection.js"></script>
-	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.shift.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.symbol.js"></script>
-	<script language="javascript" type="text/javascript" src="/static/scripts/Note.js"></script>
+
+	<!-- custom flot plugin -->
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.shift.js"></script>
+
+	<!-- polymer web elements: paper-dialog for pop-up display of note full text  -->
 	<script language="javascript" type="text/javascript" src="/static/bower_components/webcomponentsjs/webcomponents.js"></script>
 	<link href="/static/bower_components/paper-dialog/paper-dialog.html" rel="import">
 
+	<!-- custom js libraries -->
+	<script language="javascript" type="text/javascript" src="/static/scripts/Note.js"></script>
+
+
+	<!-- timeline -->
 	<div class="container-fluid" id="note-timeline" align="center">
 
 		<div horizontal layout id="choices" class="well"></div>
@@ -31,6 +49,7 @@
 
 	</div>
 
+	<!-- full text display pop-up  -->
 	<paper-dialog id="note_detail" heading="Title" class="scrolling" backdrop layered="false">
 		<p></p>
     </paper-dialog>
@@ -57,14 +76,18 @@
 			// load note data and create timeline
 			// ----------------------------------
 
+			// jQuery AJAX call with anonymous function callback
 			$.getJSON( "/_notes/playground", function(result) {
-				console.log(result)
+
+				// load data from flask server
 				notePreviews = result['previewData']
 				noteSeries = result['plottingSeries']
 				minDate = result['minDate']
 				maxDate = result['maxDate']
 				hospitalStays = result['hospitalizations']
-				createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate);
+
+				// call timeline creation method from object Note (defined on Note.js script import)
+				Note.createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate);
 			});
 		}
 	</script>

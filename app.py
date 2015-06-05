@@ -1,9 +1,5 @@
-# TODO: formatting notes/get better notes
-# TODO: get better med list?
-# TODO: replace toastr with polymer toast
-# TODO: organize medications by name
-# TODO: get medication groupings (snomed code?)
-
+# Authors: Emma Marriott, Baris Ungun
+# Description: Creates instance of and defines routing calls for Flask web server. 
 
 
 """
@@ -26,14 +22,16 @@ global medication_data
 global note_data
 
 #=======================================================================
-#       Application Configuration
+#       Application Configuration (EM)
 #=======================================================================
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'EHR_visualization_2015') #<= not-so-secret key for now
 #=======================================================================
+# Authors: Emma Marriott, Baris Ungun
+# Description: 
 
 #=======================================================================
-#       General routing for application
+#       General routing for application (EM)
 #=======================================================================
 @app.route('/')
 def about():
@@ -70,7 +68,7 @@ def med_eval():
 #=======================================================================
 
 #=======================================================================
-#       Routing for all AJAX calls
+#       Routing for all AJAX calls (BU, EM)
 #=======================================================================
 @app.route('/_medications/')
 @app.route('/_medications/<case_id>')
@@ -135,7 +133,7 @@ def note_preview(sevice_id,note_id):
 
 
 #=======================================================================
-#       Maintenance functions for Flask apps.
+#       Maintenance functions for Flask apps. (EM)
 #=======================================================================
 @app.after_request
 def add_header(response):
@@ -155,7 +153,7 @@ def page_not_found(error):
 
 
 #=======================================================================
-#       RUN APPLICATION!
+#       RUN APPLICATION! (EM)
 #=======================================================================
 if __name__ == '__main__':
     app.run(debug=True)

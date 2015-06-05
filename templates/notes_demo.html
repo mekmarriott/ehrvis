@@ -1,3 +1,12 @@
+<!--  Authors: Emma Marriott, Baris Ungun. sections are marked below with author indicated -->
+<!--  Description: 
+			-This page contains placeholders for the notes timeline;
+			-After loading, the page requests note data (demo case) from the flask web server
+			-After loading, the page calls a timeline creation method from Note.js
+			-The page also contains a placeholder for a bootstrap.js interactive walkthrough
+ -->
+
+	<!-- PAGE STRUCTURE - Author: EM -->
 
 {% extends "base.html" %}
 
@@ -6,20 +15,37 @@
 {% endblock %}
 
 {% block main %}
+
+	<!-- dependences -->
+
 	<link rel="stylesheet" href="/static/css/style.css">
+
+	<!-- flot.js plotting library and plugins -->
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.time.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.navigate.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.selection.js"></script>
-	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.shift.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.symbol.js"></script>
-	<script language="javascript" type="text/javascript" src="/static/scripts/Note.js"></script>
+
+	<!-- custom flot plugin -->
+	<script language="javascript" type="text/javascript" src="/static/js/jquery.flot.shift.js"></script>
+
+
+	<!-- polymer web elements: paper-dialog for pop-up display of note full text  -->
 	<script language="javascript" type="text/javascript" src="/static/bower_components/webcomponentsjs/webcomponents.js"></script>
 	<link href="/static/bower_components/paper-dialog/paper-dialog.html" rel="import">
+
+
+	<!-- bootstrap walkthrough -->
 	<script language="javascript" type="text/javascript" src="/static/js/bootstrap-tour.min.js"></script>
+
+
+	<!-- custom js libraries -->
+	<script language="javascript" type="text/javascript" src="/static/scripts/Note.js"></script>
 	<script language="javascript" type="text/javascript" src="/static/scripts/NoteTour.js"></script>
 
 
+	<!-- walkthrough -->
 	<div class='tour-backdrop jumbotron' style='opacity: 0.9' id='demo-start-page'>
 		<h1>Welcome</h1>
 		<p>This is the redesigned medical record interface</p> 
@@ -33,6 +59,7 @@
 		</p>
 	</div>
 
+	<!-- timeline -->
 	<div class="container-fluid" id="note-timeline" align="center">
 
 		<div horizontal layout id="choices" class="well"></div>
@@ -47,6 +74,7 @@
 
 	</div>
 
+	<!-- full text display pop-up -->
 	<paper-dialog id="note_detail" heading="Title" class="scrolling" backdrop layered="false">
 		<p></p>
     </paper-dialog>
@@ -60,7 +88,11 @@
 
     </style>
 
+
+	<!-- PAGE CONTENT POPULATION - Author : BU -->
+
 	<script>
+		// global scope variables
 		var med_timeline;
 		var note_timeline;
 		var notes_by_date;
@@ -73,13 +105,18 @@
 			// load note data and create timeline
 			// ----------------------------------
 
+
+			// jQuery AJAX call with anonymous function callback
 			$.getJSON( "/_notes/", function(result) {
+				// load data from flask server
 				notePreviews = result['previewData']
 				noteSeries = result['plottingSeries']
 				minDate = result['minDate']
 				maxDate = result['maxDate']
 				hospitalStays = result['hospitalizations']
-				createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate);
+
+				// call timeline creation method from object Note (defined on Note.js script import)
+				Note.createNoteTimeline(noteSeries, hospitalStays, minDate, maxDate);
 			});
 		}
 	</script>
