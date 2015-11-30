@@ -85,14 +85,6 @@ Other dependencies include:
 * [jQuery] - duh
 * [Gunicorn] - python WSGI HTTP server
 
-==================================================
-To-Dos
-==================================================
-- Get API calls working
-- Make data objects
-- Get vis.js, flot.js, etc. functioning
-- Make real visuals
-- etc.
 
 ==================================================
 License
